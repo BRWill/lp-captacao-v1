@@ -115,3 +115,61 @@ Cole este resumo (ou anexe o arquivo `RESUMO DO PROJETO.md`) e peça o próximo 
 ### Próxima sessão
 
 Iniciar desenvolvimento da LP — branch `feature/lp-alta-conversao`, começando pela estrutura HTML e tokens de design (CSS variables do Brand Guidelines).
+
+---
+
+## 03/05/2026 — Desenvolvimento da LP (sessão 2)
+
+### O que foi entregue
+
+**LP completa em HTML/CSS/JS** — 12 blocos conforme wireframe v3, na branch `feature/lp-alta-conversao`.
+
+Arquivos criados:
+- `lp/index.html` — estrutura completa com todos os 12 blocos e placeholders `[INSERIR: X]`
+- `lp/css/tokens.css` — variáveis CSS do Brand Guidelines (oklch, tipografia, espaçamentos)
+- `lp/css/lp.css` — estilos mobile-first completos (~750 linhas)
+- `lp/js/lp.js` — scroll suave, FAQ accordion, sticky CTA mobile, integração RD Station
+- `lp/assets/logos/logo-valoreasy.png` — logo colorido com fundo transparente
+
+### Integração RD Station
+
+- Formulário envia via **Events API** (`POST https://api.rd.services/platform/conversions`) com o token real configurado em `CONFIG.rdToken`
+- `conversion_identifier: lp-departamento-financeiro` — identifica leads exclusivamente desta LP
+- WhatsApp com UTMs (`utm_source=lp&utm_medium=whatsapp&utm_campaign=departamento-financeiro`) + evento de conversão disparado antes do redirect
+- Leads entram no estágio **"Sem Contato (Inbound)"** do **Funil de Vendas Diretas** (ID: `62ebd224d265d7000c78b18d`)
+- Item 7 da lista de pendências (embed RD Station) **eliminado** — integração resolvida diretamente via API pública, sem necessidade de código embed
+
+### Dados inseridos hoje
+
+- WhatsApp: `(11) 91895-3052` ✓
+- Token RD Station: configurado em `lp.js` ✓
+
+### Ajustes visuais aplicados na revisão
+
+| Bloco | Ajuste |
+|---|---|
+| 01 — Hero | Fundo off-white (`--paper`); botão do formulário verde (`btn--green`); form compactado para caber na dobra sem scroll; logo imagem no header |
+| 02 — Dor | Fundo alterado de preto (`--ink`) para azul marinho (`--brand-deep`); aspas em branco translúcido — sem conflito azul/vermelho |
+| 08 — Autoridade | Stats numéricos (`[INSERIR]`) removidos; h2 simplificado para foco em avaliações |
+
+### Inputs pendentes (bloqueiam go-live, não o desenvolvimento)
+
+| # | Item | Status |
+|---|---|---|
+| 1 | Métricas: CNPJs ativos, R$ sob gestão, anos, cidades | ⏳ Aguardando Will |
+| 2 | 12–18 logos de clientes (PNG/SVG, fundo transparente) | ⏳ Aguardando Will |
+| 3 | Print + link do perfil Google | ⏳ Aguardando Will |
+| 4 | 3 reviews em destaque (texto, nome, empresa, data) | ⏳ Aguardando Will |
+| 5 | Faixa de preço para FAQ | ⏳ Aguardando Will |
+| 6 | 5+ fotos da equipe | ⏳ Aguardando Will |
+| 7 | Embed RD Station | ✅ Resolvido via Events API |
+| 8 | IP do Coolify (para DNS no Hostgator) | ⏳ Aguardando Will |
+| 9 | IDs GA4 / Meta Pixel | ⏳ Se disponíveis |
+
+### Próxima sessão
+
+1. Revisar LP no browser com Will (aprovação visual dos 12 blocos)
+2. Substituir placeholders com dados reais conforme Will fornecer
+3. Configurar domínio `lp.valoreasy.com.br` no Hostgator (registro A → IP Coolify)
+4. Deploy no Coolify e testes de formulário (lead chegando no RD Station)
+5. Iniciar Fase 2 — reformulação do site WordPress

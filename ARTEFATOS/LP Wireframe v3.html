@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LP Wireframe v3 — Departamento Financeiro de Verdade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;--paper:#fbf8f2;--ink:#14201f;--ink-2:#3a4544;
+    --muted:#7a8281;--line:#d8cfbe;--line-2:#c2b69e;
+    --accent:#0e5b56;--accent-2:#d97a3a;--warn:#b1442b;--good:#2c6b4f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:14.5px;line-height:1.55}
+  .wrap{max-width:1320px;margin:0 auto;padding:48px 36px 96px}
+
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  h1{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(36px,5vw,56px);line-height:1.08;margin:14px 0 18px;max-width:24ch}
+  h1 em{font-style:italic;color:var(--accent)}
+  .lede{color:var(--ink-2);font-size:17px;max-width:780px}
+  .meta{margin-top:20px;display:flex;gap:24px;flex-wrap:wrap;color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:11.5px}
+  .meta b{color:var(--ink);font-weight:500}
+
+  .section{margin-top:64px}
+  h2{font-family:"Instrument Serif",serif;font-weight:400;font-size:28px;margin:0 0 6px;border-top:1px solid var(--line);padding-top:22px;display:flex;align-items:baseline;gap:14px}
+  h2 .n{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.1em}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 22px}
+
+  /* concept anchor strip */
+  .anchor-strip{
+    background:var(--ink);color:#fff;border-radius:14px;padding:22px 28px;
+    display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:center;
+  }
+  .anchor-strip .l .lab{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+  .anchor-strip .l h3{font-family:"Instrument Serif",serif;font-weight:400;font-size:30px;margin:6px 0 0;color:#fff;line-height:1.1}
+  .anchor-strip .r{color:rgba(255,255,255,.85);font-size:14px}
+  .anchor-strip .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .anchor-strip .pill{font-family:"JetBrains Mono",monospace;font-size:10.5px;background:rgba(255,255,255,.13);color:#fff;padding:4px 10px;border-radius:4px;letter-spacing:.04em}
+
+  /* Block layout */
+  .block{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    margin-bottom:22px;overflow:hidden;
+    display:grid;grid-template-columns:60px 1fr 1.05fr;
+  }
+  .block .stripe{
+    background:var(--ink);color:rgba(255,255,255,.85);
+    padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-family:"JetBrains Mono",monospace;border-right:1px solid var(--line);
+  }
+  .block .stripe .num{font-size:22px;font-family:"Instrument Serif",serif;color:#fff;line-height:1;margin-top:4px}
+  .block .stripe .role{writing-mode:vertical-rl;transform:rotate(180deg);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:auto}
+  .block.hero .stripe{background:linear-gradient(180deg,#0e5b56,#082c2a)}
+  .block.contrast .stripe{background:linear-gradient(180deg,#b1442b,#7a2c1c)}
+  .block.cta .stripe{background:linear-gradient(180deg,#d97a3a,#a3551f)}
+  .block.proof .stripe{background:linear-gradient(180deg,#6c4adb,#3d2a8a)}
+
+  .b-wire{background:#fff;padding:22px 24px;border-right:1px solid var(--line);position:relative;min-height:230px}
+  .b-wire .b-tag{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .b-wire h3{font-family:"Instrument Serif",serif;font-weight:400;font-size:24px;margin:0 0 14px;line-height:1.15}
+
+  .b-meta{padding:22px 26px;background:var(--paper)}
+  .b-meta h5{margin:0 0 8px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .b-meta h5::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2)}
+  .b-meta .copy{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+  .b-meta .copy .lab{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .b-meta .copy .text{font-size:14px;color:var(--ink);line-height:1.45}
+  .b-meta .copy .text em{color:var(--accent);font-style:italic;font-family:"Instrument Serif",serif;font-size:17px}
+  .b-meta .copy .text strong{font-weight:600}
+  .b-meta .principle{background:rgba(14,91,86,.05);border-left:2px solid var(--accent);padding:8px 12px;font-size:12.5px;color:var(--ink-2);margin-top:10px}
+  .b-meta .principle b{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px}
+
+  /* skeleton primitives */
+  .skel{display:flex;flex-direction:column;gap:8px}
+  .skel-bar{height:10px;background:#e7e1d2;border-radius:4px}
+  .skel-bar.short{width:40%}
+  .skel-bar.mid{width:65%}
+  .skel-bar.full{width:100%}
+  .skel-bar.tall{height:22px}
+  .skel-btn{display:inline-block;padding:10px 18px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;font-weight:600}
+  .skel-btn.alt{background:#25d366;margin-left:8px}
+
+  /* hero wireframe */
+  .wf-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;align-items:start}
+  .wf-hero .left{display:flex;flex-direction:column;gap:10px}
+  .wf-hero .badge{display:inline-flex;gap:6px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:rgba(14,91,86,.08);padding:4px 10px;border-radius:999px;align-self:flex-start}
+  .wf-hero .head{font-family:"Instrument Serif",serif;font-size:24px;line-height:1.05;color:var(--ink)}
+  .wf-hero .head em{color:var(--accent);font-style:italic}
+  .wf-hero .sub{font-size:12px;color:var(--ink-2)}
+  .wf-hero .form{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .wf-hero .form .lab{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .wf-hero .form .field{background:#fff;border:1px solid var(--line);border-radius:5px;height:28px}
+  .wf-hero .logos{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .wf-hero .logos div{background:#ece5d8;border-radius:4px;height:22px;flex:1;min-width:50px}
+  .wf-hero .trust{display:flex;gap:10px;font-size:10.5px;color:var(--muted);margin-top:4px;align-items:center;flex-wrap:wrap}
+  .wf-hero .trust .star{color:#e8a93a}
+
+  .wf-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px}
+  .wf-cmp .col{border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff}
+  .wf-cmp .col.bad{background:rgba(177,68,43,.05);border-color:rgba(177,68,43,.25)}
+  .wf-cmp .col.good{background:rgba(44,107,79,.05);border-color:rgba(44,107,79,.25)}
+  .wf-cmp .row{height:8px;background:#ece5d8;border-radius:3px;margin:6px 0}
+  .wf-cmp .col.bad .row{background:#f1d6cf}
+  .wf-cmp .col.good .row{background:#cfe1d6}
+  .wf-cmp .ttl{font-weight:600;font-size:11.5px}
+  .wf-cmp .col.bad .ttl{color:var(--warn)}
+  .wf-cmp .col.good .ttl{color:var(--good)}
+
+  .wf-steps{display:flex;gap:8px;align-items:stretch}
+  .wf-steps .step{flex:1;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px}
+  .wf-steps .step .n{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-family:"JetBrains Mono",monospace;font-size:11px;display:grid;place-items:center;margin-bottom:6px}
+  .wf-steps .step .t{font-size:11.5px;font-weight:600}
+
+  .wf-perfil{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .wf-perfil .p{border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff}
+  .wf-perfil .p.cur{background:rgba(14,91,86,.05);border-color:var(--accent)}
+  .wf-perfil .p .h{font-size:11.5px;font-weight:600;margin-bottom:6px}
+  .wf-perfil .p.cur .h{color:var(--accent)}
+
+  .wf-social{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .wf-social .case{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:4px}
+  .wf-social .case .num{font-family:"Instrument Serif",serif;font-size:22px;color:var(--accent)}
+  .wf-social .case .lbl{font-size:10px;color:var(--muted)}
+  .wf-social .case .who{font-size:11px;color:var(--ink);margin-top:auto}
+
+  .wf-faq{display:flex;flex-direction:column;gap:6px}
+  .wf-faq .q{border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:#fff;display:flex;justify-content:space-between;font-size:11.5px}
+  .wf-faq .q::after{content:"+";color:var(--muted)}
+
+  .wf-team{display:flex;gap:8px;align-items:center}
+  .wf-team .avatar{width:36px;height:36px;border-radius:50%;background:#ddd2b8;border:2px solid #fff;margin-right:-10px}
+  .wf-team .nums{display:flex;gap:14px;margin-left:14px}
+  .wf-team .nums div{font-size:10.5px;color:var(--muted)}
+  .wf-team .nums div b{display:block;font-family:"Instrument Serif",serif;font-size:22px;color:var(--ink)}
+
+  .wf-cta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .wf-cta .promise{background:rgba(14,91,86,.08);border:1px dashed var(--accent);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--accent);font-family:"JetBrains Mono",monospace;letter-spacing:.04em}
+
+  .wf-sticky{background:var(--ink);color:#fff;border-radius:999px;display:flex;gap:10px;align-items:center;padding:6px 6px 6px 14px;font-size:11.5px;width:max-content;margin:0 auto}
+  .wf-sticky .skel-btn{padding:6px 12px;font-size:11px}
+
+  /* Authority block */
+  .wf-auth{display:grid;grid-template-columns:1.3fr 1fr;gap:10px}
+  .wf-auth .badge-google{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:11px}
+  .wf-auth .badge-google .star{color:#e8a93a;font-size:14px}
+  .wf-auth .logos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .wf-auth .logos div{background:#ece5d8;border-radius:4px;height:26px}
+  .wf-auth .reviews{display:flex;flex-direction:column;gap:6px}
+  .wf-auth .review{background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:10.5px;color:var(--ink-2)}
+  .wf-auth .review b{color:var(--ink)}
+
+  /* Departamento bloco */
+  .wf-dept{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+  .wf-dept .pill-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:11px}
+  .wf-dept .pill-card .icn{width:22px;height:22px;border-radius:6px;background:rgba(14,91,86,.12);margin-bottom:6px}
+  .wf-dept .pill-card .t{font-weight:600;font-size:11.5px}
+
+  /* nav strip */
+  .nav-list{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .nav-list a{font-family:"JetBrains Mono",monospace;font-size:10.5px;text-decoration:none;color:var(--ink-2);background:var(--paper);border:1px solid var(--line);padding:6px 10px;border-radius:6px;letter-spacing:.04em}
+  .nav-list a:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;font-family:"JetBrains Mono",monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media (max-width:1100px){
+    .anchor-strip{grid-template-columns:1fr}
+    .block{grid-template-columns:60px 1fr}
+    .b-meta{grid-column:span 2;border-top:1px solid var(--line)}
+  }
+  @media (max-width:720px){
+    .wrap{padding:32px 20px 80px}
+    .block{grid-template-columns:1fr}
+    .block .stripe{flex-direction:row;padding:12px}
+    .block .stripe .role{writing-mode:horizontal-tb;transform:none;margin-top:0;margin-left:auto}
+    .b-meta{grid-column:span 1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow"><span class="dot"></span> LP /comecar · v3 · conceito "Departamento de verdade"</div>
+    <h1>Wireframe + copy final, pronto para <em>desenvolvimento</em>.</h1>
+    <p class="lede">
+      Versão 3 da landing page aplicando o conceito-marca aprovado: <b>"Departamento Financeiro de Verdade"</b>. 12 blocos com copy revisada, com refrão da palavra <em>departamento</em> em hero, virada, time e CTA final, e um bloco novo dedicado a explicar o que está dentro do departamento.
+    </p>
+    <div class="meta">
+      <span><b>Conceito</b> · Departamento de verdade</span>
+      <span><b>Blocos</b> · 12 (era 11)</span>
+      <span><b>CTAs</b> · 4 momentos</span>
+      <span><b>Status</b> · pronto para dev</span>
+    </div>
+  </header>
+
+  <!-- ANCHOR STRIP -->
+  <section class="section">
+    <div class="anchor-strip">
+      <div class="l">
+        <div class="lab">Conceito-âncora</div>
+        <h3>"Departamento financeiro de verdade"</h3>
+      </div>
+      <div class="r">
+        Você não <em>contrata</em> um departamento — <em>liga a chave</em> em um que já existe, montado, profissionalizado e do tamanho da sua empresa. A palavra <strong>departamento</strong> é o refrão da página: aparece no hero, na virada, no time, no FAQ e no CTA final.
+        <div class="pills">
+          <span class="pill">+100 empresas</span>
+          <span class="pill">Google 4,9★</span>
+          <span class="pill">9 anos</span>
+          <span class="pill">Time dedicado</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÍNDICE -->
+  <section class="section">
+    <h2><span class="n">00</span> Índice da página</h2>
+    <div class="nav-list">
+      <a href="#b01">01 · Hero</a>
+      <a href="#b02">02 · Dor (espelhamento)</a>
+      <a href="#b03">03 · Virada</a>
+      <a href="#b04">04 · O que é o departamento</a>
+      <a href="#b05">05 · Antes vs. Depois</a>
+      <a href="#b06">06 · Como sai do papel</a>
+      <a href="#b07">07 · Para quem é</a>
+      <a href="#b08">08 · Autoridade (Google + logos)</a>
+      <a href="#b09">09 · CTA intermediário</a>
+      <a href="#b10">10 · O seu time</a>
+      <a href="#b11">11 · FAQ</a>
+      <a href="#b12">12 · CTA final</a>
+    </div>
+  </section>
+
+  <!-- BLOCKS -->
+  <section class="section">
+    <h2><span class="n">01</span> Os 12 blocos</h2>
+    <p class="sub">esquerda: wireframe · direita: copy + intenção psicológica</p>
+
+    <!-- 01 HERO -->
+    <div class="block hero" id="b01">
+      <div class="stripe"><span class="num">01</span><span class="role">Hero</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Hero · split · form acima da dobra</div>
+        <h3>Promessa + qualificação + form</h3>
+        <div class="wf-hero">
+          <div class="left">
+            <span class="badge">● Para empresas de serviço · R$ 50k–500k/mês</span>
+            <div class="head">Você não precisa <em>contratar</em> um departamento financeiro.</div>
+            <div class="head" style="font-size:18px;color:var(--ink-2)">Já tem um — pronto, profissional e do seu tamanho.</div>
+            <div class="sub">Em 30 dias o seu financeiro vira um departamento de verdade: time especializado, sistema operado a 100%, fechamento mensal no 5º dia útil.</div>
+            <div style="display:flex;gap:8px;margin-top:6px">
+              <span class="skel-btn">Quero conhecer meu departamento</span>
+              <span class="skel-btn alt">WhatsApp</span>
+            </div>
+            <div class="trust">
+              <span><span class="star">★★★★★</span> 4,9 no Google · +100 empresas</span>
+            </div>
+            <div class="logos"><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
+          <div class="form">
+            <span class="lab">Diagnóstico em 4h úteis · sem compromisso</span>
+            <div class="field"></div><div class="field"></div><div class="field"></div><div class="field"></div>
+            <span class="skel-btn" style="text-align:center;margin-top:4px">Solicitar diagnóstico</span>
+          </div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Eyebrow / qualificador</div><div class="text">Para empresas de serviço com faturamento entre R$ 50k e R$ 500k/mês.</div></div>
+        <div class="copy"><div class="lab">H1 (linha 1)</div><div class="text">Você não precisa <em>contratar</em> um departamento financeiro.</div></div>
+        <div class="copy"><div class="lab">H1 (linha 2)</div><div class="text">Já tem um — <em>pronto, profissional e do seu tamanho</em>.</div></div>
+        <div class="copy"><div class="lab">Sub-headline</div><div class="text">Em 30 dias, a Valoreasy entrega o departamento financeiro que sua empresa precisaria construir nos próximos 2 anos: <strong>time especializado</strong>, <strong>sistema operado a 100%</strong>, <strong>fechamento mensal no 5º dia útil</strong> e <strong>reunião estratégica</strong> todo mês.</div></div>
+        <div class="copy"><div class="lab">CTAs</div><div class="text">Quero conhecer meu departamento · Falar no WhatsApp</div></div>
+        <div class="copy"><div class="lab">Microcopy abaixo do form</div><div class="text">Sem compromisso. Respondemos em até 4 horas úteis.</div></div>
+        <div class="copy"><div class="lab">Faixa de prova social (acima da dobra)</div><div class="text">★ 4,9 no Google · +100 empresas atendidas · 9 anos de operação</div></div>
+        <div class="principle"><b>Princípio · reposicionamento</b>"Não precisa contratar — já tem" reframa a percepção de preço. O lead deixa de pensar "quanto vai me custar terceirizar" e passa a pensar "quanto economizo por não montar".</div>
+      </div>
+    </div>
+
+    <!-- 02 DOR -->
+    <div class="block" id="b02">
+      <div class="stripe"><span class="num">02</span><span class="role">Dor</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Espelhamento · validação da dor</div>
+        <h3>Você se reconhece?</h3>
+        <div class="skel">
+          <div class="skel-bar full"></div><div class="skel-bar mid"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+            <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:11px">— Não enxergo meus números no dia.</div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:11px">— Pago R$ 8–12k de equipe que não roda sozinha.</div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:11px">— Tenho sistema, mas usa 30% do que paguei.</div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:11px">— Não tenho tempo para gerenciar finanças.</div>
+          </div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">A operação cresceu. O financeiro <em>ficou amador</em>.</div></div>
+        <div class="copy"><div class="lab">Texto de abertura</div><div class="text">A maioria das empresas chega na Valoreasy com um financeiro feito de pedaços: uma analista que entrou pequena e cresceu junto, um sistema bom que ninguém opera direito, planilhas paralelas que ninguém atualiza. Tudo funciona — até o dia em que não funciona mais.</div></div>
+        <div class="copy"><div class="lab">Lista de dores · em primeira pessoa</div><div class="text">
+          — "Não consigo enxergar meus números todos os dias — só descubro o resultado depois do mês fechado."<br>
+          — "Pago R$ 8 a 12 mil em equipe interna e ainda preciso ficar em cima."<br>
+          — "Tenho um sistema bom, mas a gente usa 30% do potencial."<br>
+          — "Quero crescer, mas o financeiro não me dá base para decidir."<br>
+          — "Não tenho tempo nem repertório para gerenciar isso direito."
+        </div></div>
+        <div class="principle"><b>Princípio · espelhamento</b>Falas em primeira pessoa, com aspas, ativam reconhecimento direto. Ataca as 5 dores listadas pelo cliente sem listá-las como bullets de marketing.</div>
+      </div>
+    </div>
+
+    <!-- 03 VIRADA -->
+    <div class="block" id="b03">
+      <div class="stripe"><span class="num">03</span><span class="role">Virada</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Frase-virada · ponte para a solução</div>
+        <h3>O ponto de inflexão</h3>
+        <div class="skel" style="padding-top:30px">
+          <div class="skel-bar tall full" style="background:#d6e5e3"></div>
+          <div class="skel-bar mid"></div>
+          <div class="skel-bar short"></div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Headline da virada</div><div class="text">A conta não fecha: contratar é caro, montar leva anos e <em>gerenciar</em> volta para você.</div></div>
+        <div class="copy"><div class="lab">Subtexto</div><div class="text">Empresas de R$ 50k a R$ 500k/mês não precisam <em>construir</em> um departamento financeiro do zero. Precisam de um já pronto — fora da sua folha, mas dentro da sua operação. <strong>É o que a Valoreasy entrega.</strong></div></div>
+        <div class="principle"><b>Princípio · reframe econômico</b>Em vez de comparar "BPO vs. CLT", a virada compara "ligar a chave em algo pronto" vs. "construir/contratar/gerenciar". Tira o lead da matemática de hora-homem e leva para a matemática de oportunidade.</div>
+      </div>
+    </div>
+
+    <!-- 04 O QUE É O DEPARTAMENTO (NOVO) -->
+    <div class="block" id="b04">
+      <div class="stripe"><span class="num">04</span><span class="role">Departamento</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Anatomia · o que está dentro do departamento</div>
+        <h3>O que tem dentro</h3>
+        <div class="wf-dept">
+          <div class="pill-card"><div class="icn"></div><div class="t">Time dedicado</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Sistema operado</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Rotina diária</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Fechamento mensal</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Análise estratégica</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Régua de cobrança</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Projeção 90 dias</div></div>
+          <div class="pill-card"><div class="icn"></div><div class="t">Ponte com contábil</div></div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">Um departamento <em>de verdade</em> tem oito coisas. As oito vêm com a Valoreasy.</div></div>
+        <div class="copy"><div class="lab">Cards (8 itens · título + 1 frase)</div><div class="text">
+          <strong>Time dedicado</strong> — analista financeiro + gestor de relacionamento exclusivos do seu CNPJ.<br>
+          <strong>Sistema operado</strong> — usamos 100% do sistema que você já paga (Conta Azul, Omie, Granatum etc.).<br>
+          <strong>Rotina diária</strong> — pagamentos, recebimentos, conciliação e lançamentos atualizados todo dia útil.<br>
+          <strong>Fechamento mensal</strong> — entregue até o 5º dia útil, com análise por escrito.<br>
+          <strong>Análise estratégica</strong> — reunião mensal de 60 min para ler resultado e ajustar rota junto com você.<br>
+          <strong>Régua de cobrança</strong> — automação + follow-up humano para clientes em atraso.<br>
+          <strong>Projeção de caixa 90 dias</strong> — sempre disponível, atualizada toda semana.<br>
+          <strong>Ponte com a contabilidade</strong> — sua contabilidade recebe tudo pronto, sem ruído.
+        </div></div>
+        <div class="principle"><b>Princípio · concretização</b>"Departamento" é abstrato. Os 8 itens viram cardápio tangível — o lead consegue medir o que <em>não tem hoje</em> e o que vai passar a ter. Endereça desejo de profissionalização.</div>
+      </div>
+    </div>
+
+    <!-- 05 ANTES vs DEPOIS -->
+    <div class="block contrast" id="b05">
+      <div class="stripe"><span class="num">05</span><span class="role">Contraste</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Tabela · antes vs. depois</div>
+        <h3>Como muda o seu mês</h3>
+        <div class="wf-cmp">
+          <div class="col bad"><div class="ttl">Hoje</div><div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div></div>
+          <div class="col good"><div class="ttl">Em 30 dias</div><div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div><div class="row"></div></div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">O seu mês, antes e depois do <em>departamento</em>.</div></div>
+        <div class="copy"><div class="lab">Coluna esquerda · "Hoje"</div><div class="text">
+          — Decisão tomada no escuro, sem dado confiável<br>
+          — Equipe interna que custa caro e exige seu tempo<br>
+          — Sistema bom, usado em 30%<br>
+          — Fechamento que chega 20 dias depois — quando chega<br>
+          — Cobrança feita no impulso<br>
+          — Caixa apertando sem aviso prévio<br>
+          — Dono respondendo "deixa eu verificar"<br>
+          — Crescimento adiado por falta de base<br>
+          — Contabilidade trocando e-mails sem fim
+        </div></div>
+        <div class="copy"><div class="lab">Coluna direita · "Em 30 dias com o departamento"</div><div class="text">
+          — Dashboard atualizado todo dia útil<br>
+          — Time externo especializado, sem CLT, sem gestão<br>
+          — Sistema operado a 100%, com POPs documentados<br>
+          — Fechamento entregue até o 5º DU, com leitura<br>
+          — Régua de cobrança automática + follow-up humano<br>
+          — Projeção de 90 dias sempre à mão<br>
+          — Dono respondendo com dado, não com palpite<br>
+          — Base sólida para decisões de crescimento<br>
+          — Contabilidade recebendo tudo pronto, sem ruído
+        </div></div>
+        <div class="principle"><b>Princípio · contraste sensorial 1:1</b>9 dores específicas, 9 entregas concretas. Cada par é um "check mental". Substitui cards genéricos da home atual.</div>
+      </div>
+    </div>
+
+    <!-- 06 COMO SAI DO PAPEL -->
+    <div class="block" id="b06">
+      <div class="stripe"><span class="num">06</span><span class="role">Processo</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Timeline · 3 fases</div>
+        <h3>Como sai do papel</h3>
+        <div class="wf-steps">
+          <div class="step"><div class="n">1</div><div class="t">Diagnóstico (1 sem · grátis)</div></div>
+          <div class="step"><div class="n">2</div><div class="t">Onboarding (2–4 sem)</div></div>
+          <div class="step"><div class="n">3</div><div class="t">Operação contínua</div></div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">Em 3 etapas, o departamento <em>liga a chave</em>.</div></div>
+        <div class="copy"><div class="lab">Etapa 1 · Diagnóstico (1 semana · gratuito)</div><div class="text">Mapeamos suas rotinas, sistemas, equipe atual e gargalos. Você recebe um <strong>plano por escrito</strong> com escopo, time alocado e investimento. Se fizer sentido, seguimos. Se não, o diagnóstico é seu.</div></div>
+        <div class="copy"><div class="lab">Etapa 2 · Onboarding (2 a 4 semanas)</div><div class="text">Configuramos o sistema, padronizamos processos, documentamos POPs e absorvemos a operação aos poucos. <strong>Sua equipe atual transita</strong> — ou sai, ou redireciona.</div></div>
+        <div class="copy"><div class="lab">Etapa 3 · Operação contínua (mensal)</div><div class="text">O departamento opera o seu dia a dia. Você recebe dashboard atualizado, fechamento mensal e <strong>uma reunião estratégica</strong> de 60 min para ler o resultado e decidir o próximo passo.</div></div>
+        <div class="principle"><b>Princípio · redução de risco + transição cuidada</b>Diagnóstico gratuito + plano por escrito + transição da equipe atual remove o medo de "demitir geral e dar errado".</div>
+      </div>
+    </div>
+
+    <!-- 07 PARA QUEM É -->
+    <div class="block" id="b07">
+      <div class="stripe"><span class="num">07</span><span class="role">Perfil</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Quadro · este serviço é para você?</div>
+        <h3>Para quem (e para quem não)</h3>
+        <div class="wf-perfil">
+          <div class="p cur"><div class="h">Funciona muito bem para</div><div class="skel-bar full"></div><div class="skel-bar full" style="margin-top:6px"></div><div class="skel-bar mid" style="margin-top:6px"></div></div>
+          <div class="p"><div class="h">Não é para você se</div><div class="skel-bar full"></div><div class="skel-bar full" style="margin-top:6px"></div><div class="skel-bar mid" style="margin-top:6px"></div></div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Funciona muito bem para</div><div class="text">
+          — Empresas de serviço entre R$ 50k e R$ 500k/mês<br>
+          — Donos que querem decidir com dado, não com sensação<br>
+          — Operações que sentem que a equipe interna não escala<br>
+          — Quem topa <em>profissionalizar</em>, não só "delegar boleto"<br>
+          — Negócios que estão prestes a crescer e querem base sólida
+        </div></div>
+        <div class="copy"><div class="lab">Não é para você se</div><div class="text">
+          — Você fatura menos que R$ 30k/mês — ainda é cedo, e dizemos isso na reunião<br>
+          — Procura "alguém para emitir nota" — para isso, balcão. Departamento é outra coisa<br>
+          — Quer manter tudo informal, sem POP, sem documentação<br>
+          — Não topa abrir os números para um time externo
+        </div></div>
+        <div class="principle"><b>Princípio · auto-exclusão honesta</b>Dizer "não é para você se" aumenta credibilidade de quem se encaixa — e qualifica leads ruins fora do funil antes do CTA.</div>
+      </div>
+    </div>
+
+    <!-- 08 AUTORIDADE -->
+    <div class="block proof" id="b08">
+      <div class="stripe"><span class="num">08</span><span class="role">Autoridade</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Google + logos + reviews</div>
+        <h3>+100 empresas. 4,9 no Google.</h3>
+        <div class="wf-auth">
+          <div>
+            <div class="badge-google" style="margin-bottom:8px"><span class="star">★★★★★</span> 4,9 · Google · 80+ avaliações</div>
+            <div class="logos">
+              <div></div><div></div><div></div><div></div>
+              <div></div><div></div><div></div><div></div>
+              <div></div><div></div><div></div><div></div>
+            </div>
+          </div>
+          <div class="reviews">
+            <div class="review"><b>Cliente A</b> · agência · jan/26<br>"Em 3 meses encontraram R$ 14k em recorrências mortas."</div>
+            <div class="review"><b>Cliente B</b> · arquitetura · mar/26<br>"Voltei a olhar o financeiro só na reunião mensal."</div>
+            <div class="review"><b>Cliente C</b> · software · abr/26<br>"Profissionalizou de uma vez — virou referência interna."</div>
+          </div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">+100 empresas, 4,9 no Google e <em>uma média de 9 anos</em> operando departamentos como o seu.</div></div>
+        <div class="copy"><div class="lab">Subtexto</div><div class="text">Toda nota, todo depoimento e toda métrica desta página é real, datada e atribuída. Não somos plataforma — somos um time de pessoas com nome, telefone e currículo.</div></div>
+        <div class="copy"><div class="lab">Selos visíveis</div><div class="text">★ 4,9 · Google · 80+ avaliações &nbsp;·&nbsp; +100 CNPJs ativos &nbsp;·&nbsp; R$ XX mi sob gestão &nbsp;·&nbsp; 9 anos</div></div>
+        <div class="copy"><div class="lab">Mural de logos (12 a 18 logos curadas)</div><div class="text">Logos com tamanho uniforme, em escala de cinza. Hover revela cliente / segmento. <em>Pendência:</em> logos definitivas.</div></div>
+        <div class="copy"><div class="lab">3 reviews em destaque (formato curto)</div><div class="text">Nome · empresa · data · 1 frase específica com número quando possível. Botão "ver todas no Google".</div></div>
+        <div class="principle"><b>Princípio · prova plural</b>3 camadas de prova (selo Google, logos institucionais, reviews humanas) cobrem três tipos de lead: o que confia em rating, o que confia em peer-marca, e o que confia em testemunho.</div>
+      </div>
+    </div>
+
+    <!-- 09 CTA INTERMEDIÁRIO -->
+    <div class="block cta" id="b09">
+      <div class="stripe"><span class="num">09</span><span class="role">CTA</span></div>
+      <div class="b-wire">
+        <div class="b-tag">CTA intermediário · escape autorizado</div>
+        <h3>Pausa: bora conversar?</h3>
+        <div class="wf-sticky">Diagnóstico gratuito em 30 min · resposta em 4h úteis<span class="skel-btn" style="background:#fff;color:var(--ink)">Começar</span><span class="skel-btn alt">WhatsApp</span></div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">Já está convencido? <em>Pula para a conversa.</em></div></div>
+        <div class="copy"><div class="lab">Subtexto</div><div class="text">30 minutos com um especialista. Sem pressão comercial. Diagnóstico do seu financeiro com plano por escrito ao final — fica seu, mesmo se não fechar com a gente.</div></div>
+        <div class="copy"><div class="lab">CTAs</div><div class="text">Quero o diagnóstico · Falar no WhatsApp</div></div>
+        <div class="principle"><b>Princípio · escape autorizado</b>Para o lead "quente", oferece saída no meio da página antes que ele role e desista. Para o "morno", reforça o SLA de 4h.</div>
+      </div>
+    </div>
+
+    <!-- 10 TIME -->
+    <div class="block" id="b10">
+      <div class="stripe"><span class="num">10</span><span class="role">Time</span></div>
+      <div class="b-wire">
+        <div class="b-tag">Quem opera · humanização</div>
+        <h3>Conheça o seu departamento</h3>
+        <div class="wf-team">
+          <div class="avatar"></div><div class="avatar"></div><div class="avatar"></div><div class="avatar"></div><div class="avatar"></div>
+          <div class="nums">
+            <div><b>+100</b>CNPJs</div>
+            <div><b>R$ XX mi</b>sob gestão</div>
+            <div><b>9 anos</b>operando</div>
+          </div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Título</div><div class="text">Conheça <em>o seu departamento</em>.</div></div>
+        <div class="copy"><div class="lab">Texto</div><div class="text">Cada cliente da Valoreasy tem um <strong>analista financeiro dedicado</strong> e um <strong>gestor de relacionamento</strong>. Você sabe o nome, o telefone e o WhatsApp das duas pessoas que cuidam do seu mês — e elas conhecem o seu negócio como se fossem CLT.</div></div>
+        <div class="copy"><div class="lab">Números agregados (substituir pelos reais)</div><div class="text">+100 CNPJs ativos · R$ XX mi sob gestão · 9 anos · time de XX especialistas</div></div>
+        <div class="principle"><b>Princípio · humanização contra commodity</b>Diferencia a Valoreasy de softwares de BPO ("planilha bonita") e consultorias frias. Pessoas com nome ganham de "plataforma" em compra de serviço de confiança.</div>
+      </div>
+    </div>
+
+    <!-- 11 FAQ -->
+    <div class="block" id="b11">
+      <div class="stripe"><span class="num">11</span><span class="role">FAQ</span></div>
+      <div class="b-wire">
+        <div class="b-tag">FAQ por objeção</div>
+        <h3>O que ainda te segura</h3>
+        <div class="wf-faq">
+          <div class="q">Quanto custa um departamento desses?</div>
+          <div class="q">E minha equipe atual, como fica?</div>
+          <div class="q">Substitui minha contabilidade?</div>
+          <div class="q">Vocês movimentam minha conta?</div>
+          <div class="q">Em quanto tempo está rodando?</div>
+          <div class="q">E se eu quiser cancelar?</div>
+          <div class="q">Funciona com o meu sistema atual?</div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Quanto custa um departamento desses?</div><div class="text">A faixa começa em <strong>R$ X.XXX/mês</strong> e varia por volume e modalidade. Em geral, custa <em>menos da metade</em> de montar a equipe interna equivalente. O diagnóstico gratuito retorna sua faixa exata por escrito.</div></div>
+        <div class="copy"><div class="lab">E minha equipe atual, como fica?</div><div class="text">Conduzimos a transição com você: pode ser realocada para outras áreas, redirecionada para apoio do departamento, ou desligada com o devido planejamento. <strong>Nunca decidimos por você.</strong></div></div>
+        <div class="copy"><div class="lab">Substitui minha contabilidade?</div><div class="text">Não. Operamos junto: entregamos para a contabilidade tudo pronto, fechado e conferido — ela ganha tempo e você ganha tranquilidade.</div></div>
+        <div class="copy"><div class="lab">Vocês movimentam minha conta bancária?</div><div class="text">Não. Operamos com aprovação dupla: nós preparamos o pagamento, você (ou um aprovador definido) libera. Toda movimentação fica auditada.</div></div>
+        <div class="copy"><div class="lab">Funciona com o meu sistema atual?</div><div class="text">Sim. Operamos os principais ERPs financeiros do mercado (Conta Azul, Omie, Granatum, Sankhya, Bling). Se você ainda não tem sistema, indicamos o melhor para o seu porte.</div></div>
+        <div class="copy"><div class="lab">E se eu quiser cancelar?</div><div class="text">Aviso prévio de 30 dias e devolução completa de toda documentação. Sem multa, sem fidelidade.</div></div>
+        <div class="principle"><b>Princípio · objeção, não curiosidade</b>Cada pergunta é um motivo concreto pelo qual o lead <em>não compra</em>. "O que é BPO?" é desperdício — quem chegou aqui já passou disso.</div>
+      </div>
+    </div>
+
+    <!-- 12 CTA FINAL -->
+    <div class="block cta" id="b12">
+      <div class="stripe"><span class="num">12</span><span class="role">Final</span></div>
+      <div class="b-wire">
+        <div class="b-tag">CTA final · sem rodapé que distraia</div>
+        <h3>O salto</h3>
+        <div class="wf-cta">
+          <div class="skel-bar tall short"></div><div class="skel-bar full"></div><div class="skel-bar mid"></div>
+          <span class="promise">Resposta em 4h úteis · Diagnóstico gratuito · Sem fidelidade</span>
+          <div style="display:flex;gap:8px"><span class="skel-btn">Quero meu diagnóstico</span><span class="skel-btn alt">WhatsApp</span></div>
+        </div>
+      </div>
+      <div class="b-meta">
+        <h5>Copy final</h5>
+        <div class="copy"><div class="lab">Headline final</div><div class="text">O seu departamento financeiro pode estar de pé na <em>próxima segunda-feira</em>.</div></div>
+        <div class="copy"><div class="lab">Subtexto</div><div class="text">30 minutos para entender se faz sentido. Plano por escrito ao final — mesmo se você não fechar com a gente. <strong>O custo de continuar onde está cresce a cada mês.</strong></div></div>
+        <div class="copy"><div class="lab">Garantias visíveis (3 selos)</div><div class="text">Diagnóstico gratuito · Resposta em 4h úteis · Sem fidelidade</div></div>
+        <div class="copy"><div class="lab">CTAs</div><div class="text">Quero meu diagnóstico · Falar no WhatsApp</div></div>
+        <div class="principle"><b>Princípio · custo da inação</b>"O custo de continuar onde está cresce a cada mês" — gatilho de urgência sem desconto e sem prazo, baseado em verdade dolorida.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- HANDOFF -->
+  <section class="section">
+    <h2><span class="n">02</span> Handoff para desenvolvimento</h2>
+    <p class="sub">o que precisamos antes de começar a codar</p>
+
+    <div class="block" style="grid-template-columns:60px 1fr">
+      <div class="stripe"><span class="num">→</span><span class="role">Inputs</span></div>
+      <div class="b-wire" style="border-right:0">
+        <div class="b-tag">Pendências do cliente</div>
+        <h3>Lista de inputs para destravar o desenvolvimento</h3>
+        <ol style="padding-left:20px;color:var(--ink-2);font-size:14px">
+          <li><b>Números reais</b> — total de CNPJs ativos, R$ sob gestão, anos exatos, qtd de avaliações no Google.</li>
+          <li><b>Logos curadas (12–18)</b> — em PNG/SVG, fundo transparente.</li>
+          <li><b>3 reviews em destaque</b> — texto, nome, empresa, data e link para o Google review.</li>
+          <li><b>Faixa de investimento</b> — valor mínimo a partir do qual abrir no FAQ ("a partir de R$ X.XXX").</li>
+          <li><b>Foto/avatar do time</b> — para bloco 10. Mínimo 5 pessoas, fundo padronizado.</li>
+          <li><b>Cases com número</b> — 3 cases com 1 número exato cada (substituir os placeholders no bloco 08).</li>
+          <li><b>Sistemas suportados</b> — lista oficial dos ERPs operados (já temos 5; confirmar).</li>
+          <li><b>Domínio + estratégia de URL</b> — confirmar <code>valoreasy.com.br/comecar</code> ou subdomínio <code>lp.valoreasy.com.br</code>.</li>
+          <li><b>Pixel + GA4 + Meta</b> — confirmar IDs e eventos a disparar (form_submit, whatsapp_click, scroll_50).</li>
+          <li><b>Integração do form</b> — destino dos leads (CRM, e-mail, planilha).</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="block" style="grid-template-columns:60px 1fr">
+      <div class="stripe"><span class="num">★</span><span class="role">Stack</span></div>
+      <div class="b-wire" style="border-right:0">
+        <div class="b-tag">Próximo passo recomendado</div>
+        <h3>De wireframe a alta fidelidade</h3>
+        <p style="color:var(--ink-2)">Com o conceito e a copy aprovados, o próximo entregável é o <b>mockup hi-fi da LP</b> — visual final com tipografia, paleta, microinterações e variações mobile. A partir dele, o desenvolvimento HTML/CSS é direto.</p>
+        <p style="color:var(--ink-2)">Sugiro avançar nessa ordem: <b>1)</b> hi-fi do hero (validar tom visual) → <b>2)</b> hi-fi dos 12 blocos completos → <b>3)</b> integração do form e tracking → <b>4)</b> publicação em ambiente de staging.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Valoreasy · LP /comecar — wireframe v3</span>
+    <span>conceito "Departamento de verdade" · pronto para dev</span>
+  </footer>
+
+</div>
+</body>
+</html>

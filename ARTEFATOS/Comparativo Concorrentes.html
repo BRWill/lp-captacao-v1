@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Comparativo competitivo — Valoreasy vs. concorrentes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f5f1ea;
+    --bg-2: #ece5d8;
+    --paper: #fbf8f2;
+    --ink: #14201f;
+    --ink-2: #3a4544;
+    --muted: #7a8281;
+    --line: #d8cfbe;
+    --line-2: #c2b69e;
+    --accent: #0e5b56;
+    --accent-2: #d97a3a;
+    --warn: #b1442b;
+    --good: #2c6b4f;
+
+    /* brand colors per competitor */
+    --c-valore: #0e5b56;
+    --c-libertas: #6c4adb;
+    --c-marvee: #1da97a;
+    --c-track: #ff5b3a;
+    --shadow: 0 1px 0 rgba(20,32,31,.04), 0 24px 60px -28px rgba(20,32,31,.18);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; background: var(--bg); color: var(--ink); font-family: "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body{ font-size: 15px; line-height: 1.55; }
+  .wrap{ max-width: 1280px; margin: 0 auto; padding: 56px 40px 120px; }
+
+  .eyebrow{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius: 50%; background: var(--accent); }
+
+  h1{
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.2vw, 64px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 14px 0 22px;
+    max-width: 22ch;
+  }
+  h1 em{ font-style: italic; color: var(--accent); }
+  .lede{
+    max-width: 740px;
+    color: var(--ink-2);
+    font-size: 17px;
+  }
+  .meta{
+    margin-top: 22px;
+    display: flex; gap: 28px; flex-wrap: wrap;
+    color: var(--muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px; letter-spacing: .04em;
+  }
+  .meta b{ color: var(--ink); font-weight: 500; }
+
+  .section{ margin-top: 88px; }
+  .section-head{
+    display: flex; align-items: baseline; gap: 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    margin-bottom: 26px;
+  }
+  .section-num{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: var(--muted); letter-spacing: .1em;
+  }
+  .section-title{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 32px; margin: 0;
+  }
+  .section-sub{
+    color: var(--muted);
+    margin-left: auto;
+    font-size: 13px;
+  }
+
+  /* ===== Player cards row ===== */
+  .players{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .player{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .player .stripe{
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .player.valore  .stripe{ background: var(--c-valore); }
+  .player.libertas .stripe{ background: var(--c-libertas); }
+  .player.marvee  .stripe{ background: var(--c-marvee); }
+  .player.track   .stripe{ background: var(--c-track); }
+
+  .player .role{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .player h3{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 28px; margin: 4px 0 4px; line-height: 1.05;
+  }
+  .player .url{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; color: var(--muted); margin-bottom: 14px;
+    word-break: break-all;
+  }
+  .player .tagline{
+    font-size: 13.5px; color: var(--ink-2);
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+    font-style: italic;
+    font-family: "Instrument Serif", serif;
+    font-size: 16px;
+  }
+  .player .stats{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-top: 14px;
+  }
+  .player .stats div{
+    background: var(--bg-2);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: var(--ink-2);
+  }
+  .player .stats div b{ display: block; font-size: 16px; color: var(--ink); font-weight: 600; }
+
+  /* ===== Comparison matrix ===== */
+  .matrix{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  table.cmp{ width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.cmp th, table.cmp td{
+    text-align: left; padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.cmp thead th{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line-2);
+    position: sticky; top: 0;
+  }
+  table.cmp thead th.brand{
+    color: var(--ink);
+  }
+  table.cmp thead th.brand i{
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle;
+  }
+  table.cmp thead th.b-valore i{ background: var(--c-valore); }
+  table.cmp thead th.b-libertas i{ background: var(--c-libertas); }
+  table.cmp thead th.b-marvee i{ background: var(--c-marvee); }
+  table.cmp thead th.b-track i{ background: var(--c-track); }
+
+  table.cmp td.dim{
+    font-weight: 600; color: var(--ink); width: 16%;
+  }
+  table.cmp td .v{
+    display: block; font-size: 12.5px; color: var(--ink-2);
+  }
+  table.cmp td .badge{
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  .b-strong{ background: rgba(44,107,79,.14); color: var(--good); }
+  .b-ok{ background: rgba(14,91,86,.10); color: var(--accent); }
+  .b-mid{ background: rgba(217,122,58,.15); color: #a05420; }
+  .b-weak{ background: rgba(177,68,43,.12); color: var(--warn); }
+
+  /* ===== Per-competitor breakdown ===== */
+  .breakdowns{ display: grid; grid-template-columns: 1fr; gap: 22px; }
+  .bd{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 32px;
+    position: relative;
+  }
+  .bd::before{
+    content: "";
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 5px;
+    border-top-left-radius: 14px; border-bottom-left-radius: 14px;
+  }
+  .bd.valore::before{ background: var(--c-valore); }
+  .bd.libertas::before{ background: var(--c-libertas); }
+  .bd.marvee::before{ background: var(--c-marvee); }
+  .bd.track::before{ background: var(--c-track); }
+
+  .bd-head{
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .bd-head h3{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 30px; margin: 0;
+  }
+  .bd-head .url{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px; color: var(--muted);
+  }
+  .bd-head .verdict{
+    margin-left: auto;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--bg-2); color: var(--ink-2);
+  }
+
+  .grid4{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .grid4 .col{
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .grid4 .col h5{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .grid4 .col h5::before{
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+  }
+  .col.s h5::before{ background: var(--good); }
+  .col.w h5::before{ background: var(--warn); }
+  .col.copy h5::before{ background: var(--accent-2); }
+  .col.struct h5::before{ background: var(--accent); }
+  .grid4 .col ul{ margin: 0; padding-left: 18px; }
+  .grid4 .col li{ font-size: 13px; color: var(--ink-2); margin-bottom: 8px; line-height: 1.45; }
+  .grid4 .col li b{ color: var(--ink); }
+
+  .quote{
+    margin-top: 18px;
+    border-left: 2px solid var(--line-2);
+    padding: 4px 0 4px 14px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .quote span{
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-style: normal;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ===== Scorecard ===== */
+  .scores{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .score-row{
+    display: grid;
+    grid-template-columns: 180px repeat(4, 1fr);
+    gap: 14px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .score-row:last-child{ border-bottom: 0; }
+  .score-row .lbl{
+    font-weight: 600; font-size: 14px;
+  }
+  .score-row .lbl small{ display: block; color: var(--muted); font-weight: 400; font-size: 11.5px; margin-top: 2px; }
+  .bar{
+    background: var(--bg-2);
+    border-radius: 999px;
+    height: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar .fill{
+    height: 100%;
+    border-radius: 999px;
+    display: flex; align-items: center;
+    padding-right: 10px;
+    justify-content: flex-end;
+    color: white;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .fill.valore{ background: var(--c-valore); }
+  .fill.libertas{ background: var(--c-libertas); }
+  .fill.marvee{ background: var(--c-marvee); }
+  .fill.track{ background: var(--c-track); }
+  .score-head{
+    display: grid;
+    grid-template-columns: 180px repeat(4, 1fr);
+    gap: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-2);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .score-head .brand{ display: flex; align-items: center; gap: 8px; }
+  .score-head .brand i{ width: 8px; height: 8px; border-radius: 50%; }
+  .score-head .brand i.valore{ background: var(--c-valore); }
+  .score-head .brand i.libertas{ background: var(--c-libertas); }
+  .score-head .brand i.marvee{ background: var(--c-marvee); }
+  .score-head .brand i.track{ background: var(--c-track); }
+
+  /* ===== Takeaways ===== */
+  .takeaways{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .take{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .take h4{
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 6px;
+    line-height: 1.15;
+  }
+  .take .from{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .take .from b{ color: var(--ink); }
+  .take p{ margin: 0; color: var(--ink-2); font-size: 13.5px; }
+
+  footer{
+    margin-top: 90px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: .04em;
+  }
+
+  @media (max-width: 1100px){
+    .players{ grid-template-columns: repeat(2, 1fr); }
+    .grid4{ grid-template-columns: repeat(2, 1fr); }
+    .takeaways{ grid-template-columns: 1fr; }
+    .score-row, .score-head{ grid-template-columns: 130px repeat(4, 1fr); }
+  }
+  @media (max-width: 720px){
+    .wrap{ padding: 32px 20px 80px; }
+    .players{ grid-template-columns: 1fr; }
+    .grid4{ grid-template-columns: 1fr; }
+    .score-row, .score-head{ grid-template-columns: 1fr; }
+    .score-row .lbl{ margin-bottom: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow"><span class="dot"></span> Análise competitiva · BPO financeiro</div>
+    <h1>Como a Valoreasy se compara aos <em>3 concorrentes</em> melhor posicionados.</h1>
+    <p class="lede">
+      Avaliação dos sites <b>Libertas</b>, <b>Marvee</b> e <b>Track BPO</b> nas dimensões de estrutura,
+      layout, copywriting e identidade — destacando o que cada um faz melhor que a Valoreasy
+      e onde a Valoreasy ainda lidera.
+    </p>
+    <div class="meta">
+      <span><b>Concorrentes</b> · 3 sites</span>
+      <span><b>Dimensões</b> · 8 frentes de comparação</span>
+      <span><b>Data</b> · 02 mai 2026</span>
+    </div>
+  </header>
+
+  <!-- 01 — Players -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Os 4 sites em uma olhada</h2>
+    </div>
+    <div class="players">
+      <div class="player valore">
+        <div class="stripe"></div>
+        <div class="role">Referência · cliente</div>
+        <h3>Valoreasy</h3>
+        <div class="url">valoreasy.com.br</div>
+        <div class="tagline">“BPO Financeiro com Gestor e Assistente Virtual.”</div>
+        <div class="stats">
+          <div><b>16</b>páginas públicas</div>
+          <div><b>10</b>ferramentas grátis</div>
+        </div>
+      </div>
+
+      <div class="player libertas">
+        <div class="stripe"></div>
+        <div class="role">Concorrente · Porto Alegre</div>
+        <h3>Libertas</h3>
+        <div class="url">libertasconsultoria.com</div>
+        <div class="tagline">“Liberdade para crescer, tempo para prosperar.”</div>
+        <div class="stats">
+          <div><b>1</b>landing page longa</div>
+          <div><b>+60</b>CNPJs atendidos</div>
+        </div>
+      </div>
+
+      <div class="player marvee">
+        <div class="stripe"></div>
+        <div class="role">Concorrente · alto ticket</div>
+        <h3>Marvee</h3>
+        <div class="url">lp.marvee.com.br</div>
+        <div class="tagline">“Financeiro por assinatura.”</div>
+        <div class="stats">
+          <div><b>+500</b>empresas</div>
+          <div><b>R$30k</b>fat. mínimo</div>
+        </div>
+      </div>
+
+      <div class="player track">
+        <div class="stripe"></div>
+        <div class="role">Concorrente · pequenas empresas</div>
+        <h3>Track BPO</h3>
+        <div class="url">trackbpo.com.br</div>
+        <div class="tagline">“Coloque suas finanças nos trilhos.”</div>
+        <div class="stats">
+          <div><b>5</b>páginas + blog</div>
+          <div><b>POPs</b>diferencial declarado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — Comparison matrix -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Matriz comparativa por dimensão</h2>
+      <span class="section-sub">leitura horizontal mostra como cada site resolve a mesma questão</span>
+    </div>
+
+    <div class="matrix">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>Dimensão</th>
+            <th class="brand b-valore"><i></i>Valoreasy</th>
+            <th class="brand b-libertas"><i></i>Libertas</th>
+            <th class="brand b-marvee"><i></i>Marvee</th>
+            <th class="brand b-track"><i></i>Track BPO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dim">Arquitetura</td>
+            <td><span class="badge b-mid">Site multi-página</span><span class="v">16 páginas (home, BPO, blog, 10 ferramentas, e-book, captura). Profundidade boa, mas hub de materiais ausente.</span></td>
+            <td><span class="badge b-weak">Long-page única</span><span class="v">Tudo numa landing page com âncoras (#serviços, #depoimentos, #faq). Sem blog atualizado, sem páginas internas.</span></td>
+            <td><span class="badge b-weak">LP de captura</span><span class="v">Apenas <code>lp.marvee.com.br</code>: domínio próprio para conversão. Site institucional fica de fora.</span></td>
+            <td><span class="badge b-strong">Site enxuto e claro</span><span class="v">5 páginas: Home / Quem Somos / Soluções / Blog / Contato. Estrutura curta e direta.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Layout &amp; visual</td>
+            <td><span class="badge b-ok">Visual editorial</span><span class="v">Composição com bege/teal, boas tipografias. Mas cards repetitivos e métricas zeradas no hero quebram polidez.</span></td>
+            <td><span class="badge b-mid">Funcional, datado</span><span class="v">Layout WordPress padrão, com seções repetidas (títulos duplicados como “Motivos para contratar”).</span></td>
+            <td><span class="badge b-strong">Forte e consistente</span><span class="v">LP polida, cores vibrantes (verde-limão), mockups de app, ilustrações coesas. Mais “produto” do que “serviço”.</span></td>
+            <td><span class="badge b-ok">Limpo, ilustrativo</span><span class="v">Boa hierarquia, ilustrações tipo bússola/trilhos amarradas ao nome. Imagens AI-style em alguns lugares.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Copywriting</td>
+            <td><span class="badge b-mid">Genérico</span><span class="v">Foca no “o que é BPO” mais do que na transformação. Bullets vagos, métricas “0%” quebram credibilidade.</span></td>
+            <td><span class="badge b-ok">Emocional</span><span class="v">Narrativa de “liberdade” bem amarrada (libertação, libertas, libertaram). Promessa clara mas pouco específica.</span></td>
+            <td><span class="badge b-strong">Persuasivo</span><span class="v">Quadro <i>Empreendedor Aventureiro vs. de Sucesso</i> é uma das melhores peças de copy do setor.</span></td>
+            <td><span class="badge b-strong">Concreto e contrastante</span><span class="v">Tabela <i>“Sem Track / Com Track”</i> com 9 itens cada lado. Específico, sensorial, vendedor.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Identidade</td>
+            <td><span class="badge b-ok">Editorial-discreta</span><span class="v">Tom sério, paleta neutra, sem mascote ou metáfora forte. Funcional, mas pouco memorável.</span></td>
+            <td><span class="badge b-strong">Metáfora forte</span><span class="v">“Liberdade” permeia tudo: nome, copy, CTAs, processo (“Libertação”). Marca coesa.</span></td>
+            <td><span class="badge b-strong">Lifestyle premium</span><span class="v">Posicionamento aspiracional, quase fintech. Imagens com gestores sorrindo, app, tom “Apple-like”.</span></td>
+            <td><span class="badge b-ok">Metáfora consistente</span><span class="v">“Trilhos / nos trilhos / monitoramento” reforça nome. Bússola como visual-âncora.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Segmentação</td>
+            <td><span class="badge b-weak">Genérica</span><span class="v">Não declara nicho ou faixa de faturamento. Atende qualquer PME — o que dilui a mensagem.</span></td>
+            <td><span class="badge b-mid">Por logos</span><span class="v">Mostra Bibi, Lupo, Intimissimi. Sugere ticket alto sem dizer.</span></td>
+            <td><span class="badge b-strong">Cirúrgica</span><span class="v">Declara explicitamente: empresas de serviço com fat. &gt; R$30k/mês (agências, arquitetura, software).</span></td>
+            <td><span class="badge b-ok">Pequenas empresas</span><span class="v">Se posiciona como “BPO para pequenas empresas”. Nicho claro mas pouco quantificado.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Conversão (CTAs)</td>
+            <td><span class="badge b-ok">Formulário</span><span class="v">CTA único em /fale-com-um-consultor. Bom; mas longe da home — exige um clique extra.</span></td>
+            <td><span class="badge b-strong">WhatsApp direto</span><span class="v">Todo CTA leva direto para WhatsApp pré-preenchido. Atrito mínimo.</span></td>
+            <td><span class="badge b-strong">Form + agendamento</span><span class="v">Formulário no topo + promessa de “contato em até 12h”. Expectativa clara.</span></td>
+            <td><span class="badge b-strong">WhatsApp direto</span><span class="v">CTA persistente em WhatsApp, repetido em cada bloco. Baixíssimo atrito.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Prova social</td>
+            <td><span class="badge b-ok">Logos + depoimentos</span><span class="v">Logos na home, depoimentos curtos. Sem cases aprofundados.</span></td>
+            <td><span class="badge b-strong">Reviews datadas</span><span class="v">Reviews com nomes e datas, recentes. Logos relevantes (Bibi, Lupo).</span></td>
+            <td><span class="badge b-ok">“+500 empresas”</span><span class="v">Números absolutos + carrossel de logos, sem testemunhos individuais.</span></td>
+            <td><span class="badge b-mid">Pouca prova social</span><span class="v">Foca em conteúdo (blog) e na narrativa transformacional. Sem depoimentos visíveis na home.</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Conteúdo / SEO</td>
+            <td><span class="badge b-strong">Mais robusto</span><span class="v">Blog com 5 categorias + 10 ferramentas indexáveis. Maior superfície de SEO entre os 4.</span></td>
+            <td><span class="badge b-weak">Quase nulo</span><span class="v">Blogger separado, atualização baixa. Pouco SEO orgânico.</span></td>
+            <td><span class="badge b-weak">Nulo na LP</span><span class="v">LP fechada, sem blog. Estratégia provável: tráfego pago.</span></td>
+            <td><span class="badge b-ok">Blog ativo</span><span class="v">Blog atualizado em 2026, posts práticos. Tom editorial coeso.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 — Score visual -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Pontuação por dimensão</h2>
+      <span class="section-sub">avaliação qualitativa em escala 1–10</span>
+    </div>
+
+    <div class="scores">
+      <div class="score-head">
+        <span>Dimensão</span>
+        <span class="brand"><i class="valore"></i>Valoreasy</span>
+        <span class="brand"><i class="libertas"></i>Libertas</span>
+        <span class="brand"><i class="marvee"></i>Marvee</span>
+        <span class="brand"><i class="track"></i>Track</span>
+      </div>
+
+      <!-- rows generated from data -->
+      <div class="score-row" data-row="estr">
+        <div class="lbl">Estrutura<small>arquitetura, navegação</small></div>
+        <div class="bar"><div class="fill valore" style="width:72%">7.2</div></div>
+        <div class="bar"><div class="fill libertas" style="width:55%">5.5</div></div>
+        <div class="bar"><div class="fill marvee" style="width:60%">6.0</div></div>
+        <div class="bar"><div class="fill track" style="width:80%">8.0</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">Layout<small>composição visual</small></div>
+        <div class="bar"><div class="fill valore" style="width:68%">6.8</div></div>
+        <div class="bar"><div class="fill libertas" style="width:55%">5.5</div></div>
+        <div class="bar"><div class="fill marvee" style="width:88%">8.8</div></div>
+        <div class="bar"><div class="fill track" style="width:75%">7.5</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">Copywriting<small>persuasão, clareza</small></div>
+        <div class="bar"><div class="fill valore" style="width:55%">5.5</div></div>
+        <div class="bar"><div class="fill libertas" style="width:70%">7.0</div></div>
+        <div class="bar"><div class="fill marvee" style="width:90%">9.0</div></div>
+        <div class="bar"><div class="fill track" style="width:88%">8.8</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">Identidade<small>marca e tom</small></div>
+        <div class="bar"><div class="fill valore" style="width:62%">6.2</div></div>
+        <div class="bar"><div class="fill libertas" style="width:80%">8.0</div></div>
+        <div class="bar"><div class="fill marvee" style="width:85%">8.5</div></div>
+        <div class="bar"><div class="fill track" style="width:78%">7.8</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">Conversão<small>CTAs, captura</small></div>
+        <div class="bar"><div class="fill valore" style="width:62%">6.2</div></div>
+        <div class="bar"><div class="fill libertas" style="width:82%">8.2</div></div>
+        <div class="bar"><div class="fill marvee" style="width:88%">8.8</div></div>
+        <div class="bar"><div class="fill track" style="width:85%">8.5</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">Prova social<small>cases e reviews</small></div>
+        <div class="bar"><div class="fill valore" style="width:60%">6.0</div></div>
+        <div class="bar"><div class="fill libertas" style="width:82%">8.2</div></div>
+        <div class="bar"><div class="fill marvee" style="width:70%">7.0</div></div>
+        <div class="bar"><div class="fill track" style="width:48%">4.8</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">SEO / conteúdo<small>blog, ferramentas</small></div>
+        <div class="bar"><div class="fill valore" style="width:85%">8.5</div></div>
+        <div class="bar"><div class="fill libertas" style="width:35%">3.5</div></div>
+        <div class="bar"><div class="fill marvee" style="width:25%">2.5</div></div>
+        <div class="bar"><div class="fill track" style="width:70%">7.0</div></div>
+      </div>
+      <div class="score-row">
+        <div class="lbl">Segmentação<small>nicho declarado</small></div>
+        <div class="bar"><div class="fill valore" style="width:40%">4.0</div></div>
+        <div class="bar"><div class="fill libertas" style="width:55%">5.5</div></div>
+        <div class="bar"><div class="fill marvee" style="width:92%">9.2</div></div>
+        <div class="bar"><div class="fill track" style="width:75%">7.5</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — Per-competitor breakdown -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Análise individual</h2>
+      <span class="section-sub">forças, fraquezas, e o que copiar</span>
+    </div>
+
+    <div class="breakdowns">
+
+      <!-- LIBERTAS -->
+      <div class="bd libertas">
+        <div class="bd-head">
+          <h3>Libertas — a marca emocional</h3>
+          <span class="url">libertasconsultoria.com/bpofinanceiro</span>
+          <span class="verdict">Veredito · marca forte, site fraco</span>
+        </div>
+        <div class="grid4">
+          <div class="col s">
+            <h5>Pontos fortes</h5>
+            <ul>
+              <li><b>Posicionamento emocional</b> consistente: tudo gira em torno de “liberdade”.</li>
+              <li><b>Reviews datadas e nominais</b>, com clientes reconhecíveis (Bibi, Lupo, Intimissimi).</li>
+              <li><b>WhatsApp pré-preenchido</b> em todos os CTAs — atrito quase zero.</li>
+              <li><b>Processo em 3 passos</b> (Reunião → Onboarding → Libertação) muito didático.</li>
+            </ul>
+          </div>
+          <div class="col w">
+            <h5>Pontos fracos</h5>
+            <ul>
+              <li><b>Long-page única</b> em vez de site: prejudica SEO e profundidade.</li>
+              <li><b>Conteúdo redundante</b>: títulos duplicados (“Motivos para contratar” aparece 2×).</li>
+              <li><b>Sem blog ativo</b>: link vai a Blogger desatualizado.</li>
+              <li><b>Layout WordPress padrão</b>; pouca diferenciação visual.</li>
+            </ul>
+          </div>
+          <div class="col copy">
+            <h5>Copy &amp; tom</h5>
+            <ul>
+              <li>Verbo-marca: <i>libertar</i>. Repetido em hero, processo e CTA final.</li>
+              <li>Hierarquia clara: dor → solução → prova → contato.</li>
+              <li>FAQ extenso (7 perguntas) cobrindo segurança, porte e setores.</li>
+            </ul>
+          </div>
+          <div class="col struct">
+            <h5>Estrutura</h5>
+            <ul>
+              <li>Single-page âncoras: #escolher, #servicos, #depoimentos, #comofunciona, #beneficios, #faq.</li>
+              <li>Sem hierarquia de produtos (ao contrário da Valoreasy, que tem Gestor + Assistente).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote">“Entre em contato e liberte-se hoje mesmo.”<span>tom-marca consistente</span></div>
+      </div>
+
+      <!-- MARVEE -->
+      <div class="bd marvee">
+        <div class="bd-head">
+          <h3>Marvee — a referência de polimento</h3>
+          <span class="url">lp.marvee.com.br</span>
+          <span class="verdict">Veredito · benchmark visual e de copy</span>
+        </div>
+        <div class="grid4">
+          <div class="col s">
+            <h5>Pontos fortes</h5>
+            <ul>
+              <li><b>Segmentação cirúrgica</b>: empresas de serviço com fat. &gt; R$30k/mês. Filtra leads ruins na home.</li>
+              <li><b>Quadro “Aventureiro vs. de Sucesso”</b>: peça de copy emblemática, separa cliente bom de ruim.</li>
+              <li><b>Layout premium</b> com mockups de app, ilustrações coesas, paleta vibrante.</li>
+              <li><b>Promessa explícita</b>: contato em até 12h após o formulário.</li>
+              <li><b>“Financeiro por assinatura”</b> reposiciona BPO como um produto SaaS-like.</li>
+            </ul>
+          </div>
+          <div class="col w">
+            <h5>Pontos fracos</h5>
+            <ul>
+              <li><b>É só uma LP</b>: pouco SEO, pouca profundidade. Site institucional fica fora.</li>
+              <li><b>Sem depoimentos individuais</b>: só logos e o número “+500 empresas”.</li>
+              <li><b>Sem ferramentas/lead-magnets</b> visíveis na LP.</li>
+              <li><b>Dependência de tráfego pago</b>: a LP só funciona se houver mídia atrás.</li>
+            </ul>
+          </div>
+          <div class="col copy">
+            <h5>Copy &amp; tom</h5>
+            <ul>
+              <li>Tom aspiracional, quase fintech: “profissionalize”, “escalar”.</li>
+              <li>Estrutura clássica de LP: dor → promessa → solução → contraste → social proof → form.</li>
+              <li>Verbos no imperativo (“livre-se”, “quero conhecer”, “quero ser”).</li>
+            </ul>
+          </div>
+          <div class="col struct">
+            <h5>Estrutura</h5>
+            <ul>
+              <li>1 página, ~9 seções: hero+form / 2 passos / 3 produtos / nichos / especialistas / tecnologia / contraste / clientes.</li>
+              <li>Domínio dedicado <code>lp.</code>: separa institucional do funil.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote">“E se houvesse uma maneira de transformar esse desafio em oportunidade?”<span>frase de virada — gancho clássico de LP</span></div>
+      </div>
+
+      <!-- TRACK BPO -->
+      <div class="bd track">
+        <div class="bd-head">
+          <h3>Track BPO — a clareza pragmática</h3>
+          <span class="url">trackbpo.com.br</span>
+          <span class="verdict">Veredito · estrutura e copy de altíssima clareza</span>
+        </div>
+        <div class="grid4">
+          <div class="col s">
+            <h5>Pontos fortes</h5>
+            <ul>
+              <li><b>Tabela “Sem Track / Com Track”</b>: 9 itens vs. 9 itens. Concreta, sensorial, comparável.</li>
+              <li><b>Diferenciais não-óbvios</b>: mapeamento de processos e construção de POPs.</li>
+              <li><b>Site enxuto</b> (5 páginas): rápido de explorar, fácil de manter.</li>
+              <li><b>Metáfora coerente</b> com nome: trilhos, bússola, “colocar nos trilhos”.</li>
+              <li><b>FAQ orientado a objeções</b> (preço, presencial vs. online, conta bancária).</li>
+            </ul>
+          </div>
+          <div class="col w">
+            <h5>Pontos fracos</h5>
+            <ul>
+              <li><b>Pouca prova social</b> visível na home (sem depoimentos, sem logos).</li>
+              <li><b>Sem ferramentas/calculadoras</b>: blog é o único ativo de SEO.</li>
+              <li><b>Imagens estilo IA</b> em alguns blocos enfraquecem a percepção premium.</li>
+              <li>Não revela investimento (mesmo problema da Valoreasy).</li>
+            </ul>
+          </div>
+          <div class="col copy">
+            <h5>Copy &amp; tom</h5>
+            <ul>
+              <li>Específico até o detalhe: cita “acompanhamento <i>diário</i>” e “fechamento <i>mensal</i>”.</li>
+              <li>Combina dor (lista “sem Track”) com remédio (lista “com Track”) lado a lado.</li>
+              <li>Tom didático, sem jargão. Boa entrada para PMEs imaturas.</li>
+            </ul>
+          </div>
+          <div class="col struct">
+            <h5>Estrutura</h5>
+            <ul>
+              <li>Home / Quem Somos / Soluções e Serviços / Blog / Contato. Menu cabe num respiro.</li>
+              <li>6 produtos/serviços listados como cards na home — sem promessas falsas.</li>
+              <li>Blog ativo (último post abr/2026) com tom “estado da empresa”.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote">“Não vendemos sistemas ou planilhas — vendemos rotinas operacionais e análises estratégicas.”<span>declaração de posicionamento que muitos sites de BPO não fazem</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 05 — What to steal -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">O que a Valoreasy deveria absorver</h2>
+      <span class="section-sub">9 ideias roubáveis, atribuídas à origem</span>
+    </div>
+
+    <div class="takeaways">
+      <div class="take">
+        <h4>Tabela “Sem Valoreasy / Com Valoreasy”</h4>
+        <div class="from">de · <b>Track BPO</b></div>
+        <p>Substituir os 6 cards genéricos da home por uma tabela contrastiva de 8–10 itens. É a peça de copy mais persuasiva do mercado de BPO.</p>
+      </div>
+      <div class="take">
+        <h4>Quadro de perfil-cliente</h4>
+        <div class="from">de · <b>Marvee</b></div>
+        <p>Adotar o quadro <i>“Empreendedor que faz X / Empreendedor que faz Y”</i> para qualificar leads e dar identidade ao funil.</p>
+      </div>
+      <div class="take">
+        <h4>Segmentação por faturamento</h4>
+        <div class="from">de · <b>Marvee</b></div>
+        <p>Declarar a faixa de empresa atendida (faturamento mínimo / setor) já no hero. Filtra leads ruins e ancora preço sem mostrar tabela.</p>
+      </div>
+      <div class="take">
+        <h4>WhatsApp pré-preenchido</h4>
+        <div class="from">de · <b>Libertas + Track</b></div>
+        <p>Adicionar CTA secundário de WhatsApp ao lado do formulário. Reduz atrito para leads quentes; o form fica para frios.</p>
+      </div>
+      <div class="take">
+        <h4>Reviews datadas</h4>
+        <div class="from">de · <b>Libertas</b></div>
+        <p>Reformular depoimentos com data, nome completo e cargo, e atualizá-los a cada trimestre. Sinaliza site vivo.</p>
+      </div>
+      <div class="take">
+        <h4>Promessa de SLA</h4>
+        <div class="from">de · <b>Marvee</b></div>
+        <p>Adicionar “Resposta em até 12h úteis” perto do formulário. Pequeno, mas reduz ansiedade do lead e aumenta envio.</p>
+      </div>
+      <div class="take">
+        <h4>Diferencial não-óbvio</h4>
+        <div class="from">de · <b>Track</b></div>
+        <p>Track destaca POPs e mapeamento de processos. Valoreasy precisa de pelo menos um diferencial ao lado de “BPO” — ferramentas? mentoria? educação?</p>
+      </div>
+      <div class="take">
+        <h4>Metáfora-âncora</h4>
+        <div class="from">de · <b>todos</b></div>
+        <p>Libertas tem “liberdade”; Track tem “trilhos”; Marvee tem “assinatura/fintech”. Valoreasy precisa de UMA palavra-âncora além de “BPO”.</p>
+      </div>
+      <div class="take">
+        <h4>Domínio de captura separado</h4>
+        <div class="from">de · <b>Marvee</b></div>
+        <p>Considerar uma LP em <code>lp.valoreasy.com.br</code> para campanhas pagas, com copy mais agressivo, sem competir com o site institucional.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 — Where Valoreasy already wins -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Onde a Valoreasy já lidera</h2>
+      <span class="section-sub">não trocar por algo só porque o concorrente faz</span>
+    </div>
+
+    <div class="takeaways">
+      <div class="take">
+        <h4>10 ferramentas gratuitas</h4>
+        <div class="from">vs. <b>0 — 0 — 0</b></div>
+        <p>Nenhum dos três concorrentes tem catálogo de ferramentas. É o ativo de SEO e lead-gen mais defensável da Valoreasy — desde que ganhe um hub de verdade.</p>
+      </div>
+      <div class="take">
+        <h4>Blog estruturado em 5 categorias</h4>
+        <div class="from">vs. <b>blog parado</b> (Libertas) e <b>nenhum</b> (Marvee)</div>
+        <p>Apenas Track BPO compete em conteúdo, e ainda assim sem categorização. Aproveitar e estruturar trilhas (não só categorias) por funil.</p>
+      </div>
+      <div class="take">
+        <h4>Dois produtos diferenciados</h4>
+        <div class="from">vs. <b>oferta única</b> nos 3</div>
+        <p>Gestor + Assistente Virtual permitem upsell e ticket variado — vantagem de proposta. Mas precisam de URLs próprias para realmente vender.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Valoreasy · análise competitiva</span>
+    <span>02 mai 2026 · libertas + marvee + trackbpo</span>
+  </footer>
+
+</div>
+</body>
+</html>

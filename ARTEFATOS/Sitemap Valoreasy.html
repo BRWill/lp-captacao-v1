@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mapa do site & diagnóstico — Valoreasy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f5f1ea;
+    --bg-2: #ece5d8;
+    --paper: #fbf8f2;
+    --ink: #14201f;
+    --ink-2: #3a4544;
+    --muted: #7a8281;
+    --line: #d8cfbe;
+    --line-2: #c2b69e;
+    --accent: #0e5b56;        /* deep teal — close to Valoreasy */
+    --accent-2: #d97a3a;      /* warm orange accent */
+    --warn: #b1442b;
+    --good: #2c6b4f;
+    --shadow: 0 1px 0 rgba(20,32,31,.04), 0 24px 60px -28px rgba(20,32,31,.18);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; background: var(--bg); color: var(--ink); font-family: "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body{ font-size: 15px; line-height: 1.55; }
+  a{ color: inherit; }
+
+  /* shell */
+  .wrap{ max-width: 1240px; margin: 0 auto; padding: 56px 40px 120px; }
+  .eyebrow{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius: 50%; background: var(--accent); }
+
+  h1{
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.2vw, 64px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 14px 0 22px;
+    max-width: 18ch;
+  }
+  h1 em{ font-style: italic; color: var(--accent); }
+  .lede{
+    max-width: 720px;
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .meta{
+    margin-top: 22px;
+    display: flex; gap: 28px; flex-wrap: wrap;
+    color: var(--muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px;
+    letter-spacing: .04em;
+  }
+  .meta b{ color: var(--ink); font-weight: 500; }
+
+  /* section header */
+  .section{ margin-top: 88px; }
+  .section-head{
+    display: flex; align-items: baseline; gap: 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    margin-bottom: 22px;
+  }
+  .section-num{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: var(--muted); letter-spacing: .1em;
+  }
+  .section-title{
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 32px;
+    margin: 0;
+  }
+  .section-sub{
+    color: var(--muted);
+    margin-left: auto;
+    font-size: 13px;
+  }
+
+  /* sitemap board */
+  .board{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .board::before{
+    content:"";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(20,32,31,.07) 1px, transparent 0);
+    background-size: 22px 22px;
+    pointer-events: none;
+    opacity: .55;
+  }
+  .legend{
+    position: relative;
+    display: flex; gap: 20px; flex-wrap: wrap;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: .06em;
+    margin-bottom: 18px;
+  }
+  .legend .swatch{
+    display:inline-flex; align-items:center; gap: 8px;
+  }
+  .legend i{
+    display:inline-block; width: 14px; height: 10px; border-radius: 2px;
+  }
+  .legend .l-home{ background: var(--ink); }
+  .legend .l-prod{ background: var(--accent); }
+  .legend .l-tool{ background: #c9a76a; }
+  .legend .l-blog{ background: #9aabaa; }
+  .legend .l-cta{ background: var(--accent-2); }
+  .legend .l-leaf{ background: #ddd2b8; border:1px solid var(--line-2); }
+
+  .map{
+    position: relative;
+    width: 100%;
+    height: 880px;
+  }
+  .map svg.edges{
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .node{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: var(--paper);
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 160px;
+    text-align: center;
+    box-shadow: 0 1px 0 rgba(20,32,31,.04), 0 8px 22px -16px rgba(20,32,31,.4);
+    transition: transform .15s ease, box-shadow .15s ease;
+    cursor: default;
+  }
+  .node:hover{ transform: translate(-50%, -50%) translateY(-2px); box-shadow: 0 1px 0 rgba(20,32,31,.04), 0 14px 28px -16px rgba(20,32,31,.5); }
+  .node .tag{
+    display:block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .node .name{
+    font-weight: 600; font-size: 13.5px; color: var(--ink);
+    letter-spacing: -.005em;
+  }
+  .node .url{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; color: var(--muted); margin-top: 4px;
+    word-break: break-all;
+  }
+
+  /* node variants */
+  .n-home{ background: var(--ink); border-color: var(--ink); }
+  .n-home .tag{ color: rgba(255,255,255,.55); }
+  .n-home .name{ color: #fff; }
+  .n-home .url{ color: rgba(255,255,255,.5); }
+
+  .n-prod{ background: var(--accent); border-color: var(--accent); }
+  .n-prod .tag{ color: rgba(255,255,255,.65); }
+  .n-prod .name{ color: #fff; }
+  .n-prod .url{ color: rgba(255,255,255,.55); }
+
+  .n-cta{ background: var(--accent-2); border-color: var(--accent-2); }
+  .n-cta .tag{ color: rgba(255,255,255,.65); }
+  .n-cta .name{ color: #fff; }
+  .n-cta .url{ color: rgba(255,255,255,.55); }
+
+  .n-tool{ background: #faf3e1; border-color: #d9c692; }
+  .n-blog{ background: #eef1f0; border-color: #b9c4c2; }
+  .n-leaf{ background: #f5efde; min-width: 130px; padding: 7px 10px; }
+  .n-leaf .name{ font-size: 12px; }
+  .n-leaf .tag{ font-size: 9px; }
+
+  .anchor-tag{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(14,91,86,.08);
+    color: var(--accent);
+    border: 1px dashed rgba(14,91,86,.45);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  /* annotations layer */
+  .anno{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    max-width: 230px;
+    color: var(--ink-2);
+    font-size: 11.5px;
+    line-height: 1.4;
+    background: rgba(251,248,242,.92);
+    border-left: 2px solid var(--warn);
+    padding: 8px 12px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 13.5px;
+  }
+  .anno b{ font-family: "Inter", sans-serif; font-style: normal; font-weight: 600; color: var(--warn); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; display:block; margin-bottom: 2px;}
+  .anno.good{ border-left-color: var(--good); }
+  .anno.good b{ color: var(--good); }
+
+  /* inventory */
+  .inv{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
+  }
+  .inv-card{
+    grid-column: span 4;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .inv-card .pill{
+    align-self: flex-start;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    background: var(--bg-2); color: var(--ink-2);
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .inv-card .pill.prod{ background: var(--accent); color: #fff; }
+  .inv-card .pill.cta{ background: var(--accent-2); color: #fff; }
+  .inv-card .pill.tool{ background: #f0e4be; color: #6b5a25; }
+  .inv-card .pill.blog{ background: #dde6e5; color: #2f3a39; }
+  .inv-card .pill.legal{ background: #eee5d3; color: #6b5a25; }
+  .inv-card h4{ margin: 6px 0 0; font-size: 15px; font-weight: 600; }
+  .inv-card .u{ font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--muted); word-break: break-all; }
+  .inv-card .role{ color: var(--ink-2); font-size: 13px; }
+
+  /* findings */
+  .findings{ display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+  .find{
+    grid-column: span 6;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .find .sev{
+    position: absolute; top: 18px; right: 22px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .sev.s-high{ background: rgba(177,68,43,.12); color: var(--warn); }
+  .sev.s-med{ background: rgba(217,122,58,.15); color: #a05420; }
+  .sev.s-low{ background: rgba(44,107,79,.12); color: var(--good); }
+
+  .find .num{
+    font-family: "JetBrains Mono", monospace;
+    color: var(--muted);
+    font-size: 11px; letter-spacing: .1em;
+  }
+  .find h3{
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 24px;
+    margin: 4px 0 10px;
+    line-height: 1.15;
+    max-width: 90%;
+  }
+  .find p{ margin: 0 0 10px; color: var(--ink-2); font-size: 14px; }
+  .find .obs{
+    border-top: 1px dashed var(--line);
+    margin-top: 14px; padding-top: 12px;
+    font-size: 12.5px; color: var(--muted);
+    font-family: "JetBrains Mono", monospace;
+    line-height: 1.6;
+  }
+  .find .obs b{ color: var(--ink); font-weight: 500; }
+
+  /* matrix */
+  .matrix{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    overflow-x: auto;
+  }
+  table.m{ width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.m th, table.m td{
+    text-align: left; padding: 12px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.m th{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+    border-bottom: 1px solid var(--line-2);
+  }
+  table.m td.page{ font-weight: 600; }
+  table.m .ok{ color: var(--good); }
+  table.m .miss{ color: var(--warn); }
+  table.m .partial{ color: #a05420; }
+  table.m code{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    background: var(--bg-2);
+    padding: 1px 6px; border-radius: 4px;
+  }
+
+  /* recos */
+  .recos{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .reco{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .reco h5{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+  .reco h5 .quick{ color: var(--good); }
+  .reco h5 .mid{ color: #a05420; }
+  .reco h5 .big{ color: var(--warn); }
+  .reco ol{ margin: 0; padding-left: 18px; }
+  .reco li{ margin-bottom: 10px; font-size: 13.5px; color: var(--ink-2); }
+  .reco li b{ color: var(--ink); }
+
+  footer{
+    margin-top: 90px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: .04em;
+  }
+
+  @media (max-width: 1100px){
+    .inv-card{ grid-column: span 6; }
+    .find{ grid-column: span 12; }
+    .recos{ grid-template-columns: 1fr; }
+    .map{ height: 1100px; }
+  }
+  @media (max-width: 720px){
+    .wrap{ padding: 32px 20px 80px; }
+    .inv-card{ grid-column: span 12; }
+    .map{ height: auto; min-height: 1400px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow"><span class="dot"></span> Auditoria de arquitetura · valoreasy.com.br</div>
+    <h1>Mapa do site &amp; <em>diagnóstico</em> de navegação.</h1>
+    <p class="lede">
+      Levantamento das páginas públicas (excluindo posts do blog), das conexões entre elas — menu, CTAs, footer, links internos —
+      e das oportunidades de melhoria em arquitetura de informação, conversão e SEO.
+    </p>
+    <div class="meta">
+      <span><b>Escopo</b> · 16 páginas mapeadas</span>
+      <span><b>Tipos</b> · institucional, produto, ferramentas, captura</span>
+      <span><b>Data</b> · 02 mai 2026</span>
+      <span><b>Fonte</b> · navegação direta + footer + menu global</span>
+    </div>
+  </header>
+
+  <!-- 01 — SITEMAP -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Mapa de conexões entre páginas</h2>
+      <span class="section-sub">linhas cheias = links de menu/CTA · tracejadas = âncoras na mesma URL</span>
+    </div>
+
+    <div class="board">
+      <div class="legend">
+        <span class="swatch"><i class="l-home"></i> Home</span>
+        <span class="swatch"><i class="l-prod"></i> Produto / serviço</span>
+        <span class="swatch"><i class="l-cta"></i> Conversão</span>
+        <span class="swatch"><i class="l-tool"></i> Ferramentas / E-book</span>
+        <span class="swatch"><i class="l-blog"></i> Blog (hub)</span>
+        <span class="swatch"><i class="l-leaf"></i> Página folha</span>
+      </div>
+
+      <div class="map" id="map">
+        <svg class="edges" id="edges" viewBox="0 0 1180 880" preserveAspectRatio="none"></svg>
+
+        <!-- HOME -->
+        <div class="node n-home" style="left: 50%; top: 7%;">
+          <span class="tag">/ — Home</span>
+          <div class="name">Página inicial</div>
+          <div class="url">valoreasy.com.br</div>
+        </div>
+
+        <!-- PRODUTO -->
+        <div class="node n-prod" style="left: 26%; top: 28%;">
+          <span class="tag">/bpo-financeiro</span>
+          <div class="name">BPO Financeiro</div>
+          <div class="url">página de produto</div>
+        </div>
+        <div class="anchor-tag" style="left: 14%; top: 41%;">#gestor-virtual</div>
+        <div class="anchor-tag" style="left: 14%; top: 47%;">#assistente-virtual</div>
+
+        <!-- CTA -->
+        <div class="node n-cta" style="left: 73%; top: 28%;">
+          <span class="tag">/fale-com-um-consultor</span>
+          <div class="name">Fale com Consultor</div>
+          <div class="url">página de captura</div>
+        </div>
+
+        <!-- BLOG hub -->
+        <div class="node n-blog" style="left: 50%; top: 28%;">
+          <span class="tag">/blog</span>
+          <div class="name">Blog (hub)</div>
+          <div class="url">listagem de posts</div>
+        </div>
+
+        <!-- BLOG categorias -->
+        <div class="node n-leaf n-blog" style="left: 38%; top: 47%;">
+          <span class="tag">categoria</span>
+          <div class="name">Empreendedorismo</div>
+        </div>
+        <div class="node n-leaf n-blog" style="left: 50%; top: 47%;">
+          <span class="tag">categoria</span>
+          <div class="name">Gestão Financeira</div>
+        </div>
+        <div class="node n-leaf n-blog" style="left: 62%; top: 47%;">
+          <span class="tag">categoria</span>
+          <div class="name">Marketing &amp; Vendas</div>
+        </div>
+        <div class="node n-leaf n-blog" style="left: 38%; top: 55%;">
+          <span class="tag">categoria</span>
+          <div class="name">Inovação &amp; Tecnologia</div>
+        </div>
+        <div class="node n-leaf n-blog" style="left: 62%; top: 55%;">
+          <span class="tag">categoria</span>
+          <div class="name">Finanças Pessoais</div>
+        </div>
+
+        <!-- FERRAMENTAS hub (conceitual; não tem página) -->
+        <div class="anno" style="left: 14%; top: 60%;">
+          <b>Sem hub</b>
+          “Materiais Gratuitos” só existe como dropdown do menu. Não há landing page que reúna as ferramentas.
+        </div>
+
+        <!-- TOOLS -->
+        <div class="node n-leaf n-tool" style="left: 8%;  top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Pró-labore</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 20%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Diagnóstico Empresarial</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 32%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Matriz SWOT</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 44%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Plano de Metas SMART</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 56%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Simulador CLT × BPO</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 68%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Precificador de Serviços</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 80%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Precificador de Produtos</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 92%; top: 70%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Empréstimos PJ</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 20%; top: 80%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Lucro Exponencial</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 32%; top: 80%;">
+          <span class="tag">/materiais</span>
+          <div class="name">Calculadora de Lucro</div>
+        </div>
+        <div class="node n-leaf n-tool" style="left: 56%; top: 80%;">
+          <span class="tag">/e-books</span>
+          <div class="name">E-book · Indicadores</div>
+        </div>
+
+        <!-- LEGAL -->
+        <div class="node n-leaf" style="left: 88%; top: 92%;">
+          <span class="tag">footer</span>
+          <div class="name">Política de Privacidade</div>
+        </div>
+
+        <!-- ANNOTATIONS -->
+        <div class="anno" style="left: 87%; top: 14%;">
+          <b>CTA persistente</b>
+          “Fale com um Consultor” aparece no header de todas as páginas — boa prática.
+        </div>
+        <div class="anno" style="left: 50%; top: 18%;">
+          <b>Ponto cego</b>
+          Não existe página “Sobre / Quem somos”, “Cases” ou “Preços”.
+        </div>
+        <div class="anno" style="left: 12%; top: 28%;">
+          <b>Âncoras como “página”</b>
+          Gestor e Assistente Virtual são âncoras no /bpo-financeiro — não páginas independentes.
+        </div>
+        <div class="anno good" style="left: 88%; top: 56%;">
+          <b>Boa prática</b>
+          Página de captura concentra e-mail, WhatsApp e formulário num só lugar.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — INVENTORY -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Inventário de páginas</h2>
+      <span class="section-sub">16 páginas públicas · blog posts excluídos</span>
+    </div>
+
+    <div class="inv">
+      <div class="inv-card">
+        <span class="pill">Home</span>
+        <h4>Página inicial</h4>
+        <span class="u">/</span>
+        <span class="role">Hero, descrição do BPO, 6 atividades, métricas, depoimentos, clientes, CTA final.</span>
+      </div>
+      <div class="inv-card">
+        <span class="pill prod">Produto</span>
+        <h4>BPO Financeiro</h4>
+        <span class="u">/bpo-financeiro/</span>
+        <span class="role">Conceito, modalidades (Gestor + Assistente), atividades atendidas, CTA consultor.</span>
+      </div>
+      <div class="inv-card">
+        <span class="pill cta">Conversão</span>
+        <h4>Fale com um Consultor</h4>
+        <span class="u">/fale-com-um-consultor/</span>
+        <span class="role">Formulário + e-mail comercial + WhatsApp. Único ponto de captura.</span>
+      </div>
+      <div class="inv-card">
+        <span class="pill blog">Blog</span>
+        <h4>Blog (hub)</h4>
+        <span class="u">/blog/ + 5 categorias</span>
+        <span class="role">Empreendedorismo, Gestão Financeira, Marketing &amp; Vendas, Inovação, Finanças Pessoais.</span>
+      </div>
+      <div class="inv-card">
+        <span class="pill tool">Ferramenta</span>
+        <h4>10 ferramentas de gestão</h4>
+        <span class="u">/materiais/*</span>
+        <span class="role">Pró-labore, SWOT, SMART, CLT×BPO, precificadores, simuladores e calculadoras.</span>
+      </div>
+      <div class="inv-card">
+        <span class="pill tool">E-book</span>
+        <h4>Indicadores Financeiros</h4>
+        <span class="u">/e-books/indicadores-financeiros/</span>
+        <span class="role">Único e-book listado no menu.</span>
+      </div>
+      <div class="inv-card">
+        <span class="pill legal">Legal</span>
+        <h4>Política de Privacidade</h4>
+        <span class="u">/politica-de-privacidade/</span>
+        <span class="role">Acessível apenas pelo footer.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — DIAGNOSTIC FINDINGS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Diagnóstico — o que melhorar</h2>
+      <span class="section-sub">8 achados, priorizados por impacto</span>
+    </div>
+
+    <div class="findings">
+
+      <div class="find">
+        <span class="sev s-high">Alto impacto</span>
+        <span class="num">F-01</span>
+        <h3>“Gestor Virtual” e “Assistente Virtual” não têm página própria</h3>
+        <p>São os <b>dois produtos vendidos</b>, mas existem apenas como âncoras (<code>#gestor-virtual</code>, <code>#assistente-virtual</code>) dentro de <code>/bpo-financeiro/</code>. Isso prejudica SEO, dificulta links externos e impede medir conversão por modalidade.</p>
+        <p class="obs"><b>Recomendado</b> · separar em <code>/bpo-financeiro/gestor-virtual</code> e <code>/bpo-financeiro/assistente-virtual</code>, com hero próprio, comparativo, FAQ e CTA dedicado.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-high">Alto impacto</span>
+        <span class="num">F-02</span>
+        <h3>Não há página “Sobre” nem “Cases”</h3>
+        <p>O site mostra depoimentos e logos de clientes na home, mas <b>não há onde aprofundar</b>. Para um serviço de confiança (gestão financeira terceirizada), a falta de uma página institucional e de cases é um gargalo de credibilidade.</p>
+        <p class="obs"><b>Recomendado</b> · criar <code>/sobre</code> (time, metodologia, números) e <code>/cases</code> (estudos de caso curtos, 3–5 páginas). Linkar a partir de depoimentos.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-high">Alto impacto</span>
+        <span class="num">F-03</span>
+        <h3>Sem página de Preços ou “Como funciona”</h3>
+        <p>Todo caminho de informação termina no formulário de “Fale com um Consultor”. Para PMEs em fase de pesquisa, a <b>ausência de qualquer indicação de faixa de investimento</b> ou de etapas do onboarding aumenta atrito e perde leads cedo no funil.</p>
+        <p class="obs"><b>Recomendado</b> · página <code>/como-funciona</code> com timeline (diagnóstico → onboarding → operação → mentoria) e ao menos um <i>de quanto a quanto</i> de investimento mensal.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-med">Médio impacto</span>
+        <span class="num">F-04</span>
+        <h3>“Materiais Gratuitos” não tem hub</h3>
+        <p>Existem <b>10 ferramentas + 1 e-book</b>, mas o menu “Materiais Gratuitos” é apenas um dropdown — não leva a nenhuma página. O usuário só descobre o catálogo se abrir o menu certo. Isso desperdiça um <b>poderoso ativo de SEO/lead-gen</b>.</p>
+        <p class="obs"><b>Recomendado</b> · criar <code>/materiais</code> (índice navegável das ferramentas, com filtros: gestão / precificação / simuladores / e-books) e linkar do header e do final dos posts.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-med">Médio impacto</span>
+        <span class="num">F-05</span>
+        <h3>Footer não reflete o site</h3>
+        <p>O footer lista <code>Soluções / Blog / Materiais</code>, mas as listas de Materiais e Redes Sociais aparecem <b>sem links</b>. “© 2021” também sugere site desatualizado — sinal negativo para clientes corporativos.</p>
+        <p class="obs"><b>Recomendado</b> · popular o footer com links reais para todas as ferramentas, e-books, sociais e contato; atualizar o copyright dinamicamente.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-med">Médio impacto</span>
+        <span class="num">F-06</span>
+        <h3>Posts do blog não levam de volta ao produto</h3>
+        <p>O blog tem categorias bem segmentadas, mas (pelo que se observa nas páginas-âncora) <b>não há CTAs estruturados</b> ligando do conteúdo para BPO Financeiro ou para uma ferramenta relacionada. Um post sobre fluxo de caixa deveria sugerir o BPO + a calculadora correspondente.</p>
+        <p class="obs"><b>Recomendado</b> · módulo “Conteúdos relacionados” + CTA contextual no fim de cada post.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-low">Refinamento</span>
+        <span class="num">F-07</span>
+        <h3>Os 6 cards de atividade na home apontam todos para o mesmo lugar</h3>
+        <p>“Conciliação Bancária”, “Contas a Pagar”, “Faturamento”… os 6 cards prometem detalhe (<i>“Saiba mais”</i>) mas todos linkam para <code>/bpo-financeiro/</code>. <b>Quebra a expectativa</b> e parece descuidado.</p>
+        <p class="obs"><b>Recomendado</b> · ou criar âncoras específicas dentro do BPO Financeiro (uma por atividade), ou trocar os links por um único CTA agrupado.</p>
+      </div>
+
+      <div class="find">
+        <span class="sev s-low">Refinamento</span>
+        <span class="num">F-08</span>
+        <h3>Métricas zeradas e bullets vagos no hero</h3>
+        <p>A home mostra estatísticas como “0% Aumento da Lucratividade” e “0x Retorno sobre o Investimento” — provavelmente um contador animado que não roda no carregamento ou foi esvaziado. <b>Risco de prova social negativa</b>.</p>
+        <p class="obs"><b>Recomendado</b> · trocar por números reais com fonte, ou remover. Métricas genéricas custam mais credibilidade do que entregam.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 04 — CONNECTIVITY MATRIX -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Matriz de conectividade</h2>
+      <span class="section-sub">de qual lugar cada página é alcançável</span>
+    </div>
+
+    <div class="matrix">
+      <table class="m">
+        <thead>
+          <tr>
+            <th>Página</th>
+            <th>No menu global</th>
+            <th>No footer</th>
+            <th>Linkada de outras páginas</th>
+            <th>Captação esperada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="page">Home</td>
+            <td class="ok">Sim (logo)</td>
+            <td class="ok">Sim (logo)</td>
+            <td class="ok">Várias</td>
+            <td>Topo do funil — orgânico/marca</td>
+          </tr>
+          <tr>
+            <td class="page">BPO Financeiro</td>
+            <td class="ok">Sim</td>
+            <td class="ok">Sim</td>
+            <td class="ok">Home, CTAs, cards</td>
+            <td>Meio do funil — produto</td>
+          </tr>
+          <tr>
+            <td class="page">Gestor Virtual</td>
+            <td class="partial">Âncora apenas</td>
+            <td class="partial">Âncora apenas</td>
+            <td class="miss">Sem URL própria</td>
+            <td class="miss">— SEO bloqueado</td>
+          </tr>
+          <tr>
+            <td class="page">Assistente Virtual</td>
+            <td class="partial">Âncora apenas</td>
+            <td class="partial">Âncora apenas</td>
+            <td class="miss">Sem URL própria</td>
+            <td class="miss">— SEO bloqueado</td>
+          </tr>
+          <tr>
+            <td class="page">Fale com um Consultor</td>
+            <td class="ok">Sim (botão fixo)</td>
+            <td class="miss">Não direto</td>
+            <td class="ok">Múltiplos CTAs</td>
+            <td>Bottom — conversão</td>
+          </tr>
+          <tr>
+            <td class="page">Blog (hub)</td>
+            <td class="ok">Sim</td>
+            <td class="partial">Só categorias</td>
+            <td class="ok">Home (cards)</td>
+            <td>Topo — orgânico</td>
+          </tr>
+          <tr>
+            <td class="page">Categorias do blog (5)</td>
+            <td class="miss">Não</td>
+            <td class="ok">Sim</td>
+            <td class="ok">Cards na home</td>
+            <td>Topo — long-tail</td>
+          </tr>
+          <tr>
+            <td class="page">Ferramentas (10)</td>
+            <td class="ok">Sim (dropdown)</td>
+            <td class="miss">Não</td>
+            <td class="miss">Sem hub /materiais</td>
+            <td class="partial">Lead-gen subutilizado</td>
+          </tr>
+          <tr>
+            <td class="page">E-book Indicadores</td>
+            <td class="ok">Sim</td>
+            <td class="miss">Não</td>
+            <td class="miss">Isolada</td>
+            <td class="partial">Lead-gen pontual</td>
+          </tr>
+          <tr>
+            <td class="page">Política de Privacidade</td>
+            <td class="miss">Não</td>
+            <td class="ok">Sim</td>
+            <td class="miss">Apenas footer</td>
+            <td>Compliance</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 — RECOS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Plano de ação priorizado</h2>
+      <span class="section-sub">do mais barato ao mais estratégico</span>
+    </div>
+
+    <div class="recos">
+      <div class="reco">
+        <h5><span class="quick">●</span> Quick wins · 1–2 semanas</h5>
+        <ol>
+          <li><b>Atualizar copyright</b> e popular o footer com links reais (materiais, sociais, contato).</li>
+          <li><b>Conferir contadores zerados</b> da home — substituir ou remover.</li>
+          <li><b>Trocar os 6 cards de atividades</b> por âncoras específicas no BPO Financeiro, ou unificá-los num só CTA.</li>
+          <li><b>Adicionar “Materiais” como item raiz do menu</b>, com hub <code>/materiais</code> mesmo que simples.</li>
+        </ol>
+      </div>
+
+      <div class="reco">
+        <h5><span class="mid">●</span> Médio prazo · 3–6 semanas</h5>
+        <ol>
+          <li><b>Página /sobre</b> com time, metodologia, números reais e foto da operação.</li>
+          <li><b>Hub /materiais</b> navegável com filtros por categoria de ferramenta.</li>
+          <li><b>CTAs contextuais nos posts</b> ligando para BPO Financeiro e ferramenta correspondente.</li>
+          <li><b>Página /como-funciona</b> com timeline de onboarding e faixa de investimento.</li>
+        </ol>
+      </div>
+
+      <div class="reco">
+        <h5><span class="big">●</span> Estratégicos · 1–2 meses</h5>
+        <ol>
+          <li><b>Separar Gestor Virtual e Assistente Virtual</b> em URLs próprias com SEO, comparativo e FAQ.</li>
+          <li><b>Página /cases</b> com 3–5 estudos de caso aprofundados (Blinda Co., Troppo, Solare, etc.).</li>
+          <li><b>Trilha de conversão para PMEs</b>: post de blog → ferramenta gratuita (lead) → e-mail nutrição → consultor.</li>
+          <li><b>Reorganizar o menu</b> em 4 grupos claros: Soluções · Materiais · Conteúdo · Empresa.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Valoreasy · auditoria de IA &amp; UX</span>
+    <span>Mapa lido em 02 mai 2026 · valoreasy.com.br</span>
+  </footer>
+</div>
+
+<script>
+  // Draw curved edges between nodes by reading their absolute positions on the .map element.
+  // Edges defined as [fromSelector, toSelector, type], type: solid | dashed
+  const edges = [
+    // Home → main hubs
+    ['.n-home', '.n-prod', 'solid'],
+    ['.n-home', '.n-cta', 'solid'],
+    ['.n-home', '.n-blog:not(.n-leaf)', 'solid'],
+
+    // BPO → CTA
+    ['.n-prod', '.n-cta', 'solid'],
+
+    // BPO → anchors (dashed)
+    ['.n-prod', '.anchor-tag:nth-of-type(1)', 'dashed'],
+    ['.n-prod', '.anchor-tag:nth-of-type(2)', 'dashed'],
+
+    // Blog hub → categories
+    ['.n-blog:not(.n-leaf)', '.n-leaf.n-blog:nth-of-type(1)', 'solid'],
+  ];
+
+  // We'll do edges programmatically using IDs we set below instead, easier to manage.
+  function bbox(el, container){
+    const r = el.getBoundingClientRect();
+    const c = container.getBoundingClientRect();
+    return {
+      cx: r.left - c.left + r.width/2,
+      cy: r.top - c.top + r.height/2,
+      w: r.width, h: r.height
+    };
+  }
+
+  function drawEdges(){
+    const map = document.getElementById('map');
+    const svg = document.getElementById('edges');
+    const W = map.clientWidth, H = map.clientHeight;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = '';
+
+    // Build node lookup: tag-by-text
+    const nodes = [...map.querySelectorAll('.node, .anchor-tag')];
+    const find = (txt) => nodes.find(n => n.textContent.includes(txt));
+
+    const home = find('Página inicial');
+    const bpo  = find('BPO Financeiro');
+    const cta  = find('Fale com Consultor');
+    const blog = nodes.find(n => n.classList.contains('n-blog') && !n.classList.contains('n-leaf'));
+    const gestorAnchor = nodes.find(n => n.classList.contains('anchor-tag') && n.textContent.includes('gestor'));
+    const assistAnchor = nodes.find(n => n.classList.contains('anchor-tag') && n.textContent.includes('assistente'));
+    const cats = nodes.filter(n => n.classList.contains('n-leaf') && n.classList.contains('n-blog'));
+    const tools = nodes.filter(n => n.classList.contains('n-leaf') && n.classList.contains('n-tool'));
+    const ebook = find('E-book · Indicadores');
+    const policy = find('Política de Privacidade');
+
+    const links = [];
+    const push = (a,b,style) => { if(a && b) links.push({a,b,style}); };
+
+    // Primary edges
+    push(home, bpo, 'solid');
+    push(home, cta, 'solid');
+    push(home, blog, 'solid');
+    push(bpo, cta, 'solid');
+    push(bpo, gestorAnchor, 'dashed');
+    push(bpo, assistAnchor, 'dashed');
+
+    // Blog → categories
+    cats.forEach(c => push(blog, c, 'solid'));
+
+    // Home → categories (cards na home)
+    cats.slice(0,4).forEach(c => push(home, c, 'thin'));
+
+    // Home → tools (footer/menu) — represent as menu-driven thin lines from home
+    tools.forEach(t => push(home, t, 'thin'));
+    push(home, ebook, 'thin');
+
+    // Tools → CTA conceptual? skip (would clutter). Instead show CTA attracts from blog/categories
+    cats.forEach(c => push(c, cta, 'thinDashed'));
+
+    // Footer-only link
+    push(home, policy, 'thinDashed');
+
+    // Render
+    for(const {a,b,style} of links){
+      const A = bbox(a, map), B = bbox(b, map);
+      const dx = B.cx - A.cx, dy = B.cy - A.cy;
+      const mx = A.cx + dx/2;
+      const my = A.cy + dy/2;
+      // gentle curve: control point offset perpendicular
+      const len = Math.hypot(dx, dy);
+      const off = Math.min(80, len * 0.15);
+      const nx = -dy / (len || 1);
+      const ny =  dx / (len || 1);
+      const cx = mx + nx * off;
+      const cy = my + ny * off;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M ${A.cx} ${A.cy} Q ${cx} ${cy} ${B.cx} ${B.cy}`);
+      path.setAttribute('fill', 'none');
+      if(style === 'solid'){
+        path.setAttribute('stroke', '#0e5b56');
+        path.setAttribute('stroke-width', '1.5');
+        path.setAttribute('opacity', '0.55');
+      } else if(style === 'dashed'){
+        path.setAttribute('stroke', '#0e5b56');
+        path.setAttribute('stroke-width', '1.2');
+        path.setAttribute('stroke-dasharray', '4 4');
+        path.setAttribute('opacity', '0.55');
+      } else if(style === 'thin'){
+        path.setAttribute('stroke', '#3a4544');
+        path.setAttribute('stroke-width', '0.8');
+        path.setAttribute('opacity', '0.22');
+      } else if(style === 'thinDashed'){
+        path.setAttribute('stroke', '#3a4544');
+        path.setAttribute('stroke-width', '0.8');
+        path.setAttribute('stroke-dasharray', '2 4');
+        path.setAttribute('opacity', '0.28');
+      }
+      svg.appendChild(path);
+    }
+  }
+
+  window.addEventListener('load', drawEdges);
+  window.addEventListener('resize', drawEdges);
+</script>
+</body>
+</html>

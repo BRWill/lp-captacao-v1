@@ -4,8 +4,8 @@
 
 /* --- Configuração --- */
 const CONFIG = {
-  whatsapp: '[INSERIR: NUMERO_WHATSAPP]', // ex: 5511999999999
-  rdToken:  '[INSERIR: RD_TOKEN_PUBLICO]', // Marketing → Configurações → API → Token público
+  whatsapp: '5511918953052',
+  rdToken:  '303221317997a28f6e55aec48ac6b54e',
   rdConversionId: 'lp-departamento-financeiro',
   utmSource: 'lp',
   utmMedium: 'formulario',

@@ -101,7 +101,7 @@ if (form) {
       if (msgSucesso) msgSucesso.hidden = false;
     } else {
       btn.disabled = false;
-      btn.textContent = 'Quero conhecer meu departamento →';
+      btn.textContent = 'Quero conhecer →';
       if (msgErro) msgErro.hidden = false;
     }
   });

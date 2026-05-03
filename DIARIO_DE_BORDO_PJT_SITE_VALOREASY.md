@@ -15,8 +15,9 @@ Data: 03/05/2026
 
 1. **Sitemap** com documento de referência `Sitemap Valoresy.html` salvo nos artefatos
 2. **Comparativo Concorrentes** com documento de referência `Comparativo Concorrentes.html` salvo nos artefatos
-3. **Wireframe** + **Copy da LP** com documento de referência `LP Wireframe v3.html` salvo nos artefatos
-4. **Sistema Visual** com documento de referência: `Brand Guidelines.html` (e versão standalone offline). Já há um sistema visual definido — paleta, tipografia, componentes — pronto para aplicar na LP em alta fidelidade.
+3. **Novo framework** estrutura dual (LP de conversão + Site Institucional) com documento de referência `Framework Nova Estrutura.html` salvo nos artefatos
+4. **Wireframe** + **Copy da LP** com documento de referência `LP Wireframe v3.html` salvo nos artefatos
+5. **Sistema Visual** com documento de referência: `Brand Guidelines.html` (e versão standalone offline). Já há um sistema visual definido — paleta, tipografia, componentes — pronto para aplicar na LP em alta fidelidade.
 
 ---
 

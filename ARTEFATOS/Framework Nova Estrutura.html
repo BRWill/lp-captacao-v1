@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Framework de nova estrutura — Valoreasy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f5f1ea;
+    --bg-2: #ece5d8;
+    --paper: #fbf8f2;
+    --ink: #14201f;
+    --ink-2: #3a4544;
+    --muted: #7a8281;
+    --line: #d8cfbe;
+    --line-2: #c2b69e;
+    --accent: #0e5b56;
+    --accent-2: #d97a3a;
+    --warn: #b1442b;
+    --good: #2c6b4f;
+
+    --c-lp: #d97a3a;
+    --c-site: #0e5b56;
+    --c-tools: #c9a76a;
+    --c-blog: #6b7e7d;
+    --c-trust: #6c4adb;
+
+    --shadow: 0 1px 0 rgba(20,32,31,.04), 0 24px 60px -28px rgba(20,32,31,.18);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; background: var(--bg); color: var(--ink); font-family: "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body{ font-size: 15px; line-height: 1.55; }
+  .wrap{ max-width: 1280px; margin: 0 auto; padding: 56px 40px 120px; }
+
+  .eyebrow{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius: 50%; background: var(--accent); }
+
+  h1{
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.2vw, 64px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 14px 0 22px;
+    max-width: 22ch;
+  }
+  h1 em{ font-style: italic; color: var(--accent); }
+  .lede{ max-width: 780px; color: var(--ink-2); font-size: 17px; }
+  .meta{
+    margin-top: 22px; display: flex; gap: 28px; flex-wrap: wrap;
+    color: var(--muted); font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px; letter-spacing: .04em;
+  }
+  .meta b{ color: var(--ink); font-weight: 500; }
+
+  .section{ margin-top: 88px; }
+  .section-head{
+    display: flex; align-items: baseline; gap: 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    margin-bottom: 26px;
+  }
+  .section-num{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: var(--muted); letter-spacing: .1em;
+  }
+  .section-title{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 32px; margin: 0;
+  }
+  .section-sub{ color: var(--muted); margin-left: auto; font-size: 13px; }
+
+  /* ===== Premise box ===== */
+  .premise{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 30px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+  }
+  .premise h3{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 22px; margin: 0 0 8px;
+  }
+  .premise p{ color: var(--ink-2); font-size: 14px; margin: 0 0 8px; }
+  .premise ul{ margin: 6px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 13.5px; }
+  .premise li{ margin-bottom: 5px; }
+  .premise b{ color: var(--ink); }
+
+  /* ===== Two-front diagram ===== */
+  .two-fronts{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    position: relative;
+  }
+  .fronts{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .front{
+    border-radius: 12px;
+    padding: 22px 24px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .front.lp{ background: linear-gradient(160deg, #d97a3a, #b9602a); }
+  .front.site{ background: linear-gradient(160deg, #0e5b56, #0a3d3a); }
+  .front .role{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+  }
+  .front h4{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 28px; margin: 4px 0 6px;
+  }
+  .front .url{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: rgba(255,255,255,.65);
+    margin-bottom: 14px;
+  }
+  .front p{ margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.92); }
+  .front .pills{ display: flex; flex-wrap: wrap; gap: 6px; }
+  .front .pill{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .06em;
+    background: rgba(255,255,255,.18);
+    padding: 4px 8px; border-radius: 4px;
+    color: #fff;
+  }
+
+  .funnel-bridge{
+    margin-top: 26px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    align-items: center;
+  }
+  .stage{
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: left;
+  }
+  .stage .lbl{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stage .name{ font-weight: 600; font-size: 13px; margin-top: 4px; }
+  .stage .ex{ font-size: 11.5px; color: var(--ink-2); margin-top: 4px; line-height: 1.35; }
+
+  .stage.tofu{ background: #fff3e7; border-color: #ecc699; }
+  .stage.mofu{ background: #fde9d8; border-color: #e2a577; }
+  .stage.bofu{ background: #fdd9bd; border-color: #cf8047; }
+  .stage.lp   { background: #f4d4b6; border-color: #b66225; }
+  .stage.cta  { background: #d6e5e3; border-color: #5d8581; }
+
+  /* ===== Sitemap tree ===== */
+  .tree{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 30px;
+    overflow: hidden;
+  }
+  .lvl{
+    display: flex; gap: 14px; flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .node{
+    background: #fff;
+    border: 1px solid var(--line-2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 140px;
+    text-align: center;
+    box-shadow: 0 1px 0 rgba(20,32,31,.04), 0 8px 22px -16px rgba(20,32,31,.4);
+  }
+  .node .tag{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .node .name{ font-weight: 600; font-size: 13px; }
+  .node .url{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; color: var(--muted); margin-top: 4px;
+    word-break: break-all;
+  }
+  .node.new{ outline: 2px dashed var(--accent-2); outline-offset: 3px; }
+  .node.lp{ background: var(--c-lp); border-color: var(--c-lp); }
+  .node.lp .name, .node.lp .tag, .node.lp .url{ color: #fff; }
+  .node.lp .tag{ color: rgba(255,255,255,.7); }
+  .node.lp .url{ color: rgba(255,255,255,.7); }
+  .node.home{ background: var(--ink); border-color: var(--ink); }
+  .node.home .name, .node.home .tag, .node.home .url{ color: #fff; }
+  .node.home .tag, .node.home .url{ color: rgba(255,255,255,.6); }
+
+  .lvl-label{
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 8px;
+  }
+  .lvl-label .l{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .lvl-label .rule{ flex: 1; height: 1px; background: var(--line); }
+
+  .branch-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .branch{
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .branch h5{
+    margin: 0 0 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .branch h5::before{
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+  }
+  .branch.b-prod h5::before{ background: var(--c-site); }
+  .branch.b-trust h5::before{ background: var(--c-trust); }
+  .branch.b-content h5::before{ background: var(--c-blog); }
+  .branch.b-tools h5::before{ background: var(--c-tools); }
+  .branch.b-foot h5::before{ background: #888; }
+  .branch ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .branch li{
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+  }
+  .branch li .u{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; color: var(--muted);
+  }
+  .branch li.new{ border-color: var(--accent-2); background: #fff7ed; }
+  .branch li.new::after{
+    content: "novo";
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent-2);
+    background: rgba(217,122,58,.12);
+    padding: 2px 6px; border-radius: 4px;
+  }
+
+  /* ===== LP wireframe ===== */
+  .wire{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+  }
+  .wire-frame{
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .wblock{
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    color: var(--ink-2);
+  }
+  .wblock .k{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .wblock h6{ margin: 0 0 4px; font-size: 12.5px; color: var(--ink); font-weight: 600; }
+  .wblock.hero{ background: linear-gradient(160deg, #fff, #faecdc); }
+  .wblock.contrast{ background: #fbf8f2; }
+  .wblock.cta{ background: #0e5b56; color: rgba(255,255,255,.9); }
+  .wblock.cta h6{ color: #fff; }
+  .wblock.cta .k{ color: rgba(255,255,255,.6); }
+
+  .wire-explain ol{ margin: 0; padding-left: 20px; }
+  .wire-explain li{ margin-bottom: 14px; font-size: 13.5px; color: var(--ink-2); }
+  .wire-explain li b{ color: var(--ink); display: block; margin-bottom: 2px; font-size: 14px; }
+  .wire-explain li .insp{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .06em;
+    color: var(--accent);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ===== Routing rules ===== */
+  .routing{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  }
+  .rcard{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 26px;
+  }
+  .rcard h4{
+    font-family: "Instrument Serif", serif; font-weight: 400;
+    font-size: 22px; margin: 0 0 6px;
+  }
+  .rcard .cap{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  .flow{
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    font-size: 12.5px;
+  }
+  .flow .step{
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 9px;
+  }
+  .flow .arr{ color: var(--muted); }
+  .flow .step.dest{ background: var(--accent); color: #fff; border-color: var(--accent); }
+  .flow .step.lpdest{ background: var(--accent-2); color: #fff; border-color: var(--accent-2); }
+  .rcard p{ margin: 14px 0 0; color: var(--ink-2); font-size: 13.5px; }
+
+  /* ===== Roadmap ===== */
+  .roadmap{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 30px;
+  }
+  .phase{
+    display: grid; grid-template-columns: 130px 1fr 280px;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .phase:last-child{ border-bottom: 0; padding-bottom: 0; }
+  .phase:first-child{ padding-top: 0; }
+  .phase .when{
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .phase .when b{
+    display: block;
+    color: var(--ink);
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-top: 4px;
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 22px;
+  }
+  .phase ul{ margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 13.5px; }
+  .phase li{ margin-bottom: 6px; }
+  .phase li b{ color: var(--ink); }
+  .phase .kpi{
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .phase .kpi h6{
+    margin: 0 0 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  footer{
+    margin-top: 90px; padding-top: 28px;
+    border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 12px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: .04em;
+  }
+
+  @media (max-width: 1100px){
+    .premise, .fronts, .routing{ grid-template-columns: 1fr; }
+    .funnel-bridge{ grid-template-columns: 1fr 1fr; }
+    .branch-grid{ grid-template-columns: 1fr 1fr; }
+    .wire{ grid-template-columns: 1fr; }
+    .phase{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px){
+    .wrap{ padding: 32px 20px 80px; }
+    .branch-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow"><span class="dot"></span> Framework de arquitetura · Valoreasy v2</div>
+    <h1>Uma <em>LP de alta conversão</em> orquestrando um site institucional saudável.</h1>
+    <p class="lede">
+      Proposta de reestruturação combinando os achados da auditoria interna e da análise competitiva:
+      separar <b>captura paga</b> (LP) de <b>presença orgânica</b> (site), com regras claras de roteamento,
+      hierarquia de produtos, hubs ausentes e um plano de implementação em 3 ondas.
+    </p>
+    <div class="meta">
+      <span><b>Modelo</b> · LP + Site dual</span>
+      <span><b>Ondas</b> · 3 (4 + 6 + 8 semanas)</span>
+      <span><b>Páginas novas</b> · 6 + LP</span>
+      <span><b>Data</b> · 02 mai 2026</span>
+    </div>
+  </header>
+
+  <!-- 01 — Premise -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Premissa: dois canais, dois objetivos</h2>
+    </div>
+    <div class="premise">
+      <div>
+        <h3>O problema que estamos resolvendo</h3>
+        <p>
+          Hoje a home da Valoreasy carrega <b>dois objetivos conflitantes</b> ao mesmo tempo:
+          (a) ranquear no Google para “BPO financeiro” e termos relacionados e (b) converter
+          tráfego pago de quem já está pronto para comprar. O resultado é uma home equilibrada,
+          mas não excelente em nenhuma das duas tarefas.
+        </p>
+        <ul>
+          <li>Home institucional <b>perde para a Track BPO</b> em clareza estrutural;</li>
+          <li>Conversão <b>perde para a Marvee</b> em força de copy e segmentação;</li>
+          <li>Ferramentas e blog <b>não convertem</b> — falta hub e CTAs contextuais.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>A solução: separar canais</h3>
+        <p>
+          Criar uma <b>LP de alta conversão</b> em URL própria (otimizada para tráfego pago e
+          "Vendo, vendo, vendo") e <b>refatorar o site institucional</b> para servir tráfego
+          orgânico, conteúdo e prova social. O Google escolhe a porta certa para cada lead;
+          nós controlamos o que ele encontra.
+        </p>
+        <ul>
+          <li><b>LP</b> · <code>valoreasy.com.br/comecar</code> — captação por mídia paga;</li>
+          <li><b>Site</b> · <code>valoreasy.com.br</code> — autoridade orgânica + nutrição;</li>
+          <li><b>Bridges</b> · ferramentas e posts levam à LP <i>quando o lead esquenta</i>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — Dual front + funnel -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Dois ativos, um funil único</h2>
+      <span class="section-sub">cada peça serve um momento do lead</span>
+    </div>
+    <div class="two-fronts">
+      <div class="fronts">
+        <div class="front lp">
+          <div class="role">Frente 1 · captura</div>
+          <h4>LP de alta conversão</h4>
+          <div class="url">valoreasy.com.br/comecar</div>
+          <p>
+            Página única, focada em uma promessa, um perfil de cliente e um CTA. Carrega rápido,
+            roda em mídia paga, captura formulário + WhatsApp. Sem menu, sem distração. Esta é a
+            página principal para quem chega via Google Ads ou social pago.
+          </p>
+          <div class="pills">
+            <span class="pill">1 página</span>
+            <span class="pill">1 CTA</span>
+            <span class="pill">Mídia paga</span>
+            <span class="pill">Form + WhatsApp</span>
+            <span class="pill">SLA 12h</span>
+          </div>
+        </div>
+        <div class="front site">
+          <div class="role">Frente 2 · autoridade</div>
+          <h4>Site institucional</h4>
+          <div class="url">valoreasy.com.br</div>
+          <p>
+            Site multi-página otimizado para SEO orgânico: explica produto, mostra cases, hospeda
+            ferramentas, blog, e-books, time. Resolve dúvidas, gera confiança e empurra o lead
+            quente para a LP via CTAs contextuais. Esta é a porta de entrada do tráfego orgânico.
+          </p>
+          <div class="pills">
+            <span class="pill">~22 páginas</span>
+            <span class="pill">SEO</span>
+            <span class="pill">Blog + ferramentas</span>
+            <span class="pill">Cases &amp; sobre</span>
+            <span class="pill">Hub /materiais</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-bridge">
+        <div class="stage tofu">
+          <span class="lbl">Topo</span>
+          <div class="name">Pesquisa orgânica</div>
+          <div class="ex">"o que é BPO", "fluxo de caixa", "calculadora pró-labore"</div>
+        </div>
+        <div class="stage mofu">
+          <span class="lbl">Meio</span>
+          <div class="name">Blog + ferramentas</div>
+          <div class="ex">post → calculadora → e-book → e-mail</div>
+        </div>
+        <div class="stage bofu">
+          <span class="lbl">Fundo</span>
+          <div class="name">Páginas de produto</div>
+          <div class="ex">/bpo-financeiro/gestor-virtual, /assistente-virtual, /como-funciona</div>
+        </div>
+        <div class="stage lp">
+          <span class="lbl">Conversão paga</span>
+          <div class="name">LP /comecar</div>
+          <div class="ex">tráfego de Ads chega aqui direto</div>
+        </div>
+        <div class="stage cta">
+          <span class="lbl">CTA</span>
+          <div class="name">Fale com Consultor</div>
+          <div class="ex">WhatsApp + formulário com SLA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — New site map -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Nova arquitetura — mapa de páginas</h2>
+      <span class="section-sub">páginas marcadas em laranja são novas</span>
+    </div>
+    <div class="tree">
+
+      <div class="lvl-label"><span class="l">Camada 0 · Captação paga</span><span class="rule"></span></div>
+      <div class="lvl">
+        <div class="node lp new">
+          <span class="tag">/comecar</span>
+          <div class="name">LP de Conversão</div>
+          <div class="url">valoreasy.com.br/comecar</div>
+        </div>
+      </div>
+
+      <div class="lvl-label"><span class="l">Camada 1 · Site institucional</span><span class="rule"></span></div>
+      <div class="lvl">
+        <div class="node home">
+          <span class="tag">/</span>
+          <div class="name">Home</div>
+          <div class="url">refeita</div>
+        </div>
+      </div>
+
+      <div class="lvl-label"><span class="l">Camada 2 · Hubs principais</span><span class="rule"></span></div>
+
+      <div class="branch-grid">
+        <div class="branch b-prod">
+          <h5>Soluções</h5>
+          <ul>
+            <li>BPO Financeiro <span class="u">/bpo-financeiro</span></li>
+            <li class="new">Gestor Virtual <span class="u">/bpo-financeiro/gestor-virtual</span></li>
+            <li class="new">Assistente Virtual <span class="u">/bpo-financeiro/assistente-virtual</span></li>
+            <li class="new">Como Funciona <span class="u">/como-funciona</span></li>
+          </ul>
+        </div>
+
+        <div class="branch b-trust">
+          <h5>Confiança</h5>
+          <ul>
+            <li class="new">Sobre / Quem somos <span class="u">/sobre</span></li>
+            <li class="new">Cases <span class="u">/cases</span></li>
+            <li class="new">Cases individuais (3–5) <span class="u">/cases/[slug]</span></li>
+            <li>Política de Privacidade <span class="u">/politica-de-privacidade</span></li>
+          </ul>
+        </div>
+
+        <div class="branch b-content">
+          <h5>Conteúdo</h5>
+          <ul>
+            <li>Blog (hub) <span class="u">/blog</span></li>
+            <li>Categorias (5) <span class="u">/blog/[cat]</span></li>
+            <li>Posts (existentes)</li>
+          </ul>
+        </div>
+
+        <div class="branch b-tools">
+          <h5>Materiais</h5>
+          <ul>
+            <li class="new">Hub /materiais <span class="u">/materiais</span></li>
+            <li>10 ferramentas existentes <span class="u">/materiais/[slug]</span></li>
+            <li>E-book Indicadores <span class="u">/e-books/indicadores-financeiros</span></li>
+            <li class="new">+ E-books futuros <span class="u">/e-books/[slug]</span></li>
+          </ul>
+        </div>
+
+        <div class="branch b-prod">
+          <h5>Conversão</h5>
+          <ul>
+            <li>Fale com Consultor <span class="u">/fale-com-um-consultor</span></li>
+            <li class="new">LP /comecar (mídia paga) <span class="u">/comecar</span></li>
+          </ul>
+        </div>
+
+        <div class="branch b-foot">
+          <h5>Footer</h5>
+          <ul>
+            <li class="new">Footer reformulado (links reais, sociais, copyright dinâmico)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — LP wireframe -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Estrutura da LP /comecar</h2>
+      <span class="section-sub">9 blocos · referências cruzadas dos 3 concorrentes</span>
+    </div>
+    <div class="wire">
+      <div class="wire-frame">
+        <div class="wblock hero">
+          <span class="k">01 · Hero</span>
+          <h6>Promessa + perfil + form</h6>
+          Headline, subhead, formulário visível no fold, prova social inicial (logos).
+        </div>
+        <div class="wblock">
+          <span class="k">02 · Para quem é</span>
+          <h6>Quadro de qualificação</h6>
+          Faturamento alvo, setor, momento da empresa.
+        </div>
+        <div class="wblock contrast">
+          <span class="k">03 · Sem / Com Valoreasy</span>
+          <h6>Tabela contrastiva</h6>
+          9 itens vs. 9 itens. Pega emprestado da Track BPO.
+        </div>
+        <div class="wblock">
+          <span class="k">04 · Como funciona</span>
+          <h6>3 passos: Diagnóstico → Onboarding → Operação</h6>
+        </div>
+        <div class="wblock">
+          <span class="k">05 · Perfil-cliente</span>
+          <h6>Aventureiro vs. de Sucesso</h6>
+          Quadro emprestado da Marvee, adaptado.
+        </div>
+        <div class="wblock">
+          <span class="k">06 · Prova social</span>
+          <h6>Cases curtos + reviews datadas</h6>
+        </div>
+        <div class="wblock">
+          <span class="k">07 · FAQ de objeção</span>
+          <h6>Preço, segurança, tempo, contabilidade</h6>
+        </div>
+        <div class="wblock">
+          <span class="k">08 · Time / autoridade</span>
+          <h6>Quem opera o seu BPO</h6>
+        </div>
+        <div class="wblock cta">
+          <span class="k">09 · CTA final</span>
+          <h6>Form + WhatsApp · SLA 12h úteis</h6>
+        </div>
+      </div>
+      <div class="wire-explain">
+        <ol>
+          <li>
+            <b>Hero com formulário no fold</b>
+            Headline curta com promessa + perfil de cliente + 3 logos. Form de 4 campos à direita.
+            <span class="insp">↳ inspiração: Marvee (form no topo, SLA explícito)</span>
+          </li>
+          <li>
+            <b>Quadro "Para quem é"</b>
+            Filtra leads ruins logo no segundo bloco. Faturamento mínimo + setores. Honestidade vende.
+            <span class="insp">↳ inspiração: Marvee (segmentação cirúrgica)</span>
+          </li>
+          <li>
+            <b>Tabela "Sem / Com Valoreasy"</b>
+            Substitui os 6 cards genéricos da home atual. 9 dores específicas vs. 9 entregas concretas.
+            <span class="insp">↳ inspiração: Track BPO (peça de copy mais persuasiva do setor)</span>
+          </li>
+          <li>
+            <b>Como funciona em 3 passos</b>
+            Timeline com ícones: Diagnóstico (gratuito) → Onboarding → Operação contínua.
+            <span class="insp">↳ inspiração: Libertas (Reunião → Onboarding → Libertação)</span>
+          </li>
+          <li>
+            <b>Quadro de perfil de empreendedor</b>
+            Quem é o cliente certo da Valoreasy vs. quem não é. Provoca identificação.
+            <span class="insp">↳ inspiração: Marvee (Aventureiro vs. de Sucesso)</span>
+          </li>
+          <li>
+            <b>Prova social estruturada</b>
+            3 cases curtos (cliente, problema, resultado em número) + reviews datadas com nome e cargo.
+            <span class="insp">↳ inspiração: Libertas (reviews datadas) + Track (clareza de resultado)</span>
+          </li>
+          <li>
+            <b>FAQ por objeção</b>
+            6–8 perguntas focadas em objeções, não em curiosidades. Preço, segurança, prazo, contabilidade.
+          </li>
+          <li>
+            <b>Time / autoridade</b>
+            Foto do time, anos de experiência, números agregados (CNPJs atendidos, valor sob gestão).
+          </li>
+          <li>
+            <b>CTA final + SLA</b>
+            Formulário repetido + botão WhatsApp + promessa "respondemos em até 12h úteis".
+            <span class="insp">↳ inspiração: Marvee (SLA) + Libertas/Track (WhatsApp pré-preenchido)</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 — Routing rules -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Regras de roteamento</h2>
+      <span class="section-sub">como cada origem de tráfego encontra a página certa</span>
+    </div>
+
+    <div class="routing">
+      <div class="rcard">
+        <h4>Tráfego pago (Google Ads, Meta Ads)</h4>
+        <div class="cap">Lead já intencionado · custo por clique alto</div>
+        <div class="flow">
+          <span class="step">Anúncio</span><span class="arr">→</span>
+          <span class="step lpdest">/comecar</span><span class="arr">→</span>
+          <span class="step dest">Form / WhatsApp</span>
+        </div>
+        <p>Toda mídia paga aponta para a LP, sem exceções. Sem menu, sem links externos no fold, sem distração. Mede-se CPL desta página isolada.</p>
+      </div>
+
+      <div class="rcard">
+        <h4>SEO de marca ("Valoreasy")</h4>
+        <div class="cap">Lead pesquisando a empresa · curioso, não comprador</div>
+        <div class="flow">
+          <span class="step">Google</span><span class="arr">→</span>
+          <span class="step">/</span><span class="arr">→</span>
+          <span class="step">/sobre · /cases</span><span class="arr">→</span>
+          <span class="step lpdest">/comecar</span>
+        </div>
+        <p>Home institucional contextualiza, prova autoridade e empurra para LP via CTA principal. Cases e Sobre fazem o trabalho de validação.</p>
+      </div>
+
+      <div class="rcard">
+        <h4>SEO de produto ("BPO financeiro")</h4>
+        <div class="cap">Lead comparando opções · em pesquisa</div>
+        <div class="flow">
+          <span class="step">Google</span><span class="arr">→</span>
+          <span class="step">/bpo-financeiro</span><span class="arr">→</span>
+          <span class="step">/gestor-virtual · /como-funciona</span><span class="arr">→</span>
+          <span class="step lpdest">/comecar</span>
+        </div>
+        <p>Páginas de produto separadas por modalidade. Cada uma com hero, comparativo, FAQ. CTA final empurra para LP, não para o formulário institucional.</p>
+      </div>
+
+      <div class="rcard">
+        <h4>SEO de problema ("calcular pró-labore")</h4>
+        <div class="cap">Lead resolvendo dor pontual · ainda frio</div>
+        <div class="flow">
+          <span class="step">Google</span><span class="arr">→</span>
+          <span class="step">/materiais/[ferramenta]</span><span class="arr">→</span>
+          <span class="step">e-mail capturado</span><span class="arr">→</span>
+          <span class="step">nutrição</span><span class="arr">→</span>
+          <span class="step lpdest">/comecar</span>
+        </div>
+        <p>Ferramenta serve a dor; e-mail é capturado em troca de download/relatório; sequência de e-mail nutre por 2–4 semanas; lead esquenta e clica para a LP.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 — Roadmap -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Roadmap de implementação</h2>
+      <span class="section-sub">3 ondas, do mais alavancável ao mais estratégico</span>
+    </div>
+
+    <div class="roadmap">
+
+      <div class="phase">
+        <div class="when">Onda 1 ·<b>4 semanas</b>Quick wins + LP</div>
+        <ul>
+          <li><b>Construir LP /comecar</b> — wireframe da seção 04. É o ativo de maior alavancagem.</li>
+          <li><b>Footer reformulado</b> — popular links, atualizar copyright, adicionar redes sociais.</li>
+          <li><b>Home: substituir 6 cards genéricos</b> por tabela "Sem / Com Valoreasy".</li>
+          <li><b>Home: corrigir contadores zerados</b> ou removê-los.</li>
+          <li><b>Adicionar /materiais como item raiz do menu</b>, mesmo que o hub seja simples na primeira versão.</li>
+        </ul>
+        <div class="kpi">
+          <h6>KPI da onda</h6>
+          Taxa de conversão da LP em formulário ≥ 3% no tráfego pago.<br>
+          Tempo médio na home cresce em 20%.
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="when">Onda 2 ·<b>6 semanas</b>Profundidade institucional</div>
+        <ul>
+          <li><b>Páginas /sobre e /cases</b> com 3–5 estudos de caso reais (Blinda Co., Troppo, Solare).</li>
+          <li><b>Hub /materiais</b> navegável com filtros por categoria de ferramenta.</li>
+          <li><b>Página /como-funciona</b> com timeline e faixa de investimento sugerida.</li>
+          <li><b>CTAs contextuais nos posts</b> ligando para BPO Financeiro e ferramenta correlata.</li>
+          <li><b>Definir palavra-âncora</b> da marca (modelo Libertas/Track). Ex: "clareza", "operação", "controle".</li>
+        </ul>
+        <div class="kpi">
+          <h6>KPI da onda</h6>
+          Tráfego orgânico cresce 30%.<br>
+          Páginas/sessão sobe de ~1,8 para ≥ 2,5.
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="when">Onda 3 ·<b>8 semanas</b>Estratégicos</div>
+        <ul>
+          <li><b>Separar Gestor Virtual e Assistente Virtual</b> em URLs próprias com SEO e FAQ.</li>
+          <li><b>Trilha de nutrição completa</b> ferramenta → e-mail → LP.</li>
+          <li><b>Reorganizar menu</b> em 4 grupos: Soluções · Materiais · Conteúdo · Empresa.</li>
+          <li><b>Sistema de cases</b> com template repetível (3–5 novos por ano).</li>
+          <li><b>A/B test da LP</b> em 2 versões: emocional (Libertas-style) vs. técnica (Track-style).</li>
+        </ul>
+        <div class="kpi">
+          <h6>KPI da onda</h6>
+          Leads qualificados (MQL) crescem 50%.<br>
+          CAC do canal pago cai em 25% pela LP otimizada.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Valoreasy · framework de nova estrutura</span>
+    <span>02 mai 2026 · LP + site dual</span>
+  </footer>
+
+</div>
+</body>
+</html>

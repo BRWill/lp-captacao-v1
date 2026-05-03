@@ -1,0 +1,83 @@
+/* ============================================================
+   TOKENS — Brand Guidelines Valoreasy
+   Sistema de cores oklch + tipografia + espaçamento
+   ============================================================ */
+
+:root {
+
+  /* --- Cores principais --- */
+  --brand:       oklch(46% 0.13 245);   /* azul marca */
+  --brand-deep:  oklch(32% 0.10 245);
+  --brand-soft:  oklch(78% 0.08 245);
+  --brand-tint:  oklch(92% 0.04 245);
+
+  --accent:      oklch(48% 0.16 25);    /* terracota/laranja */
+  --accent-deep: oklch(34% 0.12 25);
+  --accent-tint: oklch(94% 0.03 25);
+
+  --good:        oklch(50% 0.12 155);   /* verde sucesso */
+  --warn:        oklch(62% 0.14 75);    /* amarelo aviso */
+
+  --ink:         oklch(20% 0.012 230);  /* texto principal */
+  --ink-soft:    oklch(45% 0.012 230);  /* texto secundário */
+  --ink-muted:   oklch(65% 0.010 230);  /* texto terciário */
+
+  --line:        oklch(86% 0.012 78);   /* bordas */
+  --paper:       oklch(97.5% 0.008 80); /* fundo claro */
+  --white:       #ffffff;
+
+  /* --- Tipografia --- */
+  --font-serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-sans:  'Geist', 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-md:   1.125rem;  /* 18px */
+  --text-lg:   1.25rem;   /* 20px */
+  --text-xl:   1.5rem;    /* 24px */
+  --text-2xl:  1.875rem;  /* 30px */
+  --text-3xl:  2.25rem;   /* 36px */
+  --text-4xl:  3rem;      /* 48px */
+  --text-5xl:  3.75rem;   /* 60px */
+
+  --leading-tight:  1.15;
+  --leading-snug:   1.3;
+  --leading-normal: 1.6;
+  --leading-loose:  1.8;
+
+  /* --- Espaçamento --- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* --- Border radius --- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-full: 9999px;
+
+  /* --- Sombras --- */
+  --shadow-sm: 0 1px 0 rgba(20,26,26,.04), 0 2px 6px -2px rgba(20,26,26,.06);
+  --shadow-md: 0 1px 0 rgba(20,26,26,.04), 0 12px 28px -16px rgba(20,26,26,.14);
+  --shadow-lg: 0 1px 0 rgba(20,26,26,.04), 0 28px 60px -28px rgba(20,26,26,.18);
+
+  /* --- Layout --- */
+  --container: 1100px;
+  --container-narrow: 720px;
+
+  /* --- Transições --- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 200ms;
+}

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Departamento Financeiro de Verdade — Valoreasy</title>
+  <meta name="description" content="Em 30 dias, a Valoreasy entrega o departamento financeiro que sua empresa levaria 2 anos para montar. Especializado, profissional e do seu tamanho.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Departamento Financeiro de Verdade — Valoreasy">
+  <meta property="og:description" content="Você não precisa contratar um departamento financeiro. Você já tem um — pronto, profissional e do seu tamanho.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lp.valoreasy.com.br">
+
+  <!-- Fontes (Fraunces + Geist) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/lp.css">
+
+  <!-- [INSERIR: SCRIPT RD STATION] -->
+  <!-- Cole aqui o script de rastreamento do RD Station Marketing -->
+  <!-- Encontre em: Marketing → Configurações → Integrações → Script de rastreamento -->
+
+  <!-- [INSERIR: META PIXEL FACEBOOK] -->
+  <!-- [INSERIR: GA4 GTAG] -->
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="#hero" class="logo">Valoreasy</a>
+      <a href="#hero-form" class="btn btn--primary header-cta">Quero meu diagnóstico gratuito</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ============================================================
+     BLOCO 01 — HERO
+     ============================================================ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- Lado esquerdo: headline + sub -->
+      <div>
+        <span class="hero-tag">Para empresas de serviço · R$ 50k–500k/mês</span>
+
+        <h1 class="hero-headline">
+          Você não precisa <em>contratar</em> um departamento financeiro.<br>
+          Você já tem um — pronto, profissional e do seu tamanho.
+        </h1>
+
+        <p class="hero-sub">
+          Em 30 dias, a Valoreasy entrega o departamento financeiro que sua empresa levaria 2 anos para montar:
+          equipe especializada, sistema 100% operado, fechamento no 5º dia útil e reunião estratégica mensal.
+        </p>
+
+        <div class="selos">
+          <div class="selo">
+            <span class="selo__icon">★</span>
+            4.9 no Google
+          </div>
+          <div class="selo">
+            <span class="selo__icon">✓</span>
+            +100 empresas atendidas
+          </div>
+          <div class="selo">
+            <span class="selo__icon">✓</span>
+            9 anos de operação
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado direito: formulário -->
+      <div id="hero-form">
+        <div class="hero-form-card">
+          <p class="form-title">Diagnóstico gratuito em até 4h</p>
+          <p class="form-subtitle">Sem compromisso. Você recebe um plano por escrito.</p>
+
+          <form id="lp-form" novalidate>
+            <div class="form-group">
+              <label for="nome">Seu nome *</label>
+              <input type="text" id="nome" name="nome" placeholder="Nome completo" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail comercial *</label>
+              <input type="email" id="email" name="email" placeholder="voce@empresa.com.br" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="telefone">WhatsApp *</label>
+              <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required autocomplete="tel">
+            </div>
+            <div class="form-group">
+              <label for="empresa">Nome da empresa</label>
+              <input type="text" id="empresa" name="empresa" placeholder="Empresa Ltda." autocomplete="organization">
+            </div>
+            <div class="form-group">
+              <label for="faturamento">Faturamento mensal aproximado</label>
+              <select id="faturamento" name="faturamento">
+                <option value="">Selecione</option>
+                <option value="50k-100k">R$ 50k – R$ 100k</option>
+                <option value="100k-200k">R$ 100k – R$ 200k</option>
+                <option value="200k-500k">R$ 200k – R$ 500k</option>
+                <option value="500k+">Acima de R$ 500k</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn--accent form-submit-btn">
+              Quero conhecer meu departamento →
+            </button>
+          </form>
+
+          <div id="form-sucesso" hidden>
+            <div class="form-sucesso">
+              <div class="form-sucesso__icon">✅</div>
+              <p class="form-sucesso__title">Recebemos seu pedido!</p>
+              <p>Nossa equipe entra em contato em até 4 horas com seu diagnóstico personalizado.</p>
+            </div>
+          </div>
+
+          <p id="form-erro" class="form-erro" hidden>
+            Erro ao enviar. Tente novamente ou fale pelo WhatsApp.
+          </p>
+
+          <div class="selos form-selos" style="margin-top: 1rem;">
+            <div class="selo">
+              <span class="selo__icon">✓</span> Diagnóstico gratuito
+            </div>
+            <div class="selo">
+              <span class="selo__icon">✓</span> Resposta em 4h
+            </div>
+            <div class="selo">
+              <span class="selo__icon">✓</span> Sem compromisso
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 02 — DOR (ESPELHAMENTO)
+     ============================================================ -->
+<section id="bloco-dor">
+  <div class="container">
+    <h2>A operação cresceu. O financeiro ficou <em>amador</em>.</h2>
+    <div class="dor-grid" style="margin-top: 2.5rem;">
+
+      <div class="dor-item">
+        <p class="dor-item__quote">Não consigo ver meus números no dia a dia — só descubro o problema depois que já aconteceu.</p>
+      </div>
+      <div class="dor-item">
+        <p class="dor-item__quote">Pago R$ 8–12k por mês para uma equipe que ainda preciso supervisionar.</p>
+      </div>
+      <div class="dor-item">
+        <p class="dor-item__quote">Tenho um bom sistema, mas uso só 30% do que ele oferece.</p>
+      </div>
+      <div class="dor-item">
+        <p class="dor-item__quote">Não consigo crescer sem clareza financeira — cada decisão grande parece um palpite.</p>
+      </div>
+      <div class="dor-item">
+        <p class="dor-item__quote">Não tenho tempo nem expertise para gerir o financeiro do jeito certo.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 03 — VIRADA
+     ============================================================ -->
+<section id="bloco-virada">
+  <div class="container container--narrow text-center">
+    <h2>A conta não fecha: contratar custa, montar demora, gerir sobra pra você.</h2>
+    <p style="margin-top: 1.5rem;">
+      Empresas entre R$ 50k e R$ 500k/mês não precisam <em>construir</em> um departamento financeiro.
+      Precisam de um <strong>já pronto</strong>, fora da folha, mas dentro da operação.
+      <br><br>
+      <strong>É exatamente isso que a Valoreasy entrega.</strong>
+    </p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 04 — O QUE ESTÁ DENTRO
+     ============================================================ -->
+<section id="bloco-dentro">
+  <div class="container">
+    <div class="dentro-header">
+      <h2>Um departamento <em>de verdade</em> tem oito coisas. As oito vêm com a Valoreasy.</h2>
+    </div>
+
+    <div class="dentro-grid">
+      <div class="dentro-item">
+        <div class="dentro-item__num">01</div>
+        <div class="dentro-item__title">Equipe dedicada</div>
+        <div class="dentro-item__desc">Analista financeiro e gerente de relacionamento com nome, telefone e WhatsApp.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">02</div>
+        <div class="dentro-item__title">Sistema 100% operado</div>
+        <div class="dentro-item__desc">Seu ERP configurado e alimentado diariamente pela equipe Valoreasy.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">03</div>
+        <div class="dentro-item__title">Rotina financeira</div>
+        <div class="dentro-item__desc">Contas a pagar, a receber, conciliações e lançamentos — sem faltar um dia.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">04</div>
+        <div class="dentro-item__title">Fechamento no 5º DU</div>
+        <div class="dentro-item__desc">DRE, fluxo de caixa e balanço fechados até o 5º dia útil de todo mês.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">05</div>
+        <div class="dentro-item__title">Dashboard diário</div>
+        <div class="dentro-item__desc">Seus números visíveis todo dia — sem abrir planilha, sem esperar relatório.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">06</div>
+        <div class="dentro-item__title">Cobrança ativa</div>
+        <div class="dentro-item__desc">Follow-up automatizado + humano para inadimplentes. Menos perda, mais caixa.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">07</div>
+        <div class="dentro-item__title">Projeção de 90 dias</div>
+        <div class="dentro-item__desc">Você toma decisões com base em números, não em intuição.</div>
+      </div>
+      <div class="dentro-item">
+        <div class="dentro-item__num">08</div>
+        <div class="dentro-item__title">Ponte com contabilidade</div>
+        <div class="dentro-item__desc">Entregamos tudo pré-fechado ao seu contador. Ele economiza tempo, você tem paz.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 05 — ANTES × DEPOIS
+     ============================================================ -->
+<section id="bloco-antes-depois">
+  <div class="container">
+    <h2>O que muda no seu mês</h2>
+
+    <div style="overflow-x: auto; margin-top: 2.5rem;">
+      <table class="ad-table">
+        <thead>
+          <tr>
+            <th>Hoje (sem Valoreasy)</th>
+            <th>Em 30 dias (com Valoreasy)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sem dados financeiros no dia a dia</td>
+            <td>Dashboard atualizado todo dia</td>
+          </tr>
+          <tr>
+            <td>Equipe interna cara e que você precisa gerir</td>
+            <td>Equipe especializada externa, sem encargo</td>
+          </tr>
+          <tr>
+            <td>Sistema subutilizado (30% do potencial)</td>
+            <td>ERP 100% operado pela equipe Valoreasy</td>
+          </tr>
+          <tr>
+            <td>Fechamento financeiro tardio e incompleto</td>
+            <td>DRE + fluxo de caixa até o 5º dia útil</td>
+          </tr>
+          <tr>
+            <td>Cobrança reativa — cliente some, você não sabe</td>
+            <td>Cobrança ativa: automatizada + acompanhamento humano</td>
+          </tr>
+          <tr>
+            <td>Gestão de caixa baseada em intuição</td>
+            <td>Projeção de 90 dias atualizada mensalmente</td>
+          </tr>
+          <tr>
+            <td>Decisões sem base nos números</td>
+            <td>Reunião estratégica mensal com dados reais</td>
+          </tr>
+          <tr>
+            <td>Crescimento travado por falta de clareza</td>
+            <td>Base financeira para crescer com segurança</td>
+          </tr>
+          <tr>
+            <td>Entrega bagunçada para a contabilidade</td>
+            <td>Handoff limpo e pré-fechado todo mês</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 06 — COMO FUNCIONA
+     ============================================================ -->
+<section id="bloco-como-funciona">
+  <div class="container">
+    <h2>Como funciona</h2>
+
+    <div class="fases-grid" style="margin-top: 2.5rem;">
+
+      <div class="fase-card">
+        <div class="fase-card__num">1</div>
+        <div class="fase-card__titulo">DIAGNÓSTICO</div>
+        <div class="fase-card__prazo">1 semana · Gratuito</div>
+        <h3>Mapeamos tudo</h3>
+        <p>
+          Entendemos sua operação atual, equipe, gaps e sistemas.
+          Você recebe um plano por escrito — escopo, prazo e investimento.
+          <strong>É seu, mesmo que não feche.</strong>
+        </p>
+      </div>
+
+      <div class="fase-card fase-card--destaque">
+        <div class="fase-card__num">2</div>
+        <div class="fase-card__titulo">IMPLANTAÇÃO</div>
+        <div class="fase-card__prazo">2 a 4 semanas</div>
+        <h3>Montamos seu departamento</h3>
+        <p>
+          Configuramos o sistema, padronizamos os POPs e gerenciamos a transição
+          da sua equipe atual — realocação, redirecionamento ou saída planejada.
+          Você decide.
+        </p>
+      </div>
+
+      <div class="fase-card">
+        <div class="fase-card__num">3</div>
+        <div class="fase-card__titulo">OPERAÇÃO CONTÍNUA</div>
+        <div class="fase-card__prazo">Todo mês, todo dia</div>
+        <h3>Seu departamento roda</h3>
+        <p>
+          Dashboard diário, fechamento até o 5º DU,
+          reunião estratégica mensal de 60 minutos.
+          Você olha para o negócio — o financeiro, a gente cuida.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 07 — PARA QUEM É
+     ============================================================ -->
+<section id="bloco-para-quem">
+  <div class="container">
+    <h2>Para quem é a Valoreasy</h2>
+
+    <div class="para-quem-grid" style="margin-top: 2.5rem;">
+
+      <div class="para-quem-card para-quem-card--sim">
+        <div class="para-quem-card__header">✓ Melhor encaixe</div>
+        <ul class="para-quem-list">
+          <li>Empresas de serviço com R$ 50k–500k/mês de faturamento</li>
+          <li>Dono que quer decidir por dados, não por intuição</li>
+          <li>Operação onde a equipe interna não escala mais</li>
+          <li>Quem está pronto para profissionalizar, não apenas delegar invoice</li>
+          <li>Quem quer crescer com base financeira sólida</li>
+        </ul>
+      </div>
+
+      <div class="para-quem-card para-quem-card--nao">
+        <div class="para-quem-card__header">✗ Não é pra você se</div>
+        <ul class="para-quem-list">
+          <li>Você fatura menos de R$ 30k/mês (ainda cedo)</li>
+          <li>Quer alguém só para "emitir nota fiscal"</li>
+          <li>Prefere continuar informal, sem POPs ou documentação</li>
+          <li>Não vai compartilhar números com equipe externa</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 08 — AUTORIDADE (PROVA SOCIAL)
+     ============================================================ -->
+<section id="bloco-autoridade">
+  <div class="container">
+
+    <h2>+[INSERIR: Nº] empresas. [INSERIR: Nº] anos operando departamentos como o seu.</h2>
+    <p class="autoridade-sub">
+      Cada número, avaliação e métrica desta página é real, datado e atribuído.
+      Não somos plataforma — somos pessoas com nome, telefone e currículo.
+    </p>
+
+    <!-- Stats -->
+    <div class="autoridade-stats">
+      <div class="stat-item">
+        <div class="stat-num">+[INSERIR]</div>
+        <div class="stat-label">CNPJs ativos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">R$ [INSERIR]</div>
+        <div class="stat-label">Sob gestão</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">[INSERIR]</div>
+        <div class="stat-label">Anos de operação</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">[INSERIR]</div>
+        <div class="stat-label">Especialistas</div>
+      </div>
+    </div>
+
+    <!-- Google badge -->
+    <div class="google-badge">
+      <div class="google-badge__score">4.9</div>
+      <div>
+        <div class="google-badge__stars">★★★★★</div>
+        <div class="google-badge__info">
+          <div class="google-badge__label">+[INSERIR] avaliações · Google</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo wall -->
+    <div class="logo-wall">
+      <p class="logo-wall__title">Empresas que confiam na Valoreasy</p>
+      <!-- [INSERIR: logos dos clientes — PNG/SVG com fundo transparente] -->
+      <div class="logo-wall__placeholder">
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+        <div class="logo-placeholder"></div>
+      </div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">[INSERIR: texto do depoimento 1]</p>
+        <div class="review-card__autor">[INSERIR: Nome do cliente]</div>
+        <div class="review-card__empresa">[INSERIR: Empresa] · [INSERIR: data]</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">[INSERIR: texto do depoimento 2]</p>
+        <div class="review-card__autor">[INSERIR: Nome do cliente]</div>
+        <div class="review-card__empresa">[INSERIR: Empresa] · [INSERIR: data]</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">[INSERIR: texto do depoimento 3]</p>
+        <div class="review-card__autor">[INSERIR: Nome do cliente]</div>
+        <div class="review-card__empresa">[INSERIR: Empresa] · [INSERIR: data]</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 09 — CTA INTERMEDIÁRIO
+     ============================================================ -->
+<section id="bloco-cta-mid">
+  <div class="container">
+    <h2>Já convencido? <em>Pule para a conversa.</em></h2>
+    <p>
+      30 minutos com um especialista. Sem pressão de vendas.
+      Você recebe um plano de diagnóstico por escrito — é seu, mesmo se não fechar.
+    </p>
+
+    <div class="cta-mid-btns">
+      <a href="#hero-form" class="btn btn--accent btn--lg">Quero meu diagnóstico →</a>
+      <button class="btn btn--whatsapp btn--lg" onclick="abrirWhatsApp('cta-mid')">
+        Falar pelo WhatsApp
+      </button>
+    </div>
+
+    <div class="selos cta-mid-selos">
+      <div class="selo"><span>✓</span> Diagnóstico gratuito</div>
+      <div class="selo"><span>✓</span> Resposta em 4h</div>
+      <div class="selo"><span>✓</span> Sem compromisso</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 10 — A EQUIPE
+     ============================================================ -->
+<section id="bloco-equipe">
+  <div class="container">
+    <h2>Conheça <em>seu departamento</em>.</h2>
+    <p class="equipe-sub">
+      Cada cliente Valoreasy tem um <strong>analista financeiro dedicado</strong> e um
+      <strong>gerente de relacionamento</strong>. Você sabe o nome, o telefone, o WhatsApp.
+      Eles conhecem o seu negócio como se estivessem na sua folha.
+    </p>
+
+    <!-- [INSERIR: fotos reais da equipe — fundo padronizado] -->
+    <div class="equipe-grid">
+      <div class="equipe-card">
+        <div class="equipe-avatar equipe-avatar--placeholder">👤</div>
+        <div class="equipe-nome">[INSERIR: Nome]</div>
+        <div class="equipe-cargo">[INSERIR: Cargo]</div>
+      </div>
+      <div class="equipe-card">
+        <div class="equipe-avatar equipe-avatar--placeholder">👤</div>
+        <div class="equipe-nome">[INSERIR: Nome]</div>
+        <div class="equipe-cargo">[INSERIR: Cargo]</div>
+      </div>
+      <div class="equipe-card">
+        <div class="equipe-avatar equipe-avatar--placeholder">👤</div>
+        <div class="equipe-nome">[INSERIR: Nome]</div>
+        <div class="equipe-cargo">[INSERIR: Cargo]</div>
+      </div>
+      <div class="equipe-card">
+        <div class="equipe-avatar equipe-avatar--placeholder">👤</div>
+        <div class="equipe-nome">[INSERIR: Nome]</div>
+        <div class="equipe-cargo">[INSERIR: Cargo]</div>
+      </div>
+      <div class="equipe-card">
+        <div class="equipe-avatar equipe-avatar--placeholder">👤</div>
+        <div class="equipe-nome">[INSERIR: Nome]</div>
+        <div class="equipe-cargo">[INSERIR: Cargo]</div>
+      </div>
+    </div>
+
+    <div class="autoridade-stats" style="justify-content: flex-start;">
+      <div class="stat-item">
+        <div class="stat-num">+[INSERIR]</div>
+        <div class="stat-label">CNPJs ativos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">R$ [INSERIR]</div>
+        <div class="stat-label">Sob gestão</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">[INSERIR]</div>
+        <div class="stat-label">Anos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">[INSERIR]</div>
+        <div class="stat-label">Especialistas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 11 — FAQ
+     ============================================================ -->
+<section id="bloco-faq">
+  <div class="container">
+    <h2>Perguntas frequentes</h2>
+
+    <div class="faq-list" style="margin-top: 2.5rem;">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Quanto custa?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            A partir de R$ [INSERIR: faixa de preço]/mês, variando conforme o volume da operação.
+            Costuma ser <strong>menos da metade</strong> do equivalente com equipe interna.
+            O diagnóstico gratuito define sua faixa exata.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          E a minha equipe atual? Vou ter que demitir todo mundo?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            Não necessariamente. Gerenciamos a transição juntos — realocação para outras funções,
+            redirecionamento ou saída com planejamento. Você decide o que faz mais sentido.
+            Ninguém é cortado de surpresa.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Substitui a contabilidade?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            Não. Trabalhamos junto com o seu contador — entregamos tudo pré-fechado e verificado.
+            Seu contador economiza tempo. Você ganha paz de espírito e um financeiro que realmente funciona.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Vocês movimentam minha conta bancária?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            Não. A gente prepara — você (ou um aprovador que você designa) aprova.
+            Controle duplo, 100% auditado. Nunca movimentamos sem sua autorização explícita.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Funciona com o sistema que eu já uso?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            Sim. Operamos os principais ERPs do mercado: Omie, Conta Azul, Bling, Granatum e Sankhya.
+            Se você usa outro, avaliamos no diagnóstico. Se não usa nenhum, indicamos o melhor para o seu perfil.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          E se eu quiser cancelar?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            30 dias de aviso + devolução de todos os documentos organizada e completa.
+            Sem multa, sem lock-in, sem drama. Nossa retenção é alta porque o resultado fala por si.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Em quanto tempo vejo resultado?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer__inner">
+            A implantação leva de 2 a 4 semanas. No primeiro mês completo você já tem
+            dashboard diário, fechamento no 5º DU e visão clara do que está acontecendo no seu caixa.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     BLOCO 12 — CTA FINAL
+     ============================================================ -->
+<section id="bloco-cta-final">
+  <div class="container">
+    <h2>Seu departamento financeiro poderia estar operando <em>na próxima segunda-feira.</em></h2>
+    <p>
+      30 minutos para ver se faz sentido. Plano por escrito no final — é seu, mesmo se não fechar.
+      <br>O custo de continuar onde você está cresce todo mês.
+    </p>
+
+    <div class="cta-final-btns">
+      <a href="#hero-form" class="btn btn--accent btn--lg">Quero meu diagnóstico gratuito →</a>
+      <button class="btn btn--whatsapp btn--lg" onclick="abrirWhatsApp('cta-final')">
+        Falar pelo WhatsApp
+      </button>
+    </div>
+
+    <div class="selos cta-final-selos">
+      <div class="selo"><span>✓</span> Diagnóstico gratuito</div>
+      <div class="selo"><span>✓</span> Resposta em 4h</div>
+      <div class="selo"><span>✓</span> Sem compromisso</div>
+    </div>
+
+    <p class="custo-inacao">O custo de permanecer onde você está cresce todo mês.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <p>© 2026 Valoreasy · CNPJ [INSERIR] · <a href="https://valoreasy.com.br" style="color:rgba(255,255,255,0.4)">valoreasy.com.br</a></p>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     MOBILE STICKY CTA BAR
+     ============================================================ -->
+<div id="mobile-cta-bar">
+  <a href="#hero-form" class="btn btn--primary">Diagnóstico gratuito</a>
+  <button class="btn btn--whatsapp" onclick="abrirWhatsApp('mobile-bar')">WhatsApp</button>
+</div>
+
+
+<!-- Script -->
+<script src="js/lp.js"></script>
+
+</body>
+</html>

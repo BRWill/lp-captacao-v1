@@ -35,6 +35,68 @@ document.addEventListener('click', function (e) {
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
+/* --- Carousel infinito (logos + depoimentos) --- */
+function setupCarousel(root) {
+  const track = root.querySelector('[data-carousel-track]');
+  if (!track) return;
+  const prev = root.querySelector('[data-carousel-prev]');
+  const next = root.querySelector('[data-carousel-next]');
+
+  // Duplica os filhos para criar a ilusão de loop infinito
+  const originals = Array.from(track.children);
+  originals.forEach(child => {
+    const clone = child.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  let setWidth = 0;
+  const measure = () => { setWidth = track.scrollWidth / 2; };
+  requestAnimationFrame(measure);
+  window.addEventListener('resize', measure);
+
+  // Largura de um "passo" = primeiro item + gap
+  const step = () => {
+    const first = track.children[0];
+    if (!first) return 200;
+    const w = first.getBoundingClientRect().width;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    return w + gap;
+  };
+
+  // Snap silencioso quando passar do primeiro conjunto
+  let timer;
+  track.addEventListener('scroll', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (setWidth && track.scrollLeft >= setWidth) {
+        const restore = track.style.scrollBehavior;
+        track.style.scrollBehavior = 'auto';
+        track.scrollLeft -= setWidth;
+        track.style.scrollBehavior = restore;
+      }
+    }, 120);
+  });
+
+  prev?.addEventListener('click', () => {
+    // Se está no início, salta silenciosamente para o final do primeiro conjunto
+    if (setWidth && track.scrollLeft < step()) {
+      const restore = track.style.scrollBehavior;
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft += setWidth;
+      track.style.scrollBehavior = restore;
+    }
+    track.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+
+  next?.addEventListener('click', () => {
+    track.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+}
+
+document.querySelectorAll('[data-carousel]').forEach(setupCarousel);
+
 /* --- FAQ accordion --- */
 document.addEventListener('click', function (e) {
   const btn = e.target.closest('.faq-question');

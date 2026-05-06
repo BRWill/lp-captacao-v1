@@ -173,3 +173,82 @@ Arquivos criados:
 3. Configurar domínio `lp.valoreasy.com.br` no Hostgator (registro A → IP Coolify)
 4. Deploy no Coolify e testes de formulário (lead chegando no RD Station)
 5. Iniciar Fase 2 — reformulação do site WordPress
+
+---
+
+## 06/05/2026 — Bloco 08 (Autoridade) finalizado
+
+Sessão dedicada à construção completa do bloco de prova social — peça-chave de conversão da LP.
+
+### Logos de clientes (Logo Wall)
+
+- **10 logos** copiadas de `ARTEFATOS/Logos Clientes/Logos formatadas/` para `lp/assets/logos/clientes/`
+- Cada logo tem versão **gray** (padrão) e **color** (hover) — efeito de fade entre as duas via CSS opacity
+- Layout final: **carousel horizontal infinito** com setas ‹ › nas laterais (após o último logo, volta no primeiro sem solavanco)
+
+### Avaliações Google (Reviews)
+
+**Estrutura visual** — reproduz fielmente o padrão de cards de avaliação do Google Maps:
+- Avatar circular (40px) + nome + meta ("Local Guide · X avaliações" ou "X avaliações") + linha discreta com a empresa
+- Estrelas amarelas (#FBBC05, cor oficial Google)
+- Data ("9 meses atrás", "2 anos atrás", etc.)
+- Badge verde de Local Guide para reviewers que têm essa marcação
+- Texto da avaliação alinhado à esquerda, sem itálico/aspas (como no Google)
+
+**8 depoimentos reais** carregados (de `ARTEFATOS/Depoimentos/`):
+
+| # | Cliente | Empresa | Avatar |
+|---|---|---|---|
+| 1 | Bruna Habka | Klabin | Foto + Local Guide |
+| 2 | Caroline Mendonça | Olive Tree Films | Foto |
+| 3 | Daniel Vasques | Balderi Gastronomia | Letra D (rosa) |
+| 4 | HS Contabil | Parceira Contábil | Foto (logo) |
+| 5 | Larissa De Lello | School of Rock — Morumbi | Letra L (azul) |
+| 6 | Lukas Ehmke | School of Rock — Perdizes | Letra L (verde) + Local Guide |
+| 7 | Vinícius Ribeiro | RPP Advocacia | Foto + Local Guide |
+| 8 | Rafael Vasconcelos | Audaz | Foto |
+
+**Decisão estratégica sobre integração com Google:** abordagem **manual** ao invés da Google Places API. Motivos:
+- API só devolve 5 reviews que o próprio Google escolhe (sem controle de curadoria)
+- Exige conta Google Cloud + billing + chave + proxy backend
+- Sem custos, sem dependência externa, performance superior
+- Reviews mudam pouco — atualização manual ~2x ao ano é suficiente
+
+### Badge Google®
+
+- Card central com nota **5.0**, 5 estrelas amarelas e label "Google®"
+- Removido link "Ver perfil no Google →" para reduzir distrações
+
+### Estrutura técnica do carousel infinito
+
+- Função genérica `setupCarousel(root)` em `lp.js`, ativada via `data-carousel`/`data-carousel-track`/`data-carousel-prev`/`data-carousel-next`
+- Loop infinito implementado por **duplicação dos itens** + snap silencioso de scroll
+- Reutilizada para logos e depoimentos (DRY)
+
+### Ajustes finais de layout do Bloco 08
+
+- Container do bloco ampliado para **1280px** (resto da LP segue 1100px)
+- Cards de depoimento alargados para **380px** (290px no mobile) — proporção mais próxima do quadrado
+- Texto dos cards justificado à esquerda
+
+### Inputs pendentes — atualização
+
+| # | Item | Status |
+|---|---|---|
+| 1 | Métricas: CNPJs, R$ sob gestão, anos, cidades | ❌ Removido (stats deletados na revisão anterior) |
+| 2 | 12–18 logos de clientes | ✅ 10 logos integradas com efeito hover |
+| 3 | Print + link do perfil Google | ⏳ Substituído por badge "Google®" |
+| 4 | Reviews em destaque | ✅ 8 depoimentos reais com foto/letra, nome, empresa, data |
+| 5 | Faixa de preço para FAQ | ⏳ Aguardando Will |
+| 6 | 5+ fotos da equipe | ⏳ Aguardando Will |
+| 7 | Embed RD Station | ✅ Resolvido (Events API) |
+| 8 | IP do Coolify | ⏳ Aguardando Will |
+| 9 | IDs GA4 / Meta Pixel | ⏳ Se disponíveis |
+
+### Próxima sessão
+
+1. Faixa de preço (Bloco 11 — FAQ)
+2. Fotos da equipe (Bloco 10)
+3. Configurar DNS + deploy no Coolify
+4. Testes end-to-end: formulário → RD Station → CRM
+5. Iniciar Fase 2 (reformulação do site WordPress)

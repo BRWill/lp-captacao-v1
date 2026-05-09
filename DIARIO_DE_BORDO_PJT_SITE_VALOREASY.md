@@ -252,3 +252,64 @@ Sessão dedicada à construção completa do bloco de prova social — peça-cha
 3. Configurar DNS + deploy no Coolify
 4. Testes end-to-end: formulário → RD Station → CRM
 5. Iniciar Fase 2 (reformulação do site WordPress)
+
+---
+
+## 🔖 HANDOFF — Estado no fim de 06/05/2026
+
+### Onde está o projeto
+
+LP estruturalmente completa, na branch `feature/lp-alta-conversao`. Último commit: **`6d54866`** ("feat(lp): bloco 08 finalizado…"). Working tree limpo. **Ainda não foi feito merge na `main` nem deploy.**
+
+### Status dos 12 blocos
+
+| Bloco | Estado | Observações |
+|---|---|---|
+| 01 — Hero | ✅ Pronto | Form integrado com RD Station, botão verde, fundo off-white, logo no header |
+| 02 — Dor | ✅ Pronto | Fundo azul marinho (`--brand-deep`), 5 citações |
+| 03 — Virada | ✅ Pronto | — |
+| 04 — O que está dentro | ✅ Pronto | 8 componentes |
+| 05 — Antes × Depois | ✅ Pronto | Tabela 1:1 |
+| 06 — Como funciona | ✅ Pronto | 3 fases |
+| 07 — Para quem é | ✅ Pronto | — |
+| 08 — Autoridade | ✅ **Pronto (finalizado hoje)** | Logos em carousel + 8 reviews Google estilo nativo |
+| 09 — CTA intermediário | ✅ Pronto | — |
+| 10 — Equipe | ⏳ Aguarda fotos | Estrutura pronta, faltam 5+ fotos da equipe |
+| 11 — FAQ | ⏳ Aguarda preço | 7 objeções respondidas, falta a faixa "começa em R$ X.XXX/mês" |
+| 12 — CTA final | ✅ Pronto | — |
+
+### Configurações já feitas
+
+- WhatsApp: `(11) 91895-3052` em `lp/js/lp.js`
+- RD Station Token: configurado em `CONFIG.rdToken`
+- conversion_identifier: `lp-departamento-financeiro`
+- Funil destino: "Sem Contato (Inbound)" do "Funil de Vendas Diretas" (`62ebd224d265d7000c78b18d`)
+
+### O que ainda trava o go-live
+
+1. Faixa de preço (Bloco 11)
+2. Fotos da equipe (Bloco 10)
+3. IP do servidor Coolify para configurar DNS no Hostgator
+4. IDs de tracking (GA4 / Meta Pixel) — opcional
+
+### Como iniciar a próxima conversa
+
+```
+Estou retomando o PJT_SITE_VALOREASY. Por favor leia o diário de bordo
+em DIARIO_DE_BORDO_PJT_SITE_VALOREASY.md e o CLAUDE.md do projeto.
+A LP está estruturalmente completa na branch feature/lp-alta-conversao.
+Hoje quero trabalhar em [escolher: faixa de preço do FAQ / fotos da
+equipe / configuração de deploy no Coolify / iniciar Fase 2 site
+WordPress].
+```
+
+### Arquivos-chave para contexto rápido
+
+| Arquivo | Conteúdo |
+|---|---|
+| `lp/index.html` | Estrutura completa dos 12 blocos |
+| `lp/css/lp.css` | Estilos mobile-first (~1200 linhas) |
+| `lp/css/tokens.css` | Variáveis Brand Guidelines |
+| `lp/js/lp.js` | Carousel infinito, RD Station, FAQ, CTA mobile |
+| `ROADMAP.md` | Visão de fase 1 (LP) e fase 2 (site WP) |
+| `ARTEFATOS/LP Wireframe v3.html` | Referência do wireframe original |

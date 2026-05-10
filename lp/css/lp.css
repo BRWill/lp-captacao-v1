@@ -776,7 +776,7 @@ section { padding-block: var(--space-16); }
 }
 
 #bloco-autoridade .container {
-  max-width: 1500px;
+  max-width: 1280px;
 }
 
 #bloco-autoridade h2 {
@@ -978,7 +978,11 @@ section { padding-block: var(--space-16); }
 .google-reviews__header {
   display: flex;
   justify-content: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+.google-reviews__header .google-badge {
+  margin-bottom: 0;
 }
 
 /* Reviews carousel (dentro do card .google-reviews) */

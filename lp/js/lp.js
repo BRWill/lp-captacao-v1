@@ -94,30 +94,6 @@ function setupCarousel(root) {
   next?.addEventListener('click', () => {
     track.scrollBy({ left: step(), behavior: 'smooth' });
   });
-
-  // Autoplay contínuo (marquee suave, ~40px/s) — pausa no hover
-  if (autoplay) {
-    const speed = 40; // pixels por segundo
-    let lastTs = null;
-    let paused = false;
-    let rafId = null;
-
-    const tick = (ts) => {
-      if (lastTs == null) lastTs = ts;
-      const dt = (ts - lastTs) / 1000;
-      lastTs = ts;
-      if (!paused && setWidth) {
-        track.scrollLeft += speed * dt;
-        if (track.scrollLeft >= setWidth) track.scrollLeft -= setWidth;
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    root.addEventListener('mouseenter', () => { paused = true; });
-    root.addEventListener('mouseleave', () => { paused = false; lastTs = null; });
-
-    rafId = requestAnimationFrame(tick);
-  }
 }
 
 document.querySelectorAll('[data-carousel]').forEach(setupCarousel);

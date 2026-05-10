@@ -233,7 +233,6 @@ section { padding-block: var(--space-16); }
 #hero {
   background: var(--paper);
   padding-block: var(--space-10) var(--space-8);
-  border-bottom: 1px solid var(--line);
 }
 
 .hero-tag {
@@ -861,7 +860,19 @@ section { padding-block: var(--space-16); }
 }
 
 .logo-carousel--autoplay .logo-carousel__track {
-  scroll-behavior: auto;
+  flex: 0 0 auto;
+  width: max-content;
+  overflow: visible;
+  animation: logo-marquee 40s linear infinite;
+}
+
+.logo-carousel--autoplay:hover .logo-carousel__track {
+  animation-play-state: paused;
+}
+
+@keyframes logo-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* Logo wall */

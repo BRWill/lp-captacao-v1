@@ -852,10 +852,8 @@ section { padding-block: var(--space-16); }
 
 /* Faixa de logos entre Hero e Bloco 02 (autoplay) */
 #bloco-logos {
-  background: var(--paper);
-  padding: var(--space-8) 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  background: var(--white);
+  padding: var(--space-5) 0;
 }
 
 .logo-carousel--autoplay {

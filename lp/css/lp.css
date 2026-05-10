@@ -771,8 +771,12 @@ section { padding-block: var(--space-16); }
    ============================================================ */
 
 #bloco-autoridade {
-  background: var(--paper);
+  background: var(--white);
   text-align: center;
+}
+
+#bloco-autoridade .container {
+  max-width: 1500px;
 }
 
 #bloco-autoridade h2 {
@@ -962,19 +966,26 @@ section { padding-block: var(--space-16); }
 .logo-cliente:hover .logo-cliente__gray  { opacity: 0; }
 .logo-cliente:hover .logo-cliente__color { opacity: 1; }
 
-/* Avaliações Google — header (badge centralizado, sem card wrapper) */
+/* Avaliações Google — card wrapper */
+.google-reviews {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: var(--space-8) var(--space-4);
+  margin-top: var(--space-10);
+}
+
 .google-reviews__header {
   display: flex;
   justify-content: center;
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-8);
 }
 
-/* Reviews carousel (edge-to-edge — sem container) */
+/* Reviews carousel (dentro do card .google-reviews) */
 .reviews-carousel {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding-inline: var(--space-4);
 }
 
 .reviews-carousel__track {
@@ -985,7 +996,7 @@ section { padding-block: var(--space-16); }
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  padding: var(--space-4) var(--space-2);
+  padding: var(--space-2) 0;
 }
 
 .reviews-carousel__track::-webkit-scrollbar { display: none; }

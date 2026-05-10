@@ -14,4 +14,8 @@
 - Bloco 08, retirar o tempo do depoimento e ajustar esse layout entre as logos e depoimentos
 - No bloco 07, o numero do card do meio não faz contraste
 
+- Trocar a imagem real da equipe por algum tipo de avatar ou maneira mais adequada de mostrar a estrutura (analista financeiro, coordenador financeiro e gerente de relacionamento)
+
 ## MELHORIAS
+
+- incluir imagem/gif/vídeo curto do dashboard

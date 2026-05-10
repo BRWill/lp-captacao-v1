@@ -606,6 +606,12 @@ section { padding-block: var(--space-16); }
   .ad-table tr { border-bottom: 1px solid var(--line); }
 }
 
+.ad-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-10);
+}
+
 /* ============================================================
    BLOCO 06 — COMO FUNCIONA
    ============================================================ */
@@ -634,13 +640,24 @@ section { padding-block: var(--space-16); }
   padding: var(--space-8);
   border: 1px solid var(--line);
   position: relative;
+  transition: background var(--duration) var(--ease),
+              border-color var(--duration) var(--ease),
+              transform var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease);
+}
+
+.fase-card:hover {
+  background: var(--brand-tint);
+  border-color: var(--brand-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .fase-card__num {
   font-family: var(--font-serif);
   font-size: var(--text-5xl);
   font-weight: 700;
-  color: var(--brand-tint);
+  color: var(--brand);
   line-height: 1;
   margin-bottom: var(--space-4);
 }
@@ -668,11 +685,6 @@ section { padding-block: var(--space-16); }
   font-size: var(--text-sm);
   color: var(--ink-soft);
   line-height: var(--leading-loose);
-}
-
-.fase-card--destaque {
-  background: var(--brand-tint);
-  border-color: var(--brand-soft);
 }
 
 /* ============================================================
@@ -760,12 +772,8 @@ section { padding-block: var(--space-16); }
    ============================================================ */
 
 #bloco-autoridade {
-  background: var(--white);
+  background: var(--paper);
   text-align: center;
-}
-
-#bloco-autoridade .container {
-  max-width: 1280px;
 }
 
 #bloco-autoridade h2 {
@@ -840,6 +848,22 @@ section { padding-block: var(--space-16); }
   font-weight: 600;
   color: var(--ink-soft);
   letter-spacing: 0.01em;
+}
+
+/* Faixa de logos entre Hero e Bloco 02 (autoplay) */
+#bloco-logos {
+  background: var(--paper);
+  padding: var(--space-8) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo-carousel--autoplay {
+  overflow: hidden;
+}
+
+.logo-carousel--autoplay .logo-carousel__track {
+  scroll-behavior: auto;
 }
 
 /* Logo wall */
@@ -929,35 +953,19 @@ section { padding-block: var(--space-16); }
 .logo-cliente:hover .logo-cliente__gray  { opacity: 0; }
 .logo-cliente:hover .logo-cliente__color { opacity: 1; }
 
-/* Avaliações Google (badge + reviews agrupados) */
-.google-reviews {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--r-xl);
-  padding: var(--space-8);
-  margin-top: var(--space-12);
-}
-
+/* Avaliações Google — header (badge centralizado, sem card wrapper) */
 .google-reviews__header {
   display: flex;
   justify-content: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
 }
 
-.google-reviews .google-badge {
-  margin-bottom: 0;
-  background: var(--white);
-}
-
-.google-reviews .review-card {
-  background: var(--white);
-}
-
-/* Reviews carousel */
+/* Reviews carousel (edge-to-edge — sem container) */
 .reviews-carousel {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  padding-inline: var(--space-4);
 }
 
 .reviews-carousel__track {
@@ -968,7 +976,7 @@ section { padding-block: var(--space-16); }
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  padding: var(--space-2) 0;
+  padding: var(--space-4) var(--space-2);
 }
 
 .reviews-carousel__track::-webkit-scrollbar { display: none; }
@@ -1024,7 +1032,7 @@ section { padding-block: var(--space-16); }
 }
 
 .review-card {
-  background: var(--paper);
+  background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
   padding: var(--space-6);
@@ -1032,6 +1040,7 @@ section { padding-block: var(--space-16); }
   flex-direction: column;
   gap: var(--space-3);
   text-align: left;
+  box-shadow: var(--shadow-sm);
 }
 
 .review-card__header {

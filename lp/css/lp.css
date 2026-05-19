@@ -982,7 +982,7 @@ section { padding-block: var(--space-16); }
 }
 
 .google-reviews__header .google-badge {
-  margin-bottom: 0;
+  margin-bottom: 15px;
 }
 
 /* Reviews carousel (dentro do card .google-reviews) */

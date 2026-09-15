@@ -11,11 +11,11 @@
 - ~~No bloco 08, retirar a parte de dados e indicadores e focar nos clientes ativos e depoimentos Google (vide Libertas)~~
 - Bloco 06, o numero do bloco com fundo azul está sem contraste - deixar hover (muda fudo conforme passa o mouse)
 
-- Bloco 08, retirar o tempo do depoimento e ajustar esse layout entre as logos e depoimentos
+- ~~Bloco 08, retirar o tempo do depoimento e ajustar esse layout entre as logos e depoimentos~~
 - No bloco 07, o numero do card do meio não faz contraste
 
-- Trocar a imagem real da equipe por algum tipo de avatar ou maneira mais adequada de mostrar a estrutura (analista financeiro, coordenador financeiro e gerente de relacionamento)
 
 ## MELHORIAS
 
 - incluir imagem/gif/vídeo curto do dashboard
+- Trocar a imagem real da equipe por algum tipo de avatar ou maneira mais adequada de mostrar a estrutura (analista financeiro, coordenador financeiro e gerente de relacionamento)

@@ -1,0 +1,990 @@
+<!-- ============================================================
+     LP VALOREASY — BLOCO PARA WORDPRESS (HTML personalizado)
+     Cole TUDO isto dentro do bloco "HTML personalizado".
+     Recomendado: página com Modelo "Tela do Elementor" (Canvas).
+     Imagens esperadas em: /wp-content/uploads/lp/assets/
+     ============================================================ -->
+
+<style>
+/* ---- Fontes ---- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+
+/* ---- TOKENS (oklch convertido para HEX) ---- */
+#vlr-lp {
+  --brand:       #005C9B;
+  --brand-deep:  #003562;
+  --brand-soft:  #8CBDE8;
+  --brand-tint:  #CFE8FE;
+  --accent:      #A5292B;
+  --accent-deep: #691214;
+  --accent-tint: #FFE4E1;
+  --good:        #0B7643;
+  --warn:        #B67700;
+  --ink:         #11171A;
+  --ink-soft:    #4F575B;
+  --ink-muted:   #899094;
+  --line:        #D5D0C8;
+  --paper:       #FAF6F1;
+  --white:       #ffffff;
+
+  --font-serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-sans:  'Geist', 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem; --text-md: 1.125rem;
+  --text-lg: 1.25rem; --text-xl: 1.5rem; --text-2xl: 1.875rem; --text-3xl: 2.25rem;
+  --text-4xl: 3rem; --text-5xl: 3.75rem;
+
+  --leading-tight: 1.15; --leading-snug: 1.3; --leading-normal: 1.6; --leading-loose: 1.8;
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+  --space-12: 3rem; --space-16: 4rem; --space-20: 5rem; --space-24: 6rem; --space-32: 8rem;
+
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 24px; --r-full: 9999px;
+
+  --shadow-sm: 0 1px 0 rgba(20,26,26,.04), 0 2px 6px -2px rgba(20,26,26,.06);
+  --shadow-md: 0 1px 0 rgba(20,26,26,.04), 0 12px 28px -16px rgba(20,26,26,.14);
+  --shadow-lg: 0 1px 0 rgba(20,26,26,.04), 0 28px 60px -28px rgba(20,26,26,.18);
+
+  --container: 1100px; --container-narrow: 720px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); --duration: 200ms;
+
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- RESET (isolado em #vlr-lp) ---- */
+#vlr-lp, #vlr-lp *, #vlr-lp *::before, #vlr-lp *::after { box-sizing: border-box; margin: 0; padding: 0; }
+#vlr-lp img { display: block; max-width: 100%; height: auto; }
+#vlr-lp a { color: inherit; text-decoration: none; }
+#vlr-lp ul, #vlr-lp ol { list-style: none; }
+#vlr-lp button { cursor: pointer; border: none; background: none; font: inherit; }
+#vlr-lp strong { font-weight: 600; }
+#vlr-lp em { font-style: italic; }
+
+/* ---- TIPOGRAFIA ---- */
+#vlr-lp .serif { font-family: var(--font-serif); }
+#vlr-lp h1, #vlr-lp h2, #vlr-lp h3 {
+  font-family: var(--font-serif); line-height: var(--leading-tight);
+  font-weight: 600; color: var(--ink);
+}
+#vlr-lp h1 { font-size: var(--text-3xl); }
+#vlr-lp h2 { font-size: var(--text-2xl); }
+#vlr-lp h3 { font-size: var(--text-xl); }
+@media (min-width: 768px) {
+  #vlr-lp h1 { font-size: var(--text-4xl); }
+  #vlr-lp h2 { font-size: var(--text-3xl); }
+  #vlr-lp h3 { font-size: var(--text-2xl); }
+}
+@media (min-width: 1100px) { #vlr-lp h1 { font-size: var(--text-5xl); } }
+
+/* ---- LAYOUT ---- */
+#vlr-lp .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--space-6); }
+#vlr-lp .container--narrow { max-width: var(--container-narrow); }
+#vlr-lp section { padding-block: var(--space-16); }
+@media (min-width: 768px) { #vlr-lp section { padding-block: var(--space-24); } }
+
+/* ---- BOTÕES ---- */
+#vlr-lp .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  padding: var(--space-4) var(--space-8); border-radius: var(--r-md);
+  font-family: var(--font-sans); font-size: var(--text-base); font-weight: 600;
+  line-height: 1; transition: all var(--duration) var(--ease); white-space: nowrap;
+}
+#vlr-lp .btn--primary { background: var(--brand); color: var(--white); box-shadow: var(--shadow-md); }
+#vlr-lp .btn--primary:hover { background: var(--brand-deep); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+#vlr-lp .btn--accent { background: var(--accent); color: var(--white); box-shadow: var(--shadow-md); }
+#vlr-lp .btn--accent:hover { background: var(--accent-deep); transform: translateY(-1px); }
+#vlr-lp .btn--green { background: var(--good); color: var(--white); box-shadow: var(--shadow-md); }
+#vlr-lp .btn--green:hover { background: #005F2E; transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+#vlr-lp .btn--whatsapp { background: #25D366; color: var(--white); box-shadow: var(--shadow-md); }
+#vlr-lp .btn--whatsapp:hover { background: #1ebe5d; transform: translateY(-1px); }
+#vlr-lp .btn--ghost { background: transparent; color: var(--brand); border: 2px solid var(--brand); }
+#vlr-lp .btn--ghost:hover { background: var(--brand-tint); }
+#vlr-lp .btn--lg { padding: var(--space-5) var(--space-10); font-size: var(--text-md); }
+#vlr-lp .btn--full { width: 100%; }
+
+/* ---- SELOS ---- */
+#vlr-lp .selos { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+#vlr-lp .selo { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--ink-soft); font-weight: 500; }
+#vlr-lp .selo__icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--good); }
+
+/* ---- HEADER ---- */
+#vlr-lp .site-header { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+#vlr-lp .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+#vlr-lp .logo { display: flex; align-items: center; flex-shrink: 0; }
+#vlr-lp .logo img { height: 36px; width: auto; display: block; }
+#vlr-lp .header-cta { display: none; }
+@media (min-width: 768px) { #vlr-lp .header-cta { display: flex; } }
+
+/* ---- HERO ---- */
+#vlr-lp #hero { background: var(--paper); padding-block: var(--space-10) var(--space-8); }
+#vlr-lp .hero-tag { display: inline-block; padding: var(--space-1) var(--space-4); background: var(--brand-tint); color: var(--brand); border-radius: var(--r-full); font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-6); }
+#vlr-lp .hero-headline { max-width: 720px; margin-bottom: var(--space-6); }
+#vlr-lp .hero-headline em { font-style: italic; color: var(--brand); }
+#vlr-lp .hero-sub { font-size: var(--text-md); color: var(--ink-soft); max-width: 600px; line-height: var(--leading-loose); margin-bottom: var(--space-10); }
+#vlr-lp .hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-10); align-items: start; }
+@media (min-width: 900px) { #vlr-lp .hero-grid { grid-template-columns: 1fr 420px; gap: var(--space-16); } }
+#vlr-lp .hero-form-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); padding: var(--space-6); box-shadow: var(--shadow-lg); }
+#vlr-lp .form-title { font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-2); color: var(--ink); }
+#vlr-lp .form-subtitle { font-size: var(--text-sm); color: var(--ink-soft); margin-bottom: var(--space-3); }
+#vlr-lp .form-group { margin-bottom: var(--space-3); }
+#vlr-lp .form-group label { display: block; font-size: var(--text-sm); font-weight: 600; color: var(--ink); margin-bottom: var(--space-1); }
+#vlr-lp .form-group input, #vlr-lp .form-group select { width: 100%; padding: var(--space-2) var(--space-3); border: 1px solid var(--line); border-radius: var(--r-md); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--ink); background: var(--white); transition: border-color var(--duration) var(--ease); -webkit-appearance: none; }
+#vlr-lp .form-group input:focus, #vlr-lp .form-group select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-tint); }
+#vlr-lp .form-group input::placeholder { color: var(--ink-muted); }
+#vlr-lp .form-submit-btn { width: 100%; margin-top: var(--space-2); padding: var(--space-4) var(--space-6); font-size: var(--text-md); }
+#vlr-lp .form-selos { margin-top: var(--space-4); gap: var(--space-3); }
+#vlr-lp .form-selos .selo { font-size: var(--text-xs); }
+#vlr-lp .form-sucesso { text-align: center; padding: var(--space-8); }
+#vlr-lp .form-sucesso__icon { font-size: 3rem; margin-bottom: var(--space-4); }
+#vlr-lp .form-sucesso__title { font-family: var(--font-serif); font-size: var(--text-xl); color: var(--good); margin-bottom: var(--space-2); }
+#vlr-lp .form-erro { color: #B33736; font-size: var(--text-sm); margin-top: var(--space-2); text-align: center; }
+
+/* ---- BLOCO 02 — DOR ---- */
+#vlr-lp #bloco-dor { background: var(--brand-deep); color: var(--white); }
+#vlr-lp #bloco-dor h2 { color: var(--white); margin-bottom: var(--space-10); }
+#vlr-lp #bloco-dor h2 em { color: var(--brand-soft); font-style: italic; }
+#vlr-lp .dor-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+@media (min-width: 640px) { #vlr-lp .dor-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { #vlr-lp .dor-grid { grid-template-columns: repeat(3, 1fr); } }
+#vlr-lp .dor-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: var(--space-6); }
+#vlr-lp .dor-item__quote { font-family: var(--font-serif); font-size: var(--text-lg); font-style: italic; line-height: var(--leading-snug); color: rgba(255,255,255,0.92); }
+#vlr-lp .dor-item__quote::before { content: '\201C'; color: rgba(255,255,255,0.35); }
+#vlr-lp .dor-item__quote::after  { content: '\201D'; color: rgba(255,255,255,0.35); }
+
+/* ---- BLOCO 03 — VIRADA ---- */
+#vlr-lp #bloco-virada { background: var(--brand-tint); text-align: center; }
+#vlr-lp #bloco-virada h2 { max-width: 700px; margin-inline: auto; margin-bottom: var(--space-6); }
+#vlr-lp #bloco-virada p { font-size: var(--text-md); color: var(--ink-soft); max-width: 600px; margin-inline: auto; line-height: var(--leading-loose); }
+#vlr-lp #bloco-virada strong { color: var(--brand); }
+
+/* ---- BLOCO 04 — DENTRO ---- */
+#vlr-lp #bloco-dentro { background: var(--white); }
+#vlr-lp .dentro-header { margin-bottom: var(--space-12); }
+#vlr-lp .dentro-header h2 { margin-bottom: var(--space-4); }
+#vlr-lp .dentro-header em { font-style: italic; color: var(--brand); }
+#vlr-lp .dentro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+@media (min-width: 768px) { #vlr-lp .dentro-grid { grid-template-columns: repeat(4, 1fr); } }
+#vlr-lp .dentro-item { background: var(--paper); border-radius: var(--r-lg); padding: var(--space-6); border: 1px solid var(--line); transition: box-shadow var(--duration) var(--ease); }
+#vlr-lp .dentro-item:hover { box-shadow: var(--shadow-md); }
+#vlr-lp .dentro-item__num { font-family: var(--font-serif); font-size: var(--text-3xl); font-weight: 700; color: var(--brand-soft); line-height: 1; margin-bottom: var(--space-2); }
+#vlr-lp .dentro-item__title { font-weight: 700; font-size: var(--text-base); color: var(--ink); margin-bottom: var(--space-1); }
+#vlr-lp .dentro-item__desc { font-size: var(--text-sm); color: var(--ink-soft); line-height: var(--leading-normal); }
+
+/* ---- BLOCO 05 — ANTES x DEPOIS ---- */
+#vlr-lp #bloco-antes-depois { background: var(--paper); }
+#vlr-lp #bloco-antes-depois h2 { margin-bottom: var(--space-10); text-align: center; }
+#vlr-lp .ad-table { width: 100%; border-collapse: collapse; border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-md); }
+#vlr-lp .ad-table th { padding: var(--space-5) var(--space-6); font-family: var(--font-sans); font-weight: 700; font-size: var(--text-base); text-align: left; }
+#vlr-lp .ad-table th:first-child { background: var(--ink); color: var(--white); width: 50%; }
+#vlr-lp .ad-table th:last-child { background: var(--brand); color: var(--white); width: 50%; }
+#vlr-lp .ad-table td { padding: var(--space-4) var(--space-6); font-size: var(--text-sm); vertical-align: top; line-height: var(--leading-normal); border-bottom: 1px solid var(--line); }
+#vlr-lp .ad-table tr:last-child td { border-bottom: none; }
+#vlr-lp .ad-table td:first-child { background: var(--white); color: var(--ink-soft); }
+#vlr-lp .ad-table td:first-child::before { content: '✗ '; color: #B33736; font-weight: 700; }
+#vlr-lp .ad-table td:last-child { background: var(--brand-tint); color: var(--ink); font-weight: 500; }
+#vlr-lp .ad-table td:last-child::before { content: '✓ '; color: var(--good); font-weight: 700; }
+@media (max-width: 639px) {
+  #vlr-lp .ad-table, #vlr-lp .ad-table thead, #vlr-lp .ad-table tbody, #vlr-lp .ad-table tr, #vlr-lp .ad-table td, #vlr-lp .ad-table th { display: block; width: 100%; }
+  #vlr-lp .ad-table thead tr { display: grid; grid-template-columns: 1fr 1fr; }
+  #vlr-lp .ad-table tbody tr { display: grid; grid-template-columns: 1fr 1fr; }
+  #vlr-lp .ad-table td { border-bottom: none; border-right: 1px solid var(--line); }
+  #vlr-lp .ad-table tr { border-bottom: 1px solid var(--line); }
+}
+#vlr-lp .ad-cta { display: flex; justify-content: center; margin-top: var(--space-10); }
+
+/* ---- BLOCO 06 — COMO FUNCIONA ---- */
+#vlr-lp #bloco-como-funciona { background: var(--white); }
+#vlr-lp #bloco-como-funciona h2 { margin-bottom: var(--space-10); }
+#vlr-lp .fases-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+@media (min-width: 768px) { #vlr-lp .fases-grid { grid-template-columns: repeat(3, 1fr); } }
+#vlr-lp .fase-card { background: var(--paper); border-radius: var(--r-xl); padding: var(--space-8); border: 1px solid var(--line); position: relative; transition: background var(--duration) var(--ease), border-color var(--duration) var(--ease), transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease); }
+#vlr-lp .fase-card:hover { background: var(--brand-tint); border-color: var(--brand-soft); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+#vlr-lp .fase-card__num { font-family: var(--font-serif); font-size: var(--text-5xl); font-weight: 700; color: var(--brand); line-height: 1; margin-bottom: var(--space-4); }
+#vlr-lp .fase-card__titulo { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-base); color: var(--brand); margin-bottom: var(--space-1); }
+#vlr-lp .fase-card__prazo { font-size: var(--text-sm); color: var(--ink-muted); margin-bottom: var(--space-4); }
+#vlr-lp .fase-card h3 { font-size: var(--text-lg); margin-bottom: var(--space-3); }
+#vlr-lp .fase-card p { font-size: var(--text-sm); color: var(--ink-soft); line-height: var(--leading-loose); }
+
+/* ---- BLOCO 07 — PARA QUEM ---- */
+#vlr-lp #bloco-para-quem { background: var(--paper); }
+#vlr-lp #bloco-para-quem h2 { margin-bottom: var(--space-10); text-align: center; }
+#vlr-lp .para-quem-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+@media (min-width: 768px) { #vlr-lp .para-quem-grid { grid-template-columns: 1fr 1fr; } }
+#vlr-lp .para-quem-card { border-radius: var(--r-xl); padding: var(--space-8); border: 1px solid var(--line); }
+#vlr-lp .para-quem-card--sim { background: var(--white); border-color: var(--good); border-width: 2px; }
+#vlr-lp .para-quem-card--nao { background: var(--white); }
+#vlr-lp .para-quem-card__header { font-family: var(--font-sans); font-weight: 700; font-size: var(--text-sm); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: var(--space-6); padding-bottom: var(--space-4); border-bottom: 1px solid var(--line); }
+#vlr-lp .para-quem-card--sim .para-quem-card__header { color: var(--good); }
+#vlr-lp .para-quem-card--nao .para-quem-card__header { color: var(--ink-muted); }
+#vlr-lp .para-quem-list { display: flex; flex-direction: column; gap: var(--space-3); }
+#vlr-lp .para-quem-list li { display: flex; gap: var(--space-3); align-items: flex-start; font-size: var(--text-sm); line-height: var(--leading-snug); color: var(--ink-soft); }
+#vlr-lp .para-quem-list li::before { flex-shrink: 0; font-weight: 700; margin-top: 2px; }
+#vlr-lp .para-quem-card--sim .para-quem-list li::before { content: '✓'; color: var(--good); }
+#vlr-lp .para-quem-card--nao .para-quem-list li::before { content: '✗'; color: var(--ink-muted); }
+
+/* ---- BLOCO 08 — AUTORIDADE ---- */
+#vlr-lp #bloco-autoridade { background: var(--white); text-align: center; }
+#vlr-lp #bloco-autoridade .container { max-width: 1280px; }
+#vlr-lp #bloco-autoridade h2 { margin-bottom: var(--space-4); }
+#vlr-lp .autoridade-sub { font-size: var(--text-md); color: var(--ink-soft); max-width: 600px; margin-inline: auto; margin-bottom: var(--space-12); }
+#vlr-lp .autoridade-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-8); margin-bottom: var(--space-12); }
+#vlr-lp .stat-item { text-align: center; }
+#vlr-lp .stat-num { font-family: var(--font-serif); font-size: var(--text-4xl); font-weight: 700; color: var(--brand); line-height: 1; margin-bottom: var(--space-1); }
+#vlr-lp .stat-label { font-size: var(--text-sm); color: var(--ink-soft); }
+#vlr-lp .google-badge { display: inline-flex; align-items: center; gap: var(--space-3); background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--space-4) var(--space-6); margin-bottom: var(--space-10); box-shadow: var(--shadow-sm); }
+#vlr-lp .google-badge__score { font-family: var(--font-serif); font-size: var(--text-3xl); font-weight: 700; color: var(--ink); line-height: 1; }
+#vlr-lp .google-badge__stars { color: #F4B400; font-size: var(--text-xl); }
+#vlr-lp .google-badge__info { text-align: left; }
+#vlr-lp .google-badge__label { font-size: var(--text-sm); font-weight: 600; color: var(--ink-soft); letter-spacing: 0.01em; }
+#vlr-lp #bloco-logos { background: var(--white); padding: var(--space-5) 0; }
+#vlr-lp .logo-carousel--autoplay { overflow: hidden; }
+#vlr-lp .logo-carousel--autoplay .logo-carousel__track { flex: 0 0 auto; width: max-content; overflow: visible; animation: vlr-logo-marquee 40s linear infinite; }
+#vlr-lp .logo-carousel--autoplay:hover .logo-carousel__track { animation-play-state: paused; }
+@keyframes vlr-logo-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+#vlr-lp .logo-wall { margin-bottom: var(--space-12); }
+#vlr-lp .logo-wall__title { font-size: var(--text-sm); color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: var(--space-6); text-align: center; }
+#vlr-lp .logo-carousel { display: flex; align-items: center; gap: var(--space-3); }
+#vlr-lp .logo-carousel__track { display: flex; flex: 1; gap: var(--space-10); align-items: center; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; padding: var(--space-2) 0; }
+#vlr-lp .logo-carousel__track::-webkit-scrollbar { display: none; }
+#vlr-lp .logo-carousel__arrow { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--white); border: 1px solid var(--line); font-family: var(--font-sans); font-size: 1.5rem; line-height: 1; color: var(--ink-soft); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--duration) var(--ease); box-shadow: var(--shadow-sm); }
+#vlr-lp .logo-carousel__arrow:hover { background: var(--brand); color: var(--white); border-color: var(--brand); }
+#vlr-lp .logo-carousel .logo-cliente { flex-shrink: 0; }
+#vlr-lp .logo-cliente { position: relative; width: 140px; height: 60px; display: flex; align-items: center; justify-content: center; }
+#vlr-lp .logo-cliente img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity var(--duration) var(--ease); }
+#vlr-lp .logo-cliente__color { opacity: 0; }
+#vlr-lp .logo-cliente:hover .logo-cliente__gray { opacity: 0; }
+#vlr-lp .logo-cliente:hover .logo-cliente__color { opacity: 1; }
+#vlr-lp .google-reviews { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-xl); padding: var(--space-8) var(--space-4); margin-top: var(--space-10); }
+#vlr-lp .google-reviews__header { display: flex; justify-content: center; margin-bottom: var(--space-3); }
+#vlr-lp .google-reviews__header .google-badge { margin-bottom: 15px; }
+#vlr-lp .reviews-carousel { display: flex; align-items: center; gap: var(--space-3); }
+#vlr-lp .reviews-carousel__track { display: flex; flex: 1; gap: var(--space-5); align-items: stretch; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; padding: var(--space-2) 0; }
+#vlr-lp .reviews-carousel__track::-webkit-scrollbar { display: none; }
+#vlr-lp .reviews-carousel__arrow { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--white); border: 1px solid var(--line); font-family: var(--font-sans); font-size: 1.5rem; line-height: 1; color: var(--ink-soft); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--duration) var(--ease); box-shadow: var(--shadow-sm); }
+#vlr-lp .reviews-carousel__arrow:hover { background: var(--brand); color: var(--white); border-color: var(--brand); }
+#vlr-lp .reviews-carousel .review-card { flex: 0 0 380px; max-width: 380px; }
+@media (max-width: 640px) { #vlr-lp .reviews-carousel .review-card { flex: 0 0 290px; max-width: 290px; } }
+#vlr-lp .reviews-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-5); margin-top: var(--space-10); text-align: left; }
+@media (min-width: 768px) { #vlr-lp .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+#vlr-lp .review-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); text-align: left; box-shadow: var(--shadow-sm); }
+#vlr-lp .review-card__header { display: flex; align-items: center; gap: var(--space-3); }
+#vlr-lp .review-card__avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: 500; font-size: 16px; color: var(--white); flex-shrink: 0; position: relative; overflow: visible; }
+#vlr-lp .review-card__avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+#vlr-lp .review-card__avatar--red { background: #db4437; }
+#vlr-lp .review-card__avatar--blue { background: #4285f4; }
+#vlr-lp .review-card__avatar--green { background: #0f9d58; }
+#vlr-lp .review-card__avatar--pink { background: #db5b91; }
+#vlr-lp .review-card__avatar--purple { background: #ab47bc; }
+#vlr-lp .review-card__avatar--orange { background: #ff6e40; }
+#vlr-lp .review-card__avatar--teal { background: #009688; }
+#vlr-lp .review-card__guide { position: absolute; bottom: -2px; right: -2px; width: 14px; height: 14px; background: #34a853; border: 2px solid var(--white); border-radius: 50%; }
+#vlr-lp .review-card__name { font-weight: 600; font-size: var(--text-sm); color: var(--ink); line-height: 1.2; }
+#vlr-lp .review-card__author-meta { font-size: 12px; color: var(--ink-muted); line-height: 1.4; margin-top: 2px; }
+#vlr-lp .review-card__company { font-size: 11px; color: var(--brand); font-weight: 600; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+#vlr-lp .review-card__rating { display: flex; align-items: center; gap: var(--space-2); }
+#vlr-lp .review-card__stars { color: #FBBC05; font-size: var(--text-sm); letter-spacing: 1px; line-height: 1; }
+#vlr-lp .review-card__date { font-size: 12px; color: var(--ink-muted); }
+#vlr-lp .review-card__text { font-size: var(--text-sm); color: var(--ink-soft); line-height: var(--leading-loose); }
+
+/* ---- BLOCO 09 — CTA MID ---- */
+#vlr-lp #bloco-cta-mid { background: var(--brand); text-align: center; padding-block: var(--space-16); }
+#vlr-lp #bloco-cta-mid h2 { color: var(--white); margin-bottom: var(--space-4); }
+#vlr-lp #bloco-cta-mid h2 em { color: var(--brand-soft); font-style: italic; }
+#vlr-lp #bloco-cta-mid p { color: rgba(255,255,255,0.8); font-size: var(--text-md); max-width: 500px; margin-inline: auto; margin-bottom: var(--space-8); }
+#vlr-lp .cta-mid-btns { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; }
+#vlr-lp .cta-mid-selos { margin-top: var(--space-6); justify-content: center; }
+#vlr-lp .cta-mid-selos .selo { color: rgba(255,255,255,0.7); }
+
+/* ---- BLOCO 10 — EQUIPE ---- */
+#vlr-lp #bloco-equipe { background: var(--paper); }
+#vlr-lp #bloco-equipe h2 { margin-bottom: var(--space-4); }
+#vlr-lp #bloco-equipe h2 em { color: var(--brand); font-style: italic; }
+#vlr-lp .equipe-sub { font-size: var(--text-md); color: var(--ink-soft); max-width: 540px; line-height: var(--leading-loose); margin-bottom: var(--space-12); }
+#vlr-lp .equipe-grid { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-bottom: var(--space-12); }
+#vlr-lp .equipe-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); padding: var(--space-6); display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; min-width: 140px; }
+#vlr-lp .equipe-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--brand-tint); margin-bottom: var(--space-3); overflow: hidden; }
+#vlr-lp .equipe-avatar img { width: 100%; height: 100%; object-fit: cover; }
+#vlr-lp .equipe-avatar--placeholder { display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl); color: var(--brand-soft); }
+#vlr-lp .equipe-nome { font-weight: 700; font-size: var(--text-sm); color: var(--ink); margin-bottom: var(--space-1); }
+#vlr-lp .equipe-cargo { font-size: var(--text-xs); color: var(--ink-muted); }
+
+/* ---- BLOCO 11 — FAQ ---- */
+#vlr-lp #bloco-faq { background: var(--white); }
+#vlr-lp #bloco-faq h2 { margin-bottom: var(--space-10); }
+#vlr-lp .faq-list { display: flex; flex-direction: column; gap: var(--space-3); max-width: 720px; }
+#vlr-lp .faq-item { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; transition: box-shadow var(--duration) var(--ease); }
+#vlr-lp .faq-item.open { box-shadow: var(--shadow-md); border-color: var(--brand-soft); }
+#vlr-lp .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-5) var(--space-6); text-align: left; font-family: var(--font-sans); font-size: var(--text-base); font-weight: 600; color: var(--ink); background: var(--white); cursor: pointer; transition: background var(--duration) var(--ease); }
+#vlr-lp .faq-question:hover { background: var(--paper); }
+#vlr-lp .faq-item.open .faq-question { background: var(--brand-tint); color: var(--brand); }
+#vlr-lp .faq-icon { flex-shrink: 0; width: 24px; height: 24px; border: 2px solid currentColor; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--text-lg); line-height: 1; transition: transform var(--duration) var(--ease); }
+#vlr-lp .faq-item.open .faq-icon { transform: rotate(45deg); }
+#vlr-lp .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); }
+#vlr-lp .faq-item.open .faq-answer { max-height: 400px; }
+#vlr-lp .faq-answer__inner { padding: 0 var(--space-6) var(--space-5); font-size: var(--text-sm); color: var(--ink-soft); line-height: var(--leading-loose); }
+
+/* ---- BLOCO 12 — CTA FINAL ---- */
+#vlr-lp #bloco-cta-final { background: var(--ink); text-align: center; }
+#vlr-lp #bloco-cta-final h2 { color: var(--white); max-width: 660px; margin-inline: auto; margin-bottom: var(--space-4); }
+#vlr-lp #bloco-cta-final h2 em { color: var(--accent); font-style: italic; }
+#vlr-lp #bloco-cta-final p { color: rgba(255,255,255,0.7); font-size: var(--text-md); max-width: 500px; margin-inline: auto; margin-bottom: var(--space-8); line-height: var(--leading-loose); }
+#vlr-lp .cta-final-btns { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; margin-bottom: var(--space-8); }
+#vlr-lp .cta-final-selos { justify-content: center; }
+#vlr-lp .cta-final-selos .selo { color: rgba(255,255,255,0.6); }
+#vlr-lp .custo-inacao { margin-top: var(--space-8); font-size: var(--text-sm); color: rgba(255,255,255,0.4); font-style: italic; }
+
+/* ---- FOOTER ---- */
+#vlr-lp .site-footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08); padding-block: var(--space-8); text-align: center; }
+#vlr-lp .site-footer p { font-size: var(--text-xs); color: rgba(255,255,255,0.3); }
+
+/* ---- MOBILE STICKY CTA ---- */
+#vlr-lp #mobile-cta-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--white); border-top: 1px solid var(--line); padding: var(--space-3) var(--space-4); display: flex; gap: var(--space-3); box-shadow: 0 -4px 20px rgba(20,26,26,.12); transform: translateY(100%); transition: transform var(--duration) var(--ease); }
+#vlr-lp #mobile-cta-bar.visible { transform: translateY(0); }
+#vlr-lp #mobile-cta-bar .btn { flex: 1; padding: var(--space-3) var(--space-4); font-size: var(--text-sm); }
+@media (min-width: 768px) { #vlr-lp #mobile-cta-bar { display: none; } }
+
+/* ---- UTILITÁRIOS ---- */
+#vlr-lp .text-center { text-align: center; }
+#vlr-lp .text-brand { color: var(--brand); }
+#vlr-lp .text-accent { color: var(--accent); }
+#vlr-lp .text-muted { color: var(--ink-muted); }
+#vlr-lp .mb-2 { margin-bottom: var(--space-2); }
+#vlr-lp .mb-4 { margin-bottom: var(--space-4); }
+#vlr-lp .mb-6 { margin-bottom: var(--space-6); }
+#vlr-lp .mb-8 { margin-bottom: var(--space-8); }
+#vlr-lp .mb-10 { margin-bottom: var(--space-10); }
+#vlr-lp .mb-12 { margin-bottom: var(--space-12); }
+#vlr-lp .divider { border: none; border-top: 1px solid var(--line); margin-block: var(--space-10); }
+#vlr-lp [hidden] { display: none !important; }
+</style>
+
+
+<div id="vlr-lp">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#hero" class="logo">
+          <img src="COLE_AQUI_A_URL_BASE/logo-valoreasy.png" alt="Valoreasy" height="36">
+        </a>
+        <a href="#hero-form" class="btn btn--primary header-cta">Fale com um especialista </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BLOCO 01 — HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-tag">BPO Financeiro para empresas de serviço · A partir de R$ 50k/mês</span>
+          <h1 class="hero-headline">Você não precisa mais se <em>preocupar</em> com o financeiro.<br></h1>
+          <p class="hero-sub">Em 30 dias, a Valoreasy te entrega uma operação <b>profissional:</b> equipe dedicada, sistema 100% operado e apoio consultivo para tomada de decisões.</p>
+          <div class="selos">
+            <div class="selo"><span class="selo__icon">★</span> 5.0 no Google</div>
+            <div class="selo"><span class="selo__icon">✓</span> +100 empresas atendidas</div>
+            <div class="selo"><span class="selo__icon">✓</span> 6 anos de operação</div>
+          </div>
+        </div>
+
+        <div id="hero-form">
+          <div class="hero-form-card">
+            <p class="form-title">Diagnóstico gratuito em até 12h</p>
+            <p class="form-subtitle">Sem compromisso. Você faz uma sessão com nosso time e recebe uma proposta personalizada.</p>
+            <form id="lp-form" novalidate>
+              <div class="form-group">
+                <label for="nome">Seu nome *</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome completo" required autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="email">E-mail comercial *</label>
+                <input type="email" id="email" name="email" placeholder="voce@empresa.com.br" required autocomplete="email">
+              </div>
+              <div class="form-group">
+                <label for="telefone">WhatsApp *</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label for="empresa">Nome da empresa</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Empresa Ltda." autocomplete="organization">
+              </div>
+              <div class="form-group">
+                <label for="faturamento">Faturamento mensal aproximado</label>
+                <select id="faturamento" name="faturamento">
+                  <option value="">Selecione</option>
+                  <option value="50k-100k">R$ 50k – R$ 100k</option>
+                  <option value="100k-200k">R$ 100k – R$ 200k</option>
+                  <option value="200k-500k">R$ 200k – R$ 500k</option>
+                  <option value="500k+">Acima de R$ 500k</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn--green form-submit-btn">Quero conhecer →</button>
+            </form>
+
+            <div id="form-sucesso" hidden>
+              <div class="form-sucesso">
+                <div class="form-sucesso__icon">✅</div>
+                <p class="form-sucesso__title">Recebemos seu pedido!</p>
+                <p>Nossa equipe entra em contato em até 12 horas com seu diagnóstico personalizado.</p>
+              </div>
+            </div>
+
+            <p id="form-erro" class="form-erro" hidden>Erro ao enviar. Tente novamente ou fale pelo WhatsApp.</p>
+
+            <div class="selos form-selos" style="margin-top: 1rem;">
+              <div class="selo"><span class="selo__icon">✓</span> Diagnóstico gratuito</div>
+              <div class="selo"><span class="selo__icon">✓</span> Resposta em até 12h</div>
+              <div class="selo"><span class="selo__icon">✓</span> Sem compromisso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAIXA — LOGOS -->
+  <section id="bloco-logos">
+    <p class="logo-wall__title">Empresas que confiam na Valoreasy</p>
+    <div class="logo-carousel logo-carousel--autoplay" data-carousel data-carousel-autoplay>
+      <div class="logo-carousel__track" data-carousel-track>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/1-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/1-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/2-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/2-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/3-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/3-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/4-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/4-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/5-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/5-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/6-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/6-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/7-gray.svg" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/7-color.svg" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/8-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/8-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/9-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/9-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+        <div class="logo-cliente"><img class="logo-cliente__gray" src="COLE_AQUI_A_URL_BASE/10-gray.png" alt="Cliente Valoreasy" loading="lazy"><img class="logo-cliente__color" src="COLE_AQUI_A_URL_BASE/10-color.png" alt="" aria-hidden="true" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 02 — DOR -->
+  <section id="bloco-dor">
+    <div class="container">
+      <h2>A empresa cresceu. O financeiro ficou <em>amador</em>.</h2>
+      <div class="dor-grid" style="margin-top: 2.5rem;">
+        <div class="dor-item"><p class="dor-item__quote">Não tenho tempo nem expertise para gerir o financeiro do jeito certo.</p></div>
+        <div class="dor-item"><p class="dor-item__quote">Não consigo ver meus números no dia a dia — só descubro o problema depois que já aconteceu.</p></div>
+        <div class="dor-item"><p class="dor-item__quote">Tenho um bom sistema, mas uso só 30% do que ele oferece.</p></div>
+        <div class="dor-item"><p class="dor-item__quote">Não consigo crescer sem clareza financeira — cada decisão grande parece um palpite.</p></div>
+        <div class="dor-item"><p class="dor-item__quote">Tenho dificuldade em encontrar bons profissionais para o financeiro</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 03 — VIRADA -->
+  <section id="bloco-virada">
+    <div class="container container--narrow text-center">
+      <h2>A conta não fecha: contratar custa, montar processos demora, e imprevistos sobram pra você.</h2>
+      <p style="margin-top: 1.5rem;">
+        Empresas que faturam a partir de R$ 50k/mês não precisam pensar em <em>estruturar</em> um departamento financeiro.
+        Precisam de uma solução <strong>acessível</strong> e com <strong>qualidade</strong>.
+        <br><br>
+        <strong>É exatamente isso que o BPO Financeiro da Valoreasy entrega.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- BLOCO 04 — O QUE ESTÁ DENTRO -->
+  <section id="bloco-dentro">
+    <div class="container">
+      <div class="dentro-header">
+        <h2>Um departamento <em>de verdade</em> tem oito coisas. Todas elas você já recebe com a Valoreasy.</h2>
+      </div>
+      <div class="dentro-grid">
+        <div class="dentro-item"><div class="dentro-item__num">01</div><div class="dentro-item__title">Equipe dedicada</div><div class="dentro-item__desc">Analista financeiro e gerente de relacionamento com nome, telefone e WhatsApp.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">02</div><div class="dentro-item__title">Sistema 100% operado</div><div class="dentro-item__desc">Seu ERP configurado e alimentado diariamente pela equipe Valoreasy.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">03</div><div class="dentro-item__title">Rotina financeira</div><div class="dentro-item__desc">Contas a pagar, a receber, conciliações e lançamentos — sem faltar um dia.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">04</div><div class="dentro-item__title">Fechamento no 5º DU</div><div class="dentro-item__desc">DRE, fluxo de caixa e indicadores-chave fechados até o 5º dia útil de todo mês.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">05</div><div class="dentro-item__title">Dashboard atualizado</div><div class="dentro-item__desc">Seus números visíveis todo dia — sem abrir planilha, sem esperar relatório.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">06</div><div class="dentro-item__title">Validação de Recebíveis</div><div class="dentro-item__desc">Controle ativo sobre as vendas e recebíveis de maquininhas e marketplaces.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">07</div><div class="dentro-item__title">Projeção de 90 dias</div><div class="dentro-item__desc">Você toma decisões com base em números, não em intuição.</div></div>
+        <div class="dentro-item"><div class="dentro-item__num">08</div><div class="dentro-item__title">Ponte com contabilidade</div><div class="dentro-item__desc">Entregamos tudo pré-fechado ao seu contador. Ele economiza tempo, você tem paz.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 05 — ANTES x DEPOIS -->
+  <section id="bloco-antes-depois">
+    <div class="container">
+      <h2>O que muda no seu mês</h2>
+      <div style="overflow-x: auto; margin-top: 2.5rem;">
+        <table class="ad-table">
+          <thead>
+            <tr><th>Hoje (sem Valoreasy)</th><th>Em 30 dias (com Valoreasy)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sem dados financeiros no dia a dia</td><td>Dashboard sempre atualizado</td></tr>
+            <tr><td>Desorganização e desperdício</td><td>Redução a zero com desperdícios financeiros</td></tr>
+            <tr><td>Alto custo de tempo ou de pessoas</td><td>Equipe 100% operada pela Valoreasy</td></tr>
+            <tr><td>Fechamento financeiro tardio e incompleto</td><td>DRE + fluxo de caixa + KPI's até o 5º dia útil</td></tr>
+            <tr><td>Decisões sem base nos números</td><td>Acompanhamento estratégico mensal com dados reais</td></tr>
+            <tr><td>Crescimento travado por falta de clareza</td><td>Base financeira para crescer com segurança</td></tr>
+            <tr><td>Entrega bagunçada para a contabilidade</td><td>Comunicação rápida e precisa com a contabilidade</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ad-cta">
+        <a href="#hero-form" class="btn btn--primary">Quero migrar para a coluna da direita →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 06 — COMO FUNCIONA -->
+  <section id="bloco-como-funciona">
+    <div class="container">
+      <h2>Como funciona</h2>
+      <div class="fases-grid" style="margin-top: 2.5rem;">
+        <div class="fase-card">
+          <div class="fase-card__num">1</div>
+          <div class="fase-card__titulo">SESSÃO FINANCEIRA</div>
+          <div class="fase-card__prazo">1 semana · Gratuito</div>
+          <h3>Mapeamos tudo</h3>
+          <p>Entendemos sua operação atual, equipe, gaps e sistemas. Você recebe um plano por escrito — escopo, prazo e investimento. <strong>É seu, mesmo que não feche.</strong></p>
+        </div>
+        <div class="fase-card">
+          <div class="fase-card__num">2</div>
+          <div class="fase-card__titulo">IMPLANTAÇÃO</div>
+          <div class="fase-card__prazo">2 a 4 semanas</div>
+          <h3>Montamos sua operação</h3>
+          <p>Configuramos o sistema, organizamos os processos e gerenciamos a passagem de bastão. <strong>Sem crise, tudo bem orientado e alinhado.</strong></p>
+        </div>
+        <div class="fase-card">
+          <div class="fase-card__num">3</div>
+          <div class="fase-card__titulo">OPERAÇÃO CONTÍNUA</div>
+          <div class="fase-card__prazo">Todo mês, todo dia</div>
+          <h3>Seu financeiro roda</h3>
+          <p>Equipe humana te atendendo todos os dias. Atividades sempre em dia. Dashboard atualizado e dados sempre que preciso. <strong>Você olha para o negócio — o financeiro, a gente cuida.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 07 — PARA QUEM É -->
+  <section id="bloco-para-quem">
+    <div class="container">
+      <h2>Para quem é a Valoreasy</h2>
+      <div class="para-quem-grid" style="margin-top: 2.5rem;">
+        <div class="para-quem-card para-quem-card--sim">
+          <div class="para-quem-card__header">✓ Melhor encaixe</div>
+          <ul class="para-quem-list">
+            <li>Empresas de serviço a partir de R$ 50k de faturamento</li>
+            <li>Dono que quer elevar o nível de gestão do negócio</li>
+            <li>Dificuldades com a equipe interna</li>
+            <li>Quer delegar o financeiro com segurança e sigilo</li>
+            <li>Quem quer crescer com saúde financeira</li>
+          </ul>
+        </div>
+        <div class="para-quem-card para-quem-card--nao">
+          <div class="para-quem-card__header">✗ Não é pra você se</div>
+          <ul class="para-quem-list">
+            <li>Você fatura menos de R$ 30k/mês (ainda cedo)</li>
+            <li>Quer alguém só para "emitir nota fiscal"</li>
+            <li>Prefere continuar informal, sem POPs ou documentação</li>
+            <li>Não vai compartilhar números com equipe externa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 08 — AUTORIDADE -->
+  <section id="bloco-autoridade">
+    <div class="container">
+      <h2>O que nossos clientes dizem da Valoreasy</h2>
+      <div class="google-reviews">
+        <div class="google-reviews__header">
+          <div class="google-badge">
+            <div class="google-badge__score">5.0</div>
+            <div>
+              <div class="google-badge__stars">★★★★★</div>
+              <div class="google-badge__info"><div class="google-badge__label">Google</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-carousel" data-carousel>
+          <button type="button" class="reviews-carousel__arrow reviews-carousel__arrow--prev" data-carousel-prev aria-label="Avaliações anteriores">‹</button>
+          <div class="reviews-carousel__track" data-carousel-track>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar"><img src="COLE_AQUI_A_URL_BASE/bruna-habka.png" alt=""><span class="review-card__guide" title="Local Guide"></span></div>
+                <div><div class="review-card__name">Bruna Habka</div><div class="review-card__author-meta">Local Guide · 18 avaliações</div><div class="review-card__company">Klabin</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">9 meses atrás</span></div>
+              <p class="review-card__text">A ValorEasy tem sido um aliado importante no desenvolvimento do nosso novo negócio. São muito organizados, pontuais, atentos e sempre dispostos a auxiliar as empresas e os empresários em seus controles financeiros. Recomendo!!!</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar"><img src="COLE_AQUI_A_URL_BASE/caroline-mendonca.png" alt=""></div>
+                <div><div class="review-card__name">Caroline Mendonça</div><div class="review-card__author-meta">3 avaliações</div><div class="review-card__company">Olive Tree Films</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">2 anos atrás</span></div>
+              <p class="review-card__text">A Valoreasy é nosso parceiro de BPO financeiro aqui na Olive Tree Filmes, há três anos e estamos extremamente satisfeitos. Não temos nenhuma dor de cabeça com gestão de pagamentos, emissão de NFs, fluxo de caixa, e todas as demandas do dia-a-dia operacional, pois eles cuidam de tudo. São competentes e comprometidos, tornando nossa experiência impecável. Recomendamos sem hesitar!</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar review-card__avatar--pink">D</div>
+                <div><div class="review-card__name">Daniel Vasques</div><div class="review-card__author-meta">1 avaliação</div><div class="review-card__company">Balderi Gastronomia</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">2 anos atrás</span></div>
+              <p class="review-card__text">Empresa super eficiente! Salvou o financeiro da minha empresa!</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar"><img src="COLE_AQUI_A_URL_BASE/hs-contabil.png" alt=""></div>
+                <div><div class="review-card__name">HS Contabil</div><div class="review-card__author-meta">1 avaliação</div><div class="review-card__company">HS Contabil</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">2 anos atrás</span></div>
+              <p class="review-card__text">A Valoreasy BPO Financeiro é uma empresa diferenciada, com alto comprometimento, ética, responsabilidade e atendimento personalizado de alto padrão. Já somos parceiros há alguns anos e recomendamos para todos os nossos clientes e amigos.</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar review-card__avatar--blue">L</div>
+                <div><div class="review-card__name">Larissa De Lello</div><div class="review-card__author-meta">5 avaliações</div><div class="review-card__company">School of Rock — Morumbi</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">2 anos atrás</span></div>
+              <p class="review-card__text">Estou muito satisfeita com toda terceirização do financeiro das minhas empresas com a Valoreasy! Parabéns a todo o time!</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar review-card__avatar--green">L<span class="review-card__guide" title="Local Guide"></span></div>
+                <div><div class="review-card__name">Lukas Ehmke</div><div class="review-card__author-meta">Local Guide · 13 avaliações</div><div class="review-card__company">School of Rock — Perdizes</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">2 anos atrás</span></div>
+              <p class="review-card__text">Ferramentas muito eficientes e bem visuais, atendimento rápido e personalizado. Trouxe muita segurança financeira para a minha empresa! Recomendo!</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar"><img src="COLE_AQUI_A_URL_BASE/vinicius-ribeiro.png" alt=""><span class="review-card__guide" title="Local Guide"></span></div>
+                <div><div class="review-card__name">Vinícius Ribeiro</div><div class="review-card__author-meta">Local Guide · 12 avaliações</div><div class="review-card__company">RPP Advocacia</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">3 anos atrás</span></div>
+              <p class="review-card__text">Equipe faz um ótimo trabalho. O BPO aliviou bastante a rotina administrativa de nosso escritório. As conciliações bancárias e contas a pagar estão sempre atualizadas, e o atendimento é bem atencioso e pró-ativo com a sugestão de melhorias para otimização do financeiro da empresa. Recomendo.</p>
+            </div>
+
+            <div class="review-card">
+              <div class="review-card__header">
+                <div class="review-card__avatar"><img src="COLE_AQUI_A_URL_BASE/rafael-vasconcelos.png" alt=""></div>
+                <div><div class="review-card__name">Rafael Vasconcelos</div><div class="review-card__author-meta">2 avaliações</div><div class="review-card__company">Audaz</div></div>
+              </div>
+              <div class="review-card__rating"><span class="review-card__stars">★★★★★</span><span class="review-card__date">5 anos</span></div>
+              <p class="review-card__text">Excelente experiência, nos ajudaram muito a resolver os problemas que para nós pareciam muito complexos.</p>
+            </div>
+
+          </div>
+          <button type="button" class="reviews-carousel__arrow reviews-carousel__arrow--next" data-carousel-next aria-label="Próximas avaliações">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 09 — CTA INTERMEDIÁRIO -->
+  <section id="bloco-cta-mid">
+    <div class="container">
+      <h2>Já convencido? <em>Pule para a conversa.</em></h2>
+      <p>30 minutos com um especialista. Sem pressão de vendas. Você recebe um plano de estruturação por escrito — é seu, mesmo se não fechar.</p>
+      <div class="cta-mid-btns">
+        <a href="#hero-form" class="btn btn--accent btn--lg">Quero uma proposta →</a>
+        <button class="btn btn--whatsapp btn--lg" onclick="abrirWhatsApp('cta-mid')">Falar pelo WhatsApp</button>
+      </div>
+      <div class="selos cta-mid-selos">
+        <div class="selo"><span>✓</span> Diagnóstico gratuito</div>
+        <div class="selo"><span>✓</span> Resposta em 12h</div>
+        <div class="selo"><span>✓</span> Sem compromisso</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 10 — EQUIPE (oculto até fotos) -->
+  <section id="bloco-equipe" hidden>
+    <div class="container">
+      <h2>Conheça <em>seu departamento</em>.</h2>
+      <p class="equipe-sub">Cada cliente Valoreasy tem um <strong>analista financeiro dedicado</strong> e um <strong>gerente de relacionamento</strong>. Você sabe o nome, o telefone, o WhatsApp. Eles conhecem o seu negócio como se estivessem na sua folha.</p>
+      <div class="equipe-grid">
+        <div class="equipe-card"><div class="equipe-avatar equipe-avatar--placeholder">👤</div><div class="equipe-nome">[INSERIR: Nome]</div><div class="equipe-cargo">[INSERIR: Cargo]</div></div>
+        <div class="equipe-card"><div class="equipe-avatar equipe-avatar--placeholder">👤</div><div class="equipe-nome">[INSERIR: Nome]</div><div class="equipe-cargo">[INSERIR: Cargo]</div></div>
+        <div class="equipe-card"><div class="equipe-avatar equipe-avatar--placeholder">👤</div><div class="equipe-nome">[INSERIR: Nome]</div><div class="equipe-cargo">[INSERIR: Cargo]</div></div>
+        <div class="equipe-card"><div class="equipe-avatar equipe-avatar--placeholder">👤</div><div class="equipe-nome">[INSERIR: Nome]</div><div class="equipe-cargo">[INSERIR: Cargo]</div></div>
+        <div class="equipe-card"><div class="equipe-avatar equipe-avatar--placeholder">👤</div><div class="equipe-nome">[INSERIR: Nome]</div><div class="equipe-cargo">[INSERIR: Cargo]</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 11 — FAQ -->
+  <section id="bloco-faq">
+    <div class="container">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq-list" style="margin-top: 2.5rem;">
+
+        <div class="faq-item">
+          <button class="faq-question">A minha empresa ainda é pequena. O BPO Financeiro faz sentido para mim?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">A resposta óbvia é: quanto antes, melhor. Se sua empresa já fatura a partir de R$ 50 mil/mês, ela está pronta para estruturar esse novo nível de gestão.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Quanto custa o BPO Financeiro da Valoreasy?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">A partir de R$ 1.250,00/mês, variando conforme o volume da operação. O valor costuma ser acessível e adequado ao porte e necessidades da empresa. <strong><u><a href="#hero-form">Fale com um especialista</a></u></strong> e receba sua proposta personalizada.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">O que eu recebo, no final das contas?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">O BPO Financeiro da Valoreasy atua na executação de todas as <strong>atividades financeiras diárias</strong> (conciliações, contas a pagar, contas a receber, faturamento, fluxo de caixa), bem como na entrega de <strong>visão dos números</strong> da empresa para os donos através de relatórios e apresentações financeiras.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Já possuo uma equipe. Vou ter que demitir todo mundo?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">Não necessariamente. Gerenciamos a transição juntos — realocação para outras funções, redirecionamento ou saída com planejamento. Você decide o que faz mais sentido.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">O BPO Financeiro substitui a contabilidade?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">Não. Trabalhamos junto com o seu contador — entregamos tudo pré-fechado e verificado. Seu contador economiza tempo. Você ganha paz de espírito e um financeiro que realmente funciona.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Vocês acessam a conta bancária da minha empresa?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">Sim, a sua equipe dedicada precisa ter acesso às suas contas bancárias com perfil restrito a consultas e registros de dados. A gente prepara tudo e você (ou um aprovador que você designa) aprova com confiança. Controle duplo, 100% auditado. Nunca movimentamos sem sua autorização explícita.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Funciona com o sistema que eu já uso?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">Sim. Operamos os principais ERPs do mercado: Omie, Conta Azul, Bling, Tiny e Granatum. Se você usa outro, avaliamos no diagnóstico. Se não usa nenhum, indicamos o melhor para o seu perfil.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">E se eu quiser cancelar?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">30 dias de aviso prévio e tudo certo. Sem multa, sem travas, sem drama. Nosso foco é a entrega de resultados que faça sentido para você.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Em quanto tempo vejo resultado?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer__inner">A implantação leva de 15 a 30 dias. A partir daí, começamos a operar o seu financeiro e você já começa a ver os resultados. No fechamento do primeiro mês você recebe o relatório completo do seu negócio com a apresentação técnica pelo seu gerente de relacionamento.</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCO 12 — CTA FINAL -->
+  <section id="bloco-cta-final">
+    <div class="container">
+      <h2>Seu novo financeiro poderia começar <em>na próxima segunda-feira.</em></h2>
+      <p>30 minutos para ver se faz sentido. Plano por escrito no final — é seu, mesmo se não fechar.<br>O custo de continuar onde você está cresce todo mês.</p>
+      <div class="cta-final-btns">
+        <a href="#hero-form" class="btn btn--accent btn--lg">Quero conhecer →</a>
+        <button class="btn btn--whatsapp btn--lg" onclick="abrirWhatsApp('cta-final')">Falar pelo WhatsApp</button>
+      </div>
+      <div class="selos cta-final-selos">
+        <div class="selo"><span>✓</span> Diagnóstico gratuito</div>
+        <div class="selo"><span>✓</span> Resposta em 12h</div>
+        <div class="selo"><span>✓</span> Sem compromisso</div>
+      </div>
+      <p class="custo-inacao">O custo de permanecer onde você está cresce todo mês.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Valoreasy · CNPJ [INSERIR] · <a href="https://valoreasy.com.br" style="color:rgba(255,255,255,0.4)">valoreasy.com.br</a></p>
+    </div>
+  </footer>
+
+  <!-- MOBILE STICKY CTA -->
+  <div id="mobile-cta-bar">
+    <a href="#hero-form" class="btn btn--primary">Diagnóstico gratuito</a>
+    <button class="btn btn--whatsapp" onclick="abrirWhatsApp('mobile-bar')">WhatsApp</button>
+  </div>
+
+</div><!-- /#vlr-lp -->
+
+
+<script>
+(function () {
+  var CONFIG = {
+    whatsapp: '5511918953052',
+    rdToken:  '303221317997a28f6e55aec48ac6b54e',
+    rdConversionId: 'lp-departamento-financeiro',
+    utmSource: 'lp',
+    utmMedium: 'formulario',
+    utmCampaign: 'departamento-financeiro',
+  };
+  var root = document.getElementById('vlr-lp');
+  if (!root) return;
+
+  /* Sticky CTA mobile */
+  (function () {
+    var bar = root.querySelector('#mobile-cta-bar');
+    if (!bar) return;
+    var hero = root.querySelector('#hero');
+    var observer = new IntersectionObserver(function (entries) {
+      bar.classList.toggle('visible', !entries[0].isIntersecting);
+    }, { threshold: 0.1 });
+    if (hero) observer.observe(hero);
+  })();
+
+  /* Scroll suave para âncoras internas */
+  root.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var target = root.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  /* Carousel (logos + depoimentos) */
+  function setupCarousel(rootEl) {
+    var track = rootEl.querySelector('[data-carousel-track]');
+    if (!track) return;
+    var prev = rootEl.querySelector('[data-carousel-prev]');
+    var next = rootEl.querySelector('[data-carousel-next]');
+
+    var originals = Array.prototype.slice.call(track.children);
+    originals.forEach(function (child) {
+      var clone = child.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+
+    var setWidth = 0;
+    var measure = function () { setWidth = track.scrollWidth / 2; };
+    requestAnimationFrame(measure);
+    window.addEventListener('resize', measure);
+
+    var step = function () {
+      var first = track.children[0];
+      if (!first) return 200;
+      var w = first.getBoundingClientRect().width;
+      var styles = getComputedStyle(track);
+      var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+      return w + gap;
+    };
+
+    var timer;
+    track.addEventListener('scroll', function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        if (setWidth && track.scrollLeft >= setWidth) {
+          var restore = track.style.scrollBehavior;
+          track.style.scrollBehavior = 'auto';
+          track.scrollLeft -= setWidth;
+          track.style.scrollBehavior = restore;
+        }
+      }, 120);
+    });
+
+    if (prev) prev.addEventListener('click', function () {
+      if (setWidth && track.scrollLeft < step()) {
+        var restore = track.style.scrollBehavior;
+        track.style.scrollBehavior = 'auto';
+        track.scrollLeft += setWidth;
+        track.style.scrollBehavior = restore;
+      }
+      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+
+    if (next) next.addEventListener('click', function () {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+  }
+  root.querySelectorAll('[data-carousel]').forEach(setupCarousel);
+
+  /* FAQ accordion */
+  root.addEventListener('click', function (e) {
+    var btn = e.target.closest('.faq-question');
+    if (!btn) return;
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('open');
+    root.querySelectorAll('.faq-item.open').forEach(function (el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  });
+
+  /* WhatsApp com rastreamento */
+  function abrirWhatsApp(origem) {
+    var numero = CONFIG.whatsapp;
+    if (!numero) { console.warn('WhatsApp não configurado.'); return; }
+    var texto = encodeURIComponent('Olá! Vi a LP da Valoreasy e quero saber mais sobre o Departamento Financeiro.');
+    var url = 'https://wa.me/' + numero + '?text=' + texto;
+    dispararConversaoRD({
+      conversion_identifier: 'whatsapp-' + CONFIG.rdConversionId,
+      origem: origem,
+      utm_source: CONFIG.utmSource,
+      utm_medium: 'whatsapp',
+      utm_campaign: CONFIG.utmCampaign,
+    });
+    window.open(url, '_blank');
+  }
+  window.abrirWhatsApp = abrirWhatsApp;
+
+  /* Formulário principal */
+  var form = root.querySelector('#lp-form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var msgSucesso = root.querySelector('#form-sucesso');
+      var msgErro = root.querySelector('#form-erro');
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      if (msgSucesso) msgSucesso.hidden = true;
+      if (msgErro) msgErro.hidden = true;
+
+      var dados = {
+        name: form.nome.value.trim(),
+        email: form.email.value.trim(),
+        personal_phone: form.telefone.value.trim(),
+        company_name: form.empresa ? form.empresa.value.trim() : '',
+        cf_faturamento: form.faturamento ? form.faturamento.value : '',
+      };
+
+      dispararConversaoRD(Object.assign({
+        conversion_identifier: CONFIG.rdConversionId,
+        utm_source: CONFIG.utmSource,
+        utm_medium: CONFIG.utmMedium,
+        utm_campaign: CONFIG.utmCampaign,
+      }, dados)).then(function (ok) {
+        if (ok) {
+          form.hidden = true;
+          if (msgSucesso) msgSucesso.hidden = false;
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Quero conhecer →';
+          if (msgErro) msgErro.hidden = false;
+        }
+      });
+    });
+  }
+
+  /* Envio para RD Station Events API */
+  function dispararConversaoRD(payload) {
+    var token = CONFIG.rdToken;
+    return fetch('https://api.rd.services/platform/conversions?api_key=' + token, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event_type: 'CONVERSION', event_family: 'CDP', payload: payload }),
+    }).then(function (res) { return res.ok; })
+      .catch(function (err) { console.error('Erro ao enviar para RD Station:', err); return false; });
+  }
+})();
+</script>
